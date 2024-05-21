@@ -4,6 +4,7 @@
   "description": "App to register all personal data",
   "main": "server.js",
   "scripts": {
+    "dev": "ts-node-dev src/server.ts",
     "start": "node build/server.js",
     "tsc": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,6 +13,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "ts-node-dev": "^2.0.0",
     "typescript": "5.4.5"
   },
   "dependencies": {
