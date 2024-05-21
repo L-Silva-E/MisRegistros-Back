@@ -2,10 +2,19 @@
   "name": "misregistros",
   "version": "1.0.0",
   "description": "App to register all personal data",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node build/server.js",
+    "tsc": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Lucas Silva",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "typescript": "5.4.5"
+  },
+  "dependencies": {
+    "express": "4.19.2"
+  }
 }

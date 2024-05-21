@@ -5,7 +5,7 @@
 .env
 
 # Compiled Output
-/dist
+/build
 /node_modules
 
 # OS
