@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  api-mis-registros:
+    container_name: api-mis-registros
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    volumes:
+      - ./:/app
+    command: npm run start
+    networks:
+      - api-mis-registros-network
+networks:
+  api-mis-registros-network:
+    driver: bridge
