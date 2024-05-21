@@ -1,0 +1,15 @@
+# IDE - VSCode
+.vscode/
+
+# Env
+.env
+
+# Compiled Output
+/dist
+/node_modules
+
+# OS
+.DS_Store
+
+# Tests
+
