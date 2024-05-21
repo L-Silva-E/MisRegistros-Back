@@ -1,15 +1,14 @@
-import express from "express";
+import app from "./shared/app";
+import environment from "./shared/environment";
 
-const app = express();
-const PORT = 9000;
+// ~ Routers
+import RecipeRouter from "./modules/recipe/infrastructure/api/routes/recipe.router";
 
-app.use(express.json());
+async function init() {
+  const version = environment.APP_VERSION;
 
-app.get("/health", (_req, res) => {
-  console.log("Health check");
-  res.send({ status: "Ok!" });
-});
+  // ~ Init all routers
+  await new app([new RecipeRouter(version)], environment.APP_PORT).listen();
+}
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+init();
