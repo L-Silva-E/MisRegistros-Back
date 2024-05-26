@@ -1,4 +1,5 @@
 import express from "express";
+import bodyParser from "body-parser";
 
 class App {
   public app: express.Application;
@@ -12,6 +13,8 @@ class App {
   }
 
   private initializeMiddlewares() {
+    this.app.use(bodyParser.urlencoded({ extended: false }));
+    this.app.use(bodyParser.json());
     this.app.use((err: any, _req: any, res: any, next: any) => {
       if (err) {
         const apiError = {
