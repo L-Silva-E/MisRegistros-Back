@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.9"
 
 services:
   api-mis-registros:
@@ -6,15 +6,31 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    env_file:
-      - .env
+    environment:
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?schema=public
     ports:
       - ${APP_PORT}:${APP_PORT}
-    volumes:
-      - ./:/app
-    command: npm run start
     networks:
-      - api-mis-registros-network
+      - mis-registros-network
+
+  db-mis-registros:
+    container_name: db-mis-registros
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - mis-registros-network
+
+volumes:
+  pgdata:
+
 networks:
-  api-mis-registros-network:
+  mis-registros-network:
     driver: bridge
