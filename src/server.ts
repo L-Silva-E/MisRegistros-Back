@@ -2,7 +2,7 @@ import app from "./shared/app";
 import environment from "./shared/environment";
 
 // ~ Routers
-import RecipeRouter from "./modules/recipe/infrastructure/api/routes/recipe.router";
+import RecipeRouter from "./modules/recipes/routes/recipe.routes";
 
 async function init() {
   const version = environment.APP_VERSION;
