@@ -6,7 +6,7 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY prisma ./prisma
+COPY src/shared/prisma ./src/shared/prisma
 
 RUN npx prisma generate
 
