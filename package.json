@@ -20,5 +20,8 @@
   "dependencies": {
     "@prisma/client": "5.7.0",
     "express": "4.19.2"
+  },
+  "prisma": {
+    "schema": "src/shared/prisma/schema.prisma"
   }
 }
