@@ -59,6 +59,7 @@ const ErrorCodes = (err: Error): IResponse => {
     response.message = "Internal Server Error";
     response.stackError.message = "Database Connection Error" + customError;
   }
+
   return response;
 };
 
