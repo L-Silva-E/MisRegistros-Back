@@ -8,7 +8,7 @@ export default function AuthorizationApiKey(
 ): Response | void {
   const apiKey = req?.get("api-key");
 
-  if (!apiKey || apiKey !== process.env.APP_KEY) {
+  if (!apiKey || apiKey !== process.env.API_KEY) {
     const apiError: IResponse = {
       code: 401,
       message: "Unauthorized",

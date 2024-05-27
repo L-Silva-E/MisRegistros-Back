@@ -5,10 +5,10 @@ import environment from "./shared/environment";
 import RecipeRouter from "./modules/recipes/routes/recipe.routes";
 
 async function init() {
-  const version = environment.APP_VERSION;
+  const version = environment.API_VERSION;
 
   // ~ Init all routers
-  await new app([new RecipeRouter(version)], environment.APP_PORT).listen();
+  await new app([new RecipeRouter(version)], environment.API_PORT).listen();
 }
 
 init();

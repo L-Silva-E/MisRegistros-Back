@@ -1,8 +1,8 @@
 export interface IformatEnvironments {
-  APP_KEY: string;
-  APP_URL: string;
-  APP_PORT: number;
-  APP_VERSION: string;
+  API_KEY: string;
+  API_URL: string;
+  API_PORT: number;
+  API_VERSION: string;
 
   DB_HOST: string;
   DB_PORT: number;

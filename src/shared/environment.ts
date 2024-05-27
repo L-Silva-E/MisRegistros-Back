@@ -1,10 +1,10 @@
 import { IformatEnvironments } from "./types.environment";
 
 const environments: IformatEnvironments = {
-  APP_KEY: process.env.APP_KEY || "MISSING_APP_KEY",
-  APP_URL: process.env.APP_URL || "http://localhost:9000",
-  APP_PORT: parseInt(process.env.APP_PORT || "9000"),
-  APP_VERSION: process.env.APP_VERSION || "v1",
+  API_KEY: process.env.API_KEY || "MISSING_API_KEY",
+  API_URL: process.env.API_URL || "http://localhost:9000",
+  API_PORT: parseInt(process.env.API_PORT || "9000"),
+  API_VERSION: process.env.API_VERSION || "v1",
 
   DB_HOST: process.env.DB_HOST || "localhost",
   DB_PORT: parseInt(process.env.DB_PORT || "5432"),
