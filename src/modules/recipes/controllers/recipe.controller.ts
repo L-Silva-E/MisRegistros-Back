@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import RecipeService from "../services/recipe.service";
 import ErrorCodes from "../../../shared/prisma/middlewares/error.codes";
-import IResponse from "../../../shared/interface/Iresponse";
+import IResponse from "../../../shared/interfaces/Iresponse";
 
 const recipeService = new RecipeService();
 

@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import IResponse from "../../interface/Iresponse";
+import IResponse from "../../interfaces/Iresponse";
 
 const ErrorCodes = (err: Error): IResponse => {
   const stringError = err.message.toString();
