@@ -5,31 +5,49 @@ const prisma = new PrismaClient();
 
 export default class RecipeService {
   public async create(recipe: RecipeModel): Promise<RecipeModel> {
-    const recipeCreated = await prisma.recipe.create({ data: recipe });
+    try {
+      const recipeCreated = await prisma.recipe.create({
+        data: recipe,
+      });
 
-    return recipeCreated;
+      return recipeCreated;
+    } catch (error) {
+      throw error;
+    }
   }
 
   public async get(): Promise<RecipeModel[]> {
-    const recipes = await prisma.recipe.findMany();
+    try {
+      const recipes = await prisma.recipe.findMany();
 
-    return recipes;
+      return recipes;
+    } catch (error) {
+      throw error;
+    }
   }
 
   public async patch(id: number, recipe: RecipeModel): Promise<RecipeModel> {
-    const recipeUpdated = await prisma.recipe.update({
-      where: { id },
-      data: recipe,
-    });
+    try {
+      const recipeUpdated = await prisma.recipe.update({
+        where: { id },
+        data: recipe,
+      });
 
-    return recipeUpdated;
+      return recipeUpdated;
+    } catch (error) {
+      throw error;
+    }
   }
 
   public async delete(id: number): Promise<RecipeModel> {
-    const recipeDeleted = await prisma.recipe.delete({
-      where: { id },
-    });
+    try {
+      const recipeDeleted = await prisma.recipe.delete({
+        where: { id },
+      });
 
-    return recipeDeleted;
+      return recipeDeleted;
+    } catch (error) {
+      throw error;
+    }
   }
 }
