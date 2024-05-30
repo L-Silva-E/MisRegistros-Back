@@ -23,6 +23,8 @@ model RecipeIgnredient {
   idRecipe     Int
   idIngredient Int
   quantity     Float
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   Recipe     Recipe     @relation(fields: [idRecipe], references: [id])
   Ingredient Ingredient @relation(fields: [idIngredient], references: [id])
@@ -31,18 +33,22 @@ model RecipeIgnredient {
 }
 
 model Ingredient {
-  id   Int    @id @default(autoincrement())
-  name String
-  unit String
+  id        Int      @id @default(autoincrement())
+  name      String
+  unit      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   recipes RecipeIgnredient[]
 }
 
 model Step {
-  id          Int    @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   idRecipe    Int
   number      Int
   instruction String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   Recipe Recipe @relation(fields: [idRecipe], references: [id])
 }
