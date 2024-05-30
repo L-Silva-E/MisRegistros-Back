@@ -7,6 +7,7 @@ export enum Unit {
   OUNCE = "oz",
   TEASPOON = "tsp",
   TABLESPOON = "tbsp",
+  UNIT = "u",
 }
 
 export enum Score {
