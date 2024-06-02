@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { getQueryOptions } from "../../../shared/prisma/utils/prisma.utils";
 import IngredientModel from "../models/ingredient.model";
 
 const prisma = new PrismaClient();
@@ -16,9 +17,11 @@ export default class IngredientService {
     }
   }
 
-  public async get(): Promise<IngredientModel[]> {
+  public async get(query: any): Promise<IngredientModel[]> {
     try {
-      const ingredients = await prisma.ingredient.findMany();
+      const insensitiveFields = ["name"];
+      const queryOptions = getQueryOptions(query, insensitiveFields);
+      const ingredients = await prisma.ingredient.findMany(queryOptions);
 
       return ingredients;
     } catch (error) {

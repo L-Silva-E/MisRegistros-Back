@@ -25,9 +25,10 @@ export default class IngredientController {
     }
   }
 
-  public async get(_req: Request, res: Response): Promise<Response> {
+  public async get(req: Request, res: Response): Promise<Response> {
     try {
-      const ingredients = await ingredientService.get();
+      const { query } = req;
+      const ingredients = await ingredientService.get(query);
 
       const response: IResponse = {
         code: 200,
