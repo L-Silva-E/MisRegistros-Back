@@ -1,0 +1,86 @@
+import moment from "moment";
+
+import { QueryParams } from "../interfaces/Iquery";
+
+export const getQueryOptions = (
+  query: QueryParams,
+  insensitiveFields: string[]
+) => {
+  let options: any = {};
+  let pagination: any = {};
+  let order: any = {};
+  let relations: any = {};
+
+  options = parseCaseInsensitive(query, insensitiveFields);
+  options = parseDateRange(options);
+
+  pagination = getPagination(options);
+  order = getOrder(options);
+  relations = getRelations(options);
+
+  return { where: query, ...pagination, ...order, ...relations };
+};
+
+export const parseCaseInsensitive = (
+  query: QueryParams,
+  insensitiveFields: string[]
+) => {
+  insensitiveFields.forEach((field) => {
+    if (query[field]) {
+      query[field] = { startsWith: query[field], mode: "insensitive" };
+    }
+  });
+
+  return query;
+};
+
+export const parseDateRange = (query: QueryParams) => {
+  const createdAt: any = {
+    ...(query.from && { gte: moment(query.from).format() }),
+    ...(query.to && { lt: moment(query.to).add(1, "days").format() }),
+  };
+
+  query.createdAt = createdAt.gte || createdAt.lt ? createdAt : {};
+
+  delete query.from;
+  delete query.to;
+
+  return query;
+};
+
+export const getOrder = (query: QueryParams) => {
+  let order: any = {};
+
+  if (query.orderByField != null && query.orderBy != null) {
+    order.orderBy = { [query.orderByField]: query.orderBy };
+  }
+
+  delete query.orderByField;
+  delete query.orderBy;
+
+  return order;
+};
+
+export const getPagination = (query: QueryParams) => {
+  const take = query.limit ? +query.limit : 10;
+  const skip = query.page && query.limit ? query.page * query.limit : 0;
+
+  delete query.limit;
+  delete query.page;
+
+  return { take, skip };
+};
+
+export const getRelations = (query: QueryParams) => {
+  let include: any = {};
+
+  if (query.relations) {
+    Object.keys(query.relations).forEach((relation) => {
+      include[relation] = true;
+    });
+  }
+
+  delete query.relations;
+
+  return include;
+};
