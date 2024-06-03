@@ -10,12 +10,17 @@ const validateSchemas =
       const query = req.query || null;
       const headers = req.headers || null;
 
-      schema.parse({
+      const result = schema.parse({
         body: body,
         params: params,
         query: query,
         headers: headers,
       });
+
+      req.body = result.body;
+      req.params = result.params;
+      req.query = result.query;
+      req.headers = result.headers;
 
       return next();
     } catch (error: any) {

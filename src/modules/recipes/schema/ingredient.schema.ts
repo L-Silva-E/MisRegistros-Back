@@ -19,10 +19,10 @@ export const IngredientCreateZodSchema = z.object({
 
 export const IngredientGetZodSchema = z.object({
   query: z.object({
-    id: z
+    id: z.coerce
       .number({ invalid_type_error: "La 'id' debe ser un número" })
       .int()
-      .positive()
+      .positive("Ingrese una 'id' válida")
       .optional(),
     name: z
       .string()
