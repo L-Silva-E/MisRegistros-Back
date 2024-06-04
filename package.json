@@ -24,6 +24,7 @@
     "zod": "^3.23.8"
   },
   "prisma": {
-    "schema": "src/shared/prisma/schema.prisma"
+    "schema": "src/shared/prisma/schema.prisma",
+    "seed": "ts-node src/shared/prisma/seed/seed.ts"
   }
 }
