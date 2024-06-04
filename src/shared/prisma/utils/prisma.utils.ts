@@ -50,9 +50,10 @@ export const parseDateRange = (query: QueryParams) => {
 
 export const getOrder = (query: QueryParams) => {
   let order: any = {};
+  let orderBy: string = query.orderBy || "asc";
 
-  if (query.orderByField != null && query.orderBy != null) {
-    order.orderBy = { [query.orderByField]: query.orderBy };
+  if (query.orderByField != null) {
+    order.orderBy = { [query.orderByField]: orderBy };
   }
 
   delete query.orderByField;
