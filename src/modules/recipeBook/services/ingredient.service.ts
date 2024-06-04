@@ -21,7 +21,14 @@ export default class IngredientService {
     try {
       const insensitiveFields = ["name"];
       const queryOptions = getQueryOptions(query, insensitiveFields);
-      const ingredients = await prisma.ingredient.findMany(queryOptions);
+
+      const [ingredients, count] = await prisma.$transaction([
+        prisma.ingredient.findMany(queryOptions),
+        prisma.ingredient.count(),
+      ]);
+
+      // TODO: Falta retornar además la variable count
+      console.log(count);
 
       return ingredients;
     } catch (error) {

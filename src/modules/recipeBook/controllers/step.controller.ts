@@ -32,6 +32,7 @@ export default class StepController {
       const response: IResponse = {
         code: 200,
         message: "Done",
+        count: steps.length,
         data: steps,
       };
 

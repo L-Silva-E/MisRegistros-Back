@@ -33,6 +33,7 @@ export default class IngredientController {
       const response: IResponse = {
         code: 200,
         message: "Done",
+        count: ingredients.length,
         data: ingredients,
       };
 

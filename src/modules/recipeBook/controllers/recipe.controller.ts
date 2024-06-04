@@ -32,6 +32,7 @@ export default class RecipeController {
       const response: IResponse = {
         code: 200,
         message: "Done",
+        count: recipes.length,
         data: recipes,
       };
 
