@@ -1,6 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { getQueryOptions } from "../../../shared/prisma/utils/prisma.utils";
-import IngredientModel from "../models/ingredient.model";
+import {
+  IngredientModel,
+  IngredientCountModel,
+} from "../models/ingredient.model";
 
 const prisma = new PrismaClient();
 
@@ -17,7 +20,7 @@ export default class IngredientService {
     }
   }
 
-  public async get(query: any): Promise<IngredientModel[]> {
+  public async get(query: any): Promise<IngredientCountModel> {
     try {
       const insensitiveFields = ["name"];
       const queryOptions = getQueryOptions(query, insensitiveFields);
@@ -27,10 +30,7 @@ export default class IngredientService {
         prisma.ingredient.count(),
       ]);
 
-      // TODO: Falta retornar además la variable count
-      console.log(count);
-
-      return ingredients;
+      return { count, ingredients: ingredients };
     } catch (error) {
       throw error;
     }

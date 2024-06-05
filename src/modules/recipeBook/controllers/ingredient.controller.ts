@@ -28,13 +28,13 @@ export default class IngredientController {
   public async get(req: Request, res: Response): Promise<Response> {
     try {
       const { query } = req;
-      const ingredients = await ingredientService.get(query);
+      const dataIngredients = await ingredientService.get(query);
 
       const response: IResponse = {
         code: 200,
         message: "Done",
-        count: ingredients.length,
-        data: ingredients,
+        count: dataIngredients.count,
+        data: dataIngredients.ingredients,
       };
 
       return res.status(response.code).send(response);
