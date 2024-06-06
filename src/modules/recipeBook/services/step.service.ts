@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import StepModel from "../models/step.model";
+import { getQueryOptions } from "../../../shared/prisma/utils/prisma.utils";
+import { StepModel, StepCountModel } from "../models/step.model";
 
 const prisma = new PrismaClient();
 
@@ -16,11 +17,17 @@ export default class StepService {
     }
   }
 
-  public async get(): Promise<StepModel[]> {
+  public async get(query: any): Promise<StepCountModel> {
     try {
-      const steps = await prisma.step.findMany();
+      const insensitiveFields = ["instruction"];
+      const queryOptions = getQueryOptions(query, insensitiveFields);
 
-      return steps;
+      const [steps, count] = await prisma.$transaction([
+        prisma.step.findMany(queryOptions),
+        prisma.step.count(),
+      ]);
+
+      return { count, steps: steps };
     } catch (error) {
       throw error;
     }

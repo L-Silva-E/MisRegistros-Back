@@ -25,15 +25,16 @@ export default class StepController {
     }
   }
 
-  public async get(_req: Request, res: Response): Promise<Response> {
+  public async get(req: Request, res: Response): Promise<Response> {
     try {
-      const steps = await stepService.get();
+      const { query } = req;
+      const dataSteps = await stepService.get(query);
 
       const response: IResponse = {
         code: 200,
         message: "Done",
-        count: steps.length,
-        data: steps,
+        count: dataSteps.count,
+        data: dataSteps.steps,
       };
 
       return res.status(response.code).send(response);
