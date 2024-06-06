@@ -1,5 +1,4 @@
 export interface IngredientModel {
-  count?: number;
   id: number;
   name: string;
   unit: string;
