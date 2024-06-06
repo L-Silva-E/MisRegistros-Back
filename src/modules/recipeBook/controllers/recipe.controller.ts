@@ -25,15 +25,16 @@ export default class RecipeController {
     }
   }
 
-  public async get(_req: Request, res: Response): Promise<Response> {
+  public async get(req: Request, res: Response): Promise<Response> {
     try {
-      const recipes = await recipeService.get();
+      const { query } = req;
+      const dataRecipes = await recipeService.get(query);
 
       const response: IResponse = {
         code: 200,
         message: "Done",
-        count: recipes.length,
-        data: recipes,
+        count: dataRecipes.count,
+        data: dataRecipes.recipes,
       };
 
       return res.status(response.code).send(response);

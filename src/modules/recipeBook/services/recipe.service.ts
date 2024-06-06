@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import RecipeModel from "../models/recipe.model";
+import { getQueryOptions } from "../../../shared/prisma/utils/prisma.utils";
+import { RecipeModel, RecipeCountModel } from "../models/recipe.model";
 
 const prisma = new PrismaClient();
 
@@ -16,11 +17,17 @@ export default class RecipeService {
     }
   }
 
-  public async get(): Promise<RecipeModel[]> {
+  public async get(query: any): Promise<RecipeCountModel> {
     try {
-      const recipes = await prisma.recipe.findMany();
+      const insensitiveFields = ["name", "description"];
+      const queryOptions = getQueryOptions(query, insensitiveFields);
 
-      return recipes;
+      const [recipes, count] = await prisma.$transaction([
+        prisma.recipe.findMany(queryOptions),
+        prisma.recipe.count(),
+      ]);
+
+      return { count, recipes: recipes };
     } catch (error) {
       throw error;
     }
