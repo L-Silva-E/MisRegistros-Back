@@ -27,7 +27,7 @@ export const parseCaseInsensitive = (
 ) => {
   insensitiveFields.forEach((field) => {
     if (query[field]) {
-      query[field] = { startsWith: query[field], mode: "insensitive" };
+      query[field] = { contains: query[field], mode: "insensitive" };
     }
   });
 
