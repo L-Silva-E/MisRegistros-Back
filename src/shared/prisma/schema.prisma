@@ -15,19 +15,19 @@ model Recipe {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  ingredients RecipeIgnredient[]
+  ingredients RecipeIngredient[]
   steps       Step[]
 }
 
-model RecipeIgnredient {
+model RecipeIngredient {
   idRecipe     Int
   idIngredient Int
   quantity     Float
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  Recipe     Recipe     @relation(fields: [idRecipe], references: [id])
-  Ingredient Ingredient @relation(fields: [idIngredient], references: [id])
+  recipe     Recipe     @relation(fields: [idRecipe], references: [id])
+  ingredient Ingredient @relation(fields: [idIngredient], references: [id])
 
   @@id([idIngredient, idRecipe])
 }
@@ -39,7 +39,7 @@ model Ingredient {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  recipes RecipeIgnredient[]
+  recipes RecipeIngredient[]
 }
 
 model Step {
