@@ -9,3 +9,8 @@ export interface StepCountModel {
   count: number;
   steps: StepModel[];
 }
+
+export interface RecipeStepModel {
+  number: number;
+  instruction: string;
+}

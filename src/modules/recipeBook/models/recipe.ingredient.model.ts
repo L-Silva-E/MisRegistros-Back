@@ -1,5 +1,4 @@
-export default interface RecipeIngredientModel {
-  idRecipe: number;
-  idIngredient: number;
+export interface RecipeIngredientModel {
+  id: number;
   quantity: number;
 }
