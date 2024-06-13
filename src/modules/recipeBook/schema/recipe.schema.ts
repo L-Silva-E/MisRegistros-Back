@@ -4,6 +4,8 @@ import {
   GetZodSchema,
 } from "../../../shared/zod/schema/base.schema";
 
+import { StepBaseZodSchema } from "./step.schema";
+
 // ~ Base Zod Squema
 export const RecipeBaseZodSchema = z.object({
   name: z.string().min(1, "El campo 'nombre' no puede estar vacío"),
@@ -13,14 +15,23 @@ export const RecipeBaseZodSchema = z.object({
     .int()
     .gte(0, "El campo 'puntuación' debe ser mayor o igual a 0")
     .lte(5, "El campo 'puntuación' debe ser menor o igual a 5"),
-  ingredients: z.array(
-    z.coerce
-      .number({
-        invalid_type_error: "La 'id' de 'Ingredient' debe ser un número",
+  ingredients: z
+    .array(
+      z.object({
+        quantity: z
+          .number()
+          .int()
+          .gte(0, "La 'cantidad' debe ser mayor o igual a 0"),
+        id: z.coerce
+          .number({ invalid_type_error: "La 'id' debe ser un número" })
+          .positive("Ingrese una 'id' válida"),
       })
-      .positive("Ingrese una 'id' válida de 'Ingredient'")
-      .optional()
-  ),
+    )
+    .nonempty("Debe tener al menos un 'Ingrediente'"),
+  steps: z
+    .array(StepBaseZodSchema)
+    .nonempty("Debe tener al menos un 'Paso'")
+    .optional(),
 });
 
 // ~ CRUD Zod Schemas
