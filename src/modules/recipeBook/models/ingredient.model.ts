@@ -1,5 +1,7 @@
-export interface IngredientModel {
-  id: number;
+import { IBaseModel } from "../../../shared/interfaces/Ibase.model";
+
+// ~ Base
+export interface IngredientModel extends IBaseModel {
   name: string;
   unit: string;
 }

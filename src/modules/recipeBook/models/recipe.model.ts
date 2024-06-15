@@ -1,8 +1,9 @@
+import { IBaseModel } from "../../../shared/interfaces/Ibase.model";
 import { RecipeIngredientModel } from "./recipe.ingredient.model";
 import { RecipeStepModel } from "./step.model";
 
-export interface RecipeModel {
-  id: number;
+// ~ Base
+export interface RecipeModel extends IBaseModel {
   name: string;
   description: string;
   score: number;
@@ -13,6 +14,7 @@ export interface RecipeCountModel {
   recipes: RecipeModel[];
 }
 
+// ~ Extra
 export interface FullRecipeModel extends RecipeModel {
   ingredients: RecipeIngredientModel[];
   steps?: RecipeStepModel[];
