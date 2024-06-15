@@ -9,7 +9,7 @@ import {
 const prisma = new PrismaClient();
 
 export default class RecipeService {
-  public async create(recipe: FullRecipeModel): Promise<any> {
+  public async create(recipe: FullRecipeModel): Promise<RecipeModel> {
     try {
       const ingredients = recipe.ingredients;
       const steps = recipe.steps;
@@ -49,7 +49,7 @@ export default class RecipeService {
 
       queryOptions = {
         ...queryOptions,
-        select: {
+        include: {
           ingredients: {
             select: {
               quantity: true,
@@ -78,6 +78,17 @@ export default class RecipeService {
       const recipeUpdated = await prisma.recipe.update({
         where: { id },
         data: recipe,
+        include: {
+          ingredients: {
+            select: {
+              quantity: true,
+              ingredient: { select: { name: true, unit: true } },
+            },
+          },
+          steps: {
+            select: { number: true, instruction: true },
+          },
+        },
       });
 
       return recipeUpdated;
@@ -90,6 +101,17 @@ export default class RecipeService {
     try {
       const recipeDeleted = await prisma.recipe.delete({
         where: { id },
+        include: {
+          ingredients: {
+            select: {
+              quantity: true,
+              ingredient: { select: { name: true, unit: true } },
+            },
+          },
+          steps: {
+            select: { number: true, instruction: true },
+          },
+        },
       });
 
       return recipeDeleted;
