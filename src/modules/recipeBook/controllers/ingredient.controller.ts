@@ -1,20 +1,20 @@
 import { Request, Response } from "express";
-import RecipeService from "../services/recipe.service";
+import IngredientService from "../services/ingredient.service";
 import ErrorCodes from "../../../shared/prisma/middlewares/error.codes";
 import IResponse from "../../../shared/interfaces/Iresponse";
 
-const recipeService = new RecipeService();
+const ingredientService = new IngredientService();
 
-export default class RecipeController {
+export default class IngredientController {
   public async create(req: Request, res: Response): Promise<Response> {
     try {
       const { body } = req;
-      const recipe = await recipeService.create(body);
+      const ingredient = await ingredientService.create(body);
 
       const response: IResponse = {
         code: 201,
         message: "Created",
-        data: recipe,
+        data: ingredient,
       };
 
       return res.status(response.code).send(response);
@@ -25,14 +25,16 @@ export default class RecipeController {
     }
   }
 
-  public async get(_req: Request, res: Response): Promise<Response> {
+  public async get(req: Request, res: Response): Promise<Response> {
     try {
-      const recipes = await recipeService.get();
+      const { query } = req;
+      const dataIngredients = await ingredientService.get(query);
 
       const response: IResponse = {
         code: 200,
         message: "Done",
-        data: recipes,
+        count: dataIngredients.count,
+        data: dataIngredients.ingredients,
       };
 
       return res.status(response.code).send(response);
@@ -46,12 +48,12 @@ export default class RecipeController {
   public async patch(req: Request, res: Response): Promise<Response> {
     try {
       const { body, params } = req;
-      const recipe = await recipeService.patch(Number(params.id), body);
+      const ingredient = await ingredientService.patch(Number(params.id), body);
 
       const response: IResponse = {
         code: 200,
         message: "Updated",
-        data: recipe,
+        data: ingredient,
       };
 
       return res.status(response.code).send(response);
@@ -65,12 +67,12 @@ export default class RecipeController {
   public async delete(req: Request, res: Response): Promise<Response> {
     try {
       const { params } = req;
-      const recipe = await recipeService.delete(Number(params.id));
+      const ingredient = await ingredientService.delete(Number(params.id));
 
       const response: IResponse = {
         code: 200,
         message: "Deleted",
-        data: recipe,
+        data: ingredient,
       };
 
       return res.status(response.code).send(response);
