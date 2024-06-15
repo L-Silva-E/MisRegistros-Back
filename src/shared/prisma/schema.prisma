@@ -26,7 +26,7 @@ model RecipeIngredient {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  recipe     Recipe     @relation(fields: [idRecipe], references: [id])
+  recipe     Recipe     @relation(fields: [idRecipe], references: [id], onDelete: Cascade)
   ingredient Ingredient @relation(fields: [idIngredient], references: [id])
 
   @@id([idIngredient, idRecipe])
@@ -50,5 +50,5 @@ model Step {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  Recipe Recipe @relation(fields: [idRecipe], references: [id])
+  Recipe Recipe @relation(fields: [idRecipe], references: [id], onDelete: Cascade)
 }
