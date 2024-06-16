@@ -37,10 +37,18 @@ export default class RecipeService {
             })),
           },
         },
+        include: {
+          ingredients: {
+            select: {
+              quantity: true,
+              ingredient: { select: { name: true, unit: true } },
+            },
+          },
+          steps: {
+            select: { number: true, instruction: true },
+          },
+        },
       });
-
-      recipeCreated = (await this.get({ id: recipeCreated.id }))
-        .recipes[0] as RecipeModel & { createdAt: Date; updatedAt: Date };
 
       return recipeCreated;
     } catch (error) {
