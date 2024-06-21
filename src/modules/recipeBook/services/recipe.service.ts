@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { Context } from "../../../shared/jest/context";
 import { getQueryOptions } from "../../../shared/prisma/utils/prisma.utils";
 import {
   RecipeModel,
@@ -6,10 +7,15 @@ import {
   RecipeCountModel,
 } from "../models/recipe.model";
 
-const prisma = new PrismaClient();
+const prismaClient = new PrismaClient();
 
 export default class RecipeService {
-  public async create(recipe: FullRecipeModel): Promise<RecipeModel> {
+  public async create(
+    recipe: FullRecipeModel,
+    ctx?: Context
+  ): Promise<RecipeModel> {
+    const prisma = ctx?.prisma || prismaClient;
+
     try {
       const ingredients = recipe.ingredients;
       const steps = recipe.steps;
@@ -31,10 +37,18 @@ export default class RecipeService {
             })),
           },
         },
+        include: {
+          ingredients: {
+            select: {
+              quantity: true,
+              ingredient: { select: { name: true, unit: true } },
+            },
+          },
+          steps: {
+            select: { number: true, instruction: true },
+          },
+        },
       });
-
-      recipeCreated = (await this.get({ id: recipeCreated.id }))
-        .recipes[0] as RecipeModel & { createdAt: Date; updatedAt: Date };
 
       return recipeCreated;
     } catch (error) {
@@ -42,7 +56,9 @@ export default class RecipeService {
     }
   }
 
-  public async get(query: any): Promise<RecipeCountModel> {
+  public async get(query: any, ctx?: Context): Promise<RecipeCountModel> {
+    const prisma = ctx?.prisma || prismaClient;
+
     try {
       const insensitiveFields = ["name", "description"];
       let queryOptions = getQueryOptions(query, insensitiveFields);
@@ -73,7 +89,13 @@ export default class RecipeService {
     }
   }
 
-  public async patch(id: number, recipe: RecipeModel): Promise<RecipeModel> {
+  public async patch(
+    id: number,
+    recipe: RecipeModel,
+    ctx?: Context
+  ): Promise<RecipeModel> {
+    const prisma = ctx?.prisma || prismaClient;
+
     try {
       const recipeUpdated = await prisma.recipe.update({
         where: { id },
@@ -97,7 +119,9 @@ export default class RecipeService {
     }
   }
 
-  public async delete(id: number): Promise<RecipeModel> {
+  public async delete(id: number, ctx?: Context): Promise<RecipeModel> {
+    const prisma = ctx?.prisma || prismaClient;
+
     try {
       const recipeDeleted = await prisma.recipe.delete({
         where: { id },

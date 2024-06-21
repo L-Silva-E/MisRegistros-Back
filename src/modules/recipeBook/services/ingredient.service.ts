@@ -1,14 +1,20 @@
 import { PrismaClient } from "@prisma/client";
+import { Context } from "../../../shared/jest/context";
 import { getQueryOptions } from "../../../shared/prisma/utils/prisma.utils";
 import {
   IngredientModel,
   IngredientCountModel,
 } from "../models/ingredient.model";
 
-const prisma = new PrismaClient();
+const prismaClient = new PrismaClient();
 
 export default class IngredientService {
-  public async create(ingredient: IngredientModel): Promise<IngredientModel> {
+  public async create(
+    ingredient: IngredientModel,
+    ctx?: Context
+  ): Promise<IngredientModel> {
+    const prisma = ctx?.prisma || prismaClient;
+
     try {
       const ingredientCreated = await prisma.ingredient.create({
         data: ingredient,
@@ -20,7 +26,9 @@ export default class IngredientService {
     }
   }
 
-  public async get(query: any): Promise<IngredientCountModel> {
+  public async get(query: any, ctx?: Context): Promise<IngredientCountModel> {
+    const prisma = ctx?.prisma || prismaClient;
+
     try {
       const insensitiveFields = ["name"];
       const queryOptions = getQueryOptions(query, insensitiveFields);
@@ -38,8 +46,11 @@ export default class IngredientService {
 
   public async patch(
     id: number,
-    ingredient: IngredientModel
+    ingredient: IngredientModel,
+    ctx?: Context
   ): Promise<IngredientModel> {
+    const prisma = ctx?.prisma || prismaClient;
+
     try {
       const ingredientUpdated = await prisma.ingredient.update({
         where: { id },
@@ -52,7 +63,9 @@ export default class IngredientService {
     }
   }
 
-  public async delete(id: number): Promise<IngredientModel> {
+  public async delete(id: number, ctx?: Context): Promise<IngredientModel> {
+    const prisma = ctx?.prisma || prismaClient;
+
     try {
       const ingredientDeleted = await prisma.ingredient.delete({
         where: { id },

@@ -1,11 +1,14 @@
 import { PrismaClient } from "@prisma/client";
+import { Context } from "../../../shared/jest/context";
 import { getQueryOptions } from "../../../shared/prisma/utils/prisma.utils";
 import { StepModel, StepCountModel } from "../models/step.model";
 
-const prisma = new PrismaClient();
+const prismaClient = new PrismaClient();
 
 export default class StepService {
-  public async create(step: StepModel): Promise<StepModel> {
+  public async create(step: StepModel, ctx?: Context): Promise<StepModel> {
+    const prisma = ctx?.prisma || prismaClient;
+
     try {
       const stepCreated = await prisma.step.create({
         data: step,
@@ -17,7 +20,9 @@ export default class StepService {
     }
   }
 
-  public async get(query: any): Promise<StepCountModel> {
+  public async get(query: any, ctx?: Context): Promise<StepCountModel> {
+    const prisma = ctx?.prisma || prismaClient;
+
     try {
       const insensitiveFields = ["instruction"];
       const queryOptions = getQueryOptions(query, insensitiveFields);
@@ -33,7 +38,13 @@ export default class StepService {
     }
   }
 
-  public async patch(id: number, step: StepModel): Promise<StepModel> {
+  public async patch(
+    id: number,
+    step: StepModel,
+    ctx?: Context
+  ): Promise<StepModel> {
+    const prisma = ctx?.prisma || prismaClient;
+
     try {
       const stepUpdated = await prisma.step.update({
         where: { id },
@@ -46,7 +57,9 @@ export default class StepService {
     }
   }
 
-  public async delete(id: number): Promise<StepModel> {
+  public async delete(id: number, ctx?: Context): Promise<StepModel> {
+    const prisma = ctx?.prisma || prismaClient;
+
     try {
       const stepDeleted = await prisma.step.delete({
         where: { id },
