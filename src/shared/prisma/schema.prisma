@@ -9,10 +9,46 @@ datasource db {
 
 model Recipe {
   id          Int      @id @default(autoincrement())
-  title       String
-  description String?
-  ingredients String
-  directions  String
+  name        String
+  description String
+  score       Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  ingredients RecipeIngredient[]
+  steps       Step[]
+}
+
+model RecipeIngredient {
+  idRecipe     Int
+  idIngredient Int
+  quantity     Float
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  recipe     Recipe     @relation(fields: [idRecipe], references: [id], onDelete: Cascade)
+  ingredient Ingredient @relation(fields: [idIngredient], references: [id])
+
+  @@id([idIngredient, idRecipe])
+}
+
+model Ingredient {
+  id        Int      @id @default(autoincrement())
+  name      String
+  unit      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  recipes RecipeIngredient[]
+}
+
+model Step {
+  id          Int      @id @default(autoincrement())
+  idRecipe    Int
+  number      Int
+  instruction String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Recipe Recipe @relation(fields: [idRecipe], references: [id], onDelete: Cascade)
 }

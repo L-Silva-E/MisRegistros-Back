@@ -2,13 +2,23 @@ import app from "./shared/app";
 import environment from "./shared/environment";
 
 // ~ Routers
-import RecipeRouter from "./modules/recipes/routes/recipe.routes";
+import IngredientRouter from "./modules/recipeBook/routes/ingredient.routes";
+import RecipeRouter from "./modules/recipeBook/routes/recipe.routes";
+import StepRouter from "./modules/recipeBook/routes/step.routes";
 
 async function init() {
   const version = environment.API_VERSION;
 
   // ~ Init all routers
-  await new app([new RecipeRouter(version)], environment.API_PORT).listen();
+  // ~ RecipeBook Model
+  await new app(
+    [
+      new IngredientRouter(version),
+      new RecipeRouter(version),
+      new StepRouter(version),
+    ],
+    environment.API_PORT
+  ).listen();
 }
 
 init();
