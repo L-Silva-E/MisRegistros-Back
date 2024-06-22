@@ -6,6 +6,10 @@ const environments: IformatEnvironments = {
   API_PORT: parseInt(process.env.API_PORT || "9000"),
   API_VERSION: process.env.API_VERSION || "v1",
 
+  FRONT_URL_LOCAL: process.env.FRONT_URL_LOCAL || "http://localhost:5173",
+  FRONT_URL_DEV: process.env.FRONT_URL_DEV || "",
+  FRONT_URL_PROD: process.env.FRONT_URL_PROD || "",
+
   DB_HOST: process.env.DB_HOST || "localhost",
   DB_PORT: parseInt(process.env.DB_PORT || "5432"),
   DB_USERNAME: process.env.DB_USERNAME || "postgres",
