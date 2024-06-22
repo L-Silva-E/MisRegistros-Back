@@ -4,6 +4,10 @@ export interface IformatEnvironments {
   API_PORT: number;
   API_VERSION: string;
 
+  FRONT_URL_LOCAL: string;
+  FRONT_URL_DEV: string;
+  FRONT_URL_PROD: string;
+
   DB_HOST: string;
   DB_PORT: number;
   DB_USERNAME: string;
