@@ -1,6 +1,6 @@
 import { Unit } from "../../enums";
 
-export const dataIngredients = [
+const dataIngredients = [
   {
     name: "Tomate",
     unit: Unit.UNIT,
@@ -14,7 +14,7 @@ export const dataIngredients = [
     unit: Unit.UNIT,
   },
   {
-    name: "Ajo",
+    name: "Dientes de Ajo",
     unit: Unit.UNIT,
   },
   {
@@ -93,8 +93,6 @@ export const dataIngredients = [
     name: "Pescado",
     unit: Unit.GRAM,
   },
-  {
-    name: "Marisco",
-    unit: Unit.GRAM,
-  },
 ];
+
+export default dataIngredients;
