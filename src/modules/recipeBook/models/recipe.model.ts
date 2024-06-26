@@ -4,6 +4,8 @@ import { RecipeStepModel } from "./step.model";
 
 // ~ Base
 export interface RecipeModel extends IBaseModel {
+  idCategory: number;
+  idOrigin: number;
   name: string;
   description: string;
   score: number;

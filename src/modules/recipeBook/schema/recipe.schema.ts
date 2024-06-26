@@ -8,6 +8,12 @@ import { StepBaseZodSchema } from "./step.schema";
 
 // ~ Base Zod Squema
 export const RecipeBaseZodSchema = z.object({
+  idCategory: z.coerce
+    .number({ invalid_type_error: "La 'id' de 'Categoría' debe ser un número" })
+    .positive("Ingrese una 'id' válida"),
+  idOrigin: z.coerce
+    .number({ invalid_type_error: "La 'id' de 'Origen' debe ser un número" })
+    .positive("Ingrese una 'id' válida"),
   name: z.string().min(1, "El campo 'nombre' no puede estar vacío"),
   description: z.string().min(1, "El campo 'descripción' no puede estar vacío"),
   score: z
