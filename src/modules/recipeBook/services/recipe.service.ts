@@ -38,6 +38,12 @@ export default class RecipeService {
           },
         },
         include: {
+          category: {
+            select: { name: true },
+          },
+          origin: {
+            select: { name: true },
+          },
           ingredients: {
             select: {
               quantity: true,
@@ -66,6 +72,12 @@ export default class RecipeService {
       queryOptions = {
         ...queryOptions,
         include: {
+          category: {
+            select: { name: true },
+          },
+          origin: {
+            select: { name: true },
+          },
           ingredients: {
             select: {
               quantity: true,
@@ -101,6 +113,12 @@ export default class RecipeService {
         where: { id },
         data: recipe,
         include: {
+          category: {
+            select: { name: true },
+          },
+          origin: {
+            select: { name: true },
+          },
           ingredients: {
             select: {
               quantity: true,
@@ -126,6 +144,12 @@ export default class RecipeService {
       const recipeDeleted = await prisma.recipe.delete({
         where: { id },
         include: {
+          category: {
+            select: { name: true },
+          },
+          origin: {
+            select: { name: true },
+          },
           ingredients: {
             select: {
               quantity: true,

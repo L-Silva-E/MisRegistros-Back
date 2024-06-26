@@ -11,7 +11,7 @@ export enum Unit {
 }
 
 export enum Score {
-  VERY_BAD = 0,
+  NONE = 0,
   BAD = 1,
   OK = 2,
   GOOD = 3,

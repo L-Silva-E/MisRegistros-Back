@@ -9,6 +9,8 @@ datasource db {
 
 model Recipe {
   id          Int      @id @default(autoincrement())
+  idCategory  Int
+  idOrigin    Int
   name        String
   description String
   score       Int
@@ -17,6 +19,8 @@ model Recipe {
 
   ingredients RecipeIngredient[]
   steps       Step[]
+  category    Category           @relation(fields: [idCategory], references: [id])
+  origin      Origin             @relation(fields: [idOrigin], references: [id])
 }
 
 model RecipeIngredient {
@@ -51,4 +55,22 @@ model Step {
   updatedAt   DateTime @updatedAt
 
   Recipe Recipe @relation(fields: [idRecipe], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  recipes Recipe[]
+}
+
+model Origin {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  recipes Recipe[]
 }
