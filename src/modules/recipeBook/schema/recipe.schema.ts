@@ -21,6 +21,7 @@ export const RecipeBaseZodSchema = z.object({
     .int()
     .gte(0, "El campo 'puntuación' debe ser mayor o igual a 0")
     .lte(5, "El campo 'puntuación' debe ser menor o igual a 5"),
+  thumbnail: z.string().min(1, "El campo 'thumbnail' no puede estar vacío"),
   ingredients: z
     .array(
       z.object({

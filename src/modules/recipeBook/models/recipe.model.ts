@@ -9,6 +9,7 @@ export interface RecipeModel extends IBaseModel {
   name: string;
   description: string;
   score: number;
+  thumbnail: string;
 }
 
 export interface RecipeCountModel {
