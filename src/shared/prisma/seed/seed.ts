@@ -53,21 +53,43 @@ async function generateRecipes() {
   console.log("> 🍝 Recipes");
 
   for (const recipe of dataRecipes) {
+    let stepsFormatted = recipe.steps.map((step, index) => ({
+      number: index + 1,
+      instruction: step,
+    }));
+
+    let ingredientsFormatted = await Promise.all(
+      recipe.ingredients.map(async (ingredient) => {
+        let ingredientData = await prisma.ingredient.findFirst({
+          where: {
+            name: ingredient.name,
+          },
+        });
+
+        if (ingredientData === undefined) {
+          console.log(ingredient);
+          console.log(recipe);
+        }
+
+        return {
+          quantity: ingredient.quantity,
+          ingredient: {
+            connect: {
+              id: ingredientData?.id,
+            },
+          },
+        };
+      })
+    );
+
     await prisma.recipe.create({
       data: {
         ...recipe,
         steps: {
-          create: recipe.steps,
+          create: stepsFormatted,
         },
         ingredients: {
-          create: recipe.ingredients.map((ingredient) => ({
-            quantity: ingredient.quantity,
-            ingredient: {
-              connect: {
-                id: ingredient.id,
-              },
-            },
-          })),
+          create: ingredientsFormatted,
         },
       },
     });
