@@ -10,6 +10,7 @@ export const getQueryOptions = (
   let pagination: any = {};
   let order: any = {};
   let relations: any = {};
+  let relationsFilters: any = {};
 
   options = parseCaseInsensitive(query, insensitiveFields);
   options = parseDateRange(options);
@@ -17,8 +18,14 @@ export const getQueryOptions = (
   pagination = getPagination(options);
   order = getOrder(options);
   relations = getRelations(options);
+  relationsFilters = getRelationsFilters(options);
 
-  return { where: query, ...pagination, ...order, ...relations };
+  return {
+    where: { ...query, ...relationsFilters },
+    ...pagination,
+    ...order,
+    ...relations,
+  };
 };
 
 export const parseCaseInsensitive = (
@@ -84,4 +91,22 @@ export const getRelations = (query: QueryParams) => {
   delete query.relations;
 
   return include;
+};
+
+export const getRelationsFilters = (query: QueryParams) => {
+  for (const field in query) {
+    if (query.hasOwnProperty(field)) {
+      if (field.includes(".")) {
+        const [relation, key] = field.split(".");
+
+        query[relation] = {
+          is: { [key]: query[field] },
+        };
+
+        delete query[field];
+      }
+    }
+  }
+
+  return query;
 };
