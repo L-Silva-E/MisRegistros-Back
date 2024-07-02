@@ -60,6 +60,8 @@ const ErrorCodes = (err: Error): IResponse => {
     response.stackError.message = "Database Connection Error" + customError;
   }
 
+  console.error(err);
+
   return response;
 };
 

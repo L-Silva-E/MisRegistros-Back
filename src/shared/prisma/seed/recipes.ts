@@ -2,303 +2,344 @@ import { Score } from "../../enums";
 
 const dataRecipes = [
   {
-    idCategory: 2,
+    idCategory: 3,
     idOrigin: 15,
     name: "Fideos con salsa de tomate",
     description: "Fideos con salsa de tomate y carne",
     score: Score.EXCELLENT,
-    thumbnail:
-      "https://locosxlaparrilla.com/wp-content/uploads/2015/02/Receta-recetas-locos-x-la-parrilla-locosxlaparrilla-espaguetis-a-la-bolo%C3%B1esa-receta-espaguetis-receta-espaguetis-a-la-bolo%C3%B1esa-espaguetis-3.jpg",
+    thumbnail: "https://i.blogs.es/927bbe/salsa-pasta/840_560.jpg",
     ingredients: [
-      {
-        id: 1,
-        quantity: 3,
-      },
-      {
-        id: 2,
-        quantity: 1,
-      },
-      {
-        id: 4,
-        quantity: 3,
-      },
-      {
-        id: 6,
-        quantity: 20,
-      },
-      {
-        id: 7,
-        quantity: 5,
-      },
-      {
-        id: 12,
-        quantity: 1,
-      },
-      {
-        id: 14,
-        quantity: 300,
-      },
-      {
-        id: 20,
-        quantity: 250,
-      },
+      { name: "Fideos N°77", quantity: 0.5 },
+      { name: "Cebolla", quantity: 1 },
+      { name: "Zanahoria", quantity: 1 },
+      { name: "Aceite Vegetal", quantity: 0.1 },
+      { name: "Carne Molida", quantity: 250 },
+      { name: "Tomate", quantity: 1 },
+      { name: "Salsa de Tomate", quantity: 150 },
     ],
     steps: [
-      {
-        number: 1,
-        instruction:
-          "Picar cebolla y zanahoria, para luego sofreír en aceite caliente.",
-      },
-      {
-        number: 2,
-        instruction: "Agregar la carne picada y cocinar hasta dorar.",
-      },
-      {
-        number: 3,
-        instruction: "Incorporar los tomates y cocinar a fuego lento.",
-      },
-      {
-        number: 4,
-        instruction: "Cocinar los fideos en agua hirviendo con sal.",
-      },
-      {
-        number: 5,
-        instruction: "Servir los fideos con la salsa de tomate.",
-      },
+      "Picar cebolla y zanahoria, para luego sofreír en aceite caliente.",
+      "Agregar la carne picada y cocinar hasta dorar.",
+      "Incorporar los tomates y cocinar a fuego lento.",
+      "Cocinar los fideos en agua hirviendo con sal.",
+      "Servir los fideos con la salsa de tomate.",
+    ],
+  },
+  {
+    idCategory: 3,
+    idOrigin: 14,
+    name: "Empanadas de Carne",
+    description: "Clásicas empanadas rellenas de carne",
+    score: Score.GOOD,
+    thumbnail: "https://assets.megamediaradios.fm/sites/2/2022/09/dadino.jpg",
+    ingredients: [
+      { name: "Masa de Empanadas", quantity: 4 },
+      { name: "Carne Picada", quantity: 300 },
+      { name: "Cebolla", quantity: 1 },
+      { name: "Huevo Duro", quantity: 2 },
+      { name: "Aceitunas", quantity: 100 },
+      { name: "Comino Molido", quantity: 5 },
+      { name: "Pimentón Rojo", quantity: 1 },
+      { name: "Aceite Vegetal", quantity: 0.2 },
+    ],
+    steps: [
+      "Picar la cebolla y sofreír en aceite caliente.",
+      "Agregar la carne picada, comino y pimentón. Cocinar hasta dorar.",
+      "Incorporar las aceitunas picadas y los huevos duros picados.",
+      "Rellenar las empanadas con la mezcla y hornear hasta dorar.",
+      "Servir calientes.",
+    ],
+  },
+  {
+    idCategory: 4,
+    idOrigin: 12,
+    name: "Paella Española",
+    description: "Paella española con mariscos y chorizo",
+    score: Score.EXCELLENT,
+    thumbnail:
+      "https://i0.wp.com/imag.bonviveur.com/paella-mixta.jpg?resize=1150%2C764&ssl=1",
+    ingredients: [
+      { name: "Arroz", quantity: 1 },
+      { name: "Langostinos", quantity: 500 },
+      { name: "Calamar", quantity: 300 },
+      { name: "Chorizo Español", quantity: 200 },
+      { name: "Pimentón Rojo", quantity: 2 },
+      { name: "Cebolla", quantity: 1 },
+      { name: "Ajo", quantity: 3 },
+      { name: "Caldo de Pescado", quantity: 1 },
+      { name: "Azafrán", quantity: 1 },
+    ],
+    steps: [
+      "Picar la cebolla, los pimientos y el ajo finamente.",
+      "Sofreír el chorizo en una paellera con aceite caliente.",
+      "Agregar la cebolla, los pimientos y el ajo. Cocinar hasta que estén dorados.",
+      "Añadir los calamares y los langostinos, cocinar por unos minutos.",
+      "Agregar el arroz y el azafrán, mezclar bien.",
+      "Incorporar el caldo de pescado caliente y cocinar a fuego medio hasta que el arroz esté cocido y el líquido se haya absorbido.",
+      "Dejar reposar unos minutos antes de servir.",
+    ],
+  },
+
+  {
+    idCategory: 1,
+    idOrigin: 1,
+    name: "Ensalada César",
+    description: "Ensalada clásica con aderezo cremoso",
+    score: Score.GREAT,
+    thumbnail:
+      "https://lacocinadefrabisa.lavozdegalicia.es/wp-content/uploads/2016/04/ensalada-cesar.jpg",
+    ingredients: [
+      { name: "Lechuga Romana", quantity: 1 },
+      { name: "Pollo Asado", quantity: 200 },
+      { name: "Pan Tostado", quantity: 50 },
+      { name: "Queso Parmesano", quantity: 50 },
+      { name: "Aderezo César", quantity: 50 },
+    ],
+    steps: [
+      "Lavar y cortar la lechuga en trozos grandes.",
+      "Cortar el pollo asado en tiras finas.",
+      "Cortar el pan tostado en cubos pequeños.",
+      "Mezclar la lechuga, pollo, pan tostado y queso parmesano en un tazón grande.",
+      "Agregar el aderezo César y mezclar bien.",
+      "Servir inmediatamente.",
+    ],
+  },
+  {
+    idCategory: 2,
+    idOrigin: 1,
+    name: "Desayuno Completo",
+    description: "Desayuno nutritivo con huevos, aguacate y tostadas",
+    score: Score.EXCELLENT,
+    thumbnail:
+      "https://img-global.cpcdn.com/recipes/7167956f2eac5fc1/680x482cq70/tostadas-de-aguacate-y-huevo-foto-principal.jpg",
+    ingredients: [
+      { name: "Huevo", quantity: 2 },
+      { name: "Aguacate", quantity: 1 },
+      { name: "Pan Tostado", quantity: 2 },
+      { name: "Tomate Cherry", quantity: 6 },
+      { name: "Aceite de Oliva", quantity: 10 },
+      { name: "Sal", quantity: 1 },
+      { name: "Pimienta", quantity: 1 },
+    ],
+    steps: [
+      "Cortar el aguacate en rodajas finas.",
+      "Calentar el aceite de oliva en una sartén a fuego medio.",
+      "Cocinar los huevos al gusto (revueltos, fritos, etc.).",
+      "Tostar las rebanadas de pan.",
+      "Servir los huevos con aguacate, tostadas y tomates cherry.",
+      "Condimentar con sal y pimienta al gusto.",
+    ],
+  },
+  {
+    idCategory: 7,
+    idOrigin: 3,
+    name: "Pisco Sour",
+    description: "Cóctel peruano refrescante con pisco y limón",
+    score: Score.EXCELLENT,
+    thumbnail:
+      "https://ombligoparao.cl/wp-content/uploads/2023/10/Receta-de-Pisco-Sour.jpg",
+    ingredients: [
+      { name: "Pisco", quantity: 60 },
+      { name: "Jugo de Limón", quantity: 30 },
+      { name: "Jarabe de Goma", quantity: 20 },
+      { name: "Clara de Huevo", quantity: 1 },
+      { name: "Gotas de Amargo de Angostura", quantity: 2 },
+      { name: "Hielo", quantity: 100 },
+    ],
+    steps: [
+      "En una coctelera, mezclar el pisco, jugo de limón, jarabe de goma y clara de huevo.",
+      "Agregar hielo y agitar vigorosamente durante unos segundos.",
+      "Colar la mezcla en un vaso bajo con hielo.",
+      "Agregar las gotas de amargo de angostura sobre la espuma.",
+      "Servir inmediatamente.",
+    ],
+  },
+  {
+    idCategory: 7,
+    idOrigin: 4,
+    name: "Margarita",
+    description: "Cóctel mexicano con tequila, triple sec y lima",
+    score: Score.GOOD,
+    thumbnail:
+      "https://www.finedininglovers.com/es/sites/g/files/xknfdk1706/files/styles/recipes_1200_800_fallback/public/2023-03/margarita%C2%A9iStock.jpg?itok=Ir0T3tYT",
+    ingredients: [
+      { name: "Tequila Blanco", quantity: 60 },
+      { name: "Triple Sec", quantity: 30 },
+      { name: "Jugo de Lima", quantity: 30 },
+      { name: "Sal", quantity: 5 },
+      { name: "Hielo", quantity: 100 },
+    ],
+    steps: [
+      "Rellenar la mitad del borde de un vaso con sal.",
+      "En una coctelera, mezclar el tequila, triple sec y jugo de lima con hielo.",
+      "Agitar bien y colar en el vaso preparado con hielo.",
+      "Decorar con una rodaja de lima.",
+      "Servir inmediatamente.",
+    ],
+  },
+  {
+    idCategory: 6,
+    idOrigin: 7,
+    name: "Palomitas de maíz dulces",
+    description: "Snack de palomitas de maíz con caramelo",
+    score: Score.GREAT,
+    thumbnail:
+      "https://mellerware.com/cdn/shop/articles/blog-palomitas-1_1024x.jpg?v=1638448364",
+    ingredients: [
+      { name: "Maíz para Palomitas", quantity: 50 },
+      { name: "Azúcar Blanca", quantity: 30 },
+      { name: "Mantequilla", quantity: 20 },
+      { name: "Sal", quantity: 1 },
+    ],
+    steps: [
+      "Preparar las palomitas de maíz según las instrucciones del paquete.",
+      "En una olla, derretir la mantequilla a fuego medio.",
+      "Agregar el azúcar y mezclar hasta que se disuelva y comience a caramelizar.",
+      "Incorporar las palomitas de maíz y mezclar bien para cubrirlas con el caramelo.",
+      "Espolvorear con sal al gusto y dejar enfriar antes de servir.",
+    ],
+  },
+  {
+    idCategory: 6,
+    idOrigin: 12,
+    name: "Guacamole con nachos",
+    description: "Delicioso guacamole con Tostitos",
+    score: Score.EXCELLENT,
+    thumbnail:
+      "https://www.panchovilla.cl/wp-content/uploads/2022/07/Nachos-con-guacamole.jpg",
+    ingredients: [
+      { name: "Palta", quantity: 2 },
+      { name: "Tomate", quantity: 1 },
+      { name: "Cebolla Morada", quantity: 1 },
+      { name: "Cilantro", quantity: 10 },
+      { name: "Limón", quantity: 1 },
+      { name: "Sal", quantity: 2 },
+      { name: "Tostitos", quantity: 100 },
+    ],
+    steps: [
+      "Pelar y machacar los aguacates en un tazón.",
+      "Picar finamente el tomate, la cebolla roja y el cilantro.",
+      "Agregar el tomate, la cebolla y el cilantro al tazón de aguacate.",
+      "Exprimir el jugo de limón sobre la mezcla y sazonar con sal.",
+      "Mezclar bien hasta obtener una consistencia uniforme.",
+      "Servir con los tostitos para acompañar.",
+    ],
+  },
+  {
+    idCategory: 6,
+    idOrigin: 2,
+    name: "Mini Pizzas",
+    description: "Pequeñas pizzas individuales con queso y pepperoni",
+    score: Score.GOOD,
+    thumbnail:
+      "https://i.pinimg.com/736x/db/51/06/db5106c288e26e8d02f94d58e75cf3bf.jpg",
+    ingredients: [
+      { name: "Panecillos de Pizza", quantity: 6 },
+      { name: "Salsa de Tomate", quantity: 50 },
+      { name: "Queso Mozzarella", quantity: 100 },
+      { name: "Pepperoni", quantity: 50 },
+      { name: "Orégano", quantity: 2 },
+    ],
+    steps: [
+      "Precalentar el horno a la temperatura indicada en los panecillos de pizza.",
+      "Cubrir cada panecillo con salsa de tomate.",
+      "Agregar queso mozzarella rallado y pepperoni en rodajas.",
+      "Espolvorear con orégano al gusto.",
+      "Hornear según las instrucciones del paquete o hasta que el queso se derrita y la masa esté dorada.",
+      "Servir calientes.",
     ],
   },
   {
     name: "Ensalada de atún",
     description: "Ensalada de atún con lechuga y huevo",
-    idCategory: 2,
+    idCategory: 3,
     idOrigin: 10,
     score: Score.GOOD,
-    thumbnail: "https://i.ytimg.com/vi/zl6HSCJ6JeE/maxresdefault.jpg",
+    thumbnail:
+      "https://www.deliciosi.com/images/200/215/ensalada-de-atun-light.jpg",
     ingredients: [
-      {
-        id: 10,
-        quantity: 2,
-      },
-      {
-        id: 11,
-        quantity: 1,
-      },
-      {
-        id: 12,
-        quantity: 150,
-      },
-      {
-        id: 14,
-        quantity: 1,
-      },
-      {
-        id: 3,
-        quantity: 1,
-      },
+      { name: "Huevo", quantity: 2 },
+      { name: "Lechuga", quantity: 1 },
+      { name: "Pepino", quantity: 1 },
+      { name: "Pimentón Rojo", quantity: 1 },
+      { name: "Atún en Lata", quantity: 200 },
     ],
     steps: [
-      {
-        number: 1,
-        instruction: "Cocinar los huevos en agua hirviendo.",
-      },
-      {
-        number: 2,
-        instruction: "Cortar la lechuga, el pepino y el pimentón en trozos.",
-      },
-      {
-        number: 3,
-        instruction: "Mezclar los ingredientes en un bol.",
-      },
-      {
-        number: 4,
-        instruction: "Servir la ensalada con el atún y los huevos.",
-      },
+      "Cocinar los huevos en agua hirviendo.",
+      "Cortar la lechuga, el pepino y el pimentón en trozos.",
+      "Mezclar los ingredientes en un bol.",
+      "Servir la ensalada con el atún y los huevos.",
     ],
   },
   {
     name: "Arroz con pollo",
     description: "Arroz con pollo y verduras",
-    idCategory: 2,
+    idCategory: 3,
     idOrigin: 15,
     score: Score.GREAT,
     thumbnail:
       "https://myplate-prod.azureedge.us/sites/default/files/styles/recipe_525_x_350_/public/2021-01/MeetingYourMyPlateGoalsOnABudget_0_Page_26_0.jpg?itok=z88eO-eY",
     ingredients: [
-      {
-        id: 2,
-        quantity: 1,
-      },
-      {
-        id: 13,
-        quantity: 1,
-      },
-      {
-        id: 18,
-        quantity: 200,
-      },
-      {
-        id: 19,
-        quantity: 250,
-      },
+      { name: "Pollo", quantity: 500 },
+      { name: "Arroz", quantity: 1 },
+      { name: "Cebolla", quantity: 1 },
+      { name: "Zanahoria", quantity: 1 },
+      { name: "Aceite Vegetal", quantity: 0.1 },
+      { name: "Agua", quantity: 500 },
     ],
     steps: [
-      {
-        number: 1,
-        instruction:
-          "Picar cebolla y zanahoria, para luego sofreír en aceite caliente.",
-      },
-      {
-        number: 2,
-        instruction: "Agregar el pollo y cocinar hasta dorar.",
-      },
-      {
-        number: 3,
-        instruction: "Incorporar el arroz y cocinar a fuego lento.",
-      },
-      {
-        number: 4,
-        instruction: "Agregar agua y cocinar hasta que el arroz esté listo.",
-      },
-      {
-        number: 5,
-        instruction: "Servir el arroz con el pollo y las verduras.",
-      },
+      "Picar cebolla y zanahoria, para luego sofreír en aceite caliente.",
+      "Agregar el pollo y cocinar hasta dorar.",
+      "Incorporar el arroz y cocinar a fuego lento.",
+      "Agregar agua y cocinar hasta que el arroz esté listo.",
+      "Servir el arroz con el pollo y las verduras.",
     ],
   },
   {
     name: "Tarta de manzana",
     description: "Tarta de manzana con canela",
-    idCategory: 3,
+    idCategory: 5,
     idOrigin: 10,
     score: Score.GOOD,
     thumbnail:
       "https://img-global.cpcdn.com/recipes/b58f260e56bd4a11/680x482cq70/tarta-de-manzana-con-canela-en-licuadora-bolo-de-maca-com-casca-e-pedacos-foto-principal.jpg",
     ingredients: [
-      {
-        id: 1,
-        quantity: 1,
-      },
-      {
-        id: 3,
-        quantity: 1,
-      },
-      {
-        id: 4,
-        quantity: 1,
-      },
-      {
-        id: 5,
-        quantity: 1,
-      },
-      {
-        id: 6,
-        quantity: 50,
-      },
-      {
-        id: 7,
-        quantity: 50,
-      },
-      {
-        id: 8,
-        quantity: 100,
-      },
-      {
-        id: 9,
-        quantity: 50,
-      },
-      {
-        id: 15,
-        quantity: 1,
-      },
+      { name: "Manzana", quantity: 3 },
+      { name: "Masa de Empanadas", quantity: 1 },
+      { name: "Mantequilla", quantity: 100 },
+      { name: "Azúcar Blanca", quantity: 100 },
+      { name: "Canela Molida", quantity: 5 },
     ],
     steps: [
-      {
-        number: 1,
-        instruction:
-          "Pelar y cortar las manzanas en rodajas, para luego cocinarlas con azúcar y canela.",
-      },
-      {
-        number: 2,
-        instruction: "Mezclar la harina, la manteca y el azúcar.",
-      },
-      {
-        number: 3,
-        instruction: "Forrar un molde con la masa y cocinar en horno.",
-      },
-      {
-        number: 4,
-        instruction: "Agregar las manzanas cocidas y cocinar hasta dorar.",
-      },
+      "Pelar y cortar las manzanas en rodajas finas.",
+      "Forrar un molde con la masa de empanadas.",
+      "Colocar las manzanas en el molde y espolvorear con azúcar y canela.",
+      "Agregar trozos de mantequilla y hornear hasta dorar.",
+      "Servir la tarta caliente.",
     ],
   },
   {
     name: "Sopa de verduras",
     description: "Sopa de verduras con fideos",
-    idCategory: 1,
+    idCategory: 3,
     idOrigin: 15,
     score: Score.GOOD,
     thumbnail:
       "https://imag.bonviveur.com/sopa-de-fideos-con-verduras-en-el-plato.jpg",
     ingredients: [
-      {
-        id: 1,
-        quantity: 1,
-      },
-      {
-        id: 2,
-        quantity: 1,
-      },
-      {
-        id: 3,
-        quantity: 1,
-      },
-      {
-        id: 4,
-        quantity: 1,
-      },
-      {
-        id: 5,
-        quantity: 1,
-      },
-      {
-        id: 6,
-        quantity: 50,
-      },
-      {
-        id: 7,
-        quantity: 50,
-      },
-      {
-        id: 8,
-        quantity: 100,
-      },
-      {
-        id: 9,
-        quantity: 50,
-      },
-      {
-        id: 16,
-        quantity: 1,
-      },
+      { name: "Cebolla", quantity: 1 },
+      { name: "Zanahoria", quantity: 1 },
+      { name: "Puerro", quantity: 1 },
+      { name: "Apio", quantity: 1 },
+      { name: "Fideos N°5", quantity: 0.5 },
+      { name: "Aceite Vegetal", quantity: 0.1 },
+      { name: "Agua", quantity: 500 },
     ],
     steps: [
-      {
-        number: 1,
-        instruction:
-          "Picar cebolla, zanahoria, puerro y apio, para luego sofreír en aceite caliente.",
-      },
-      {
-        number: 2,
-        instruction: "Agregar agua y cocinar a fuego lento.",
-      },
-      {
-        number: 3,
-        instruction: "Incorporar los fideos y cocinar hasta que estén listos.",
-      },
-      {
-        number: 4,
-        instruction: "Servir la sopa caliente.",
-      },
+      "Picar cebolla, zanahoria, puerro y apio, para luego sofreír en aceite caliente.",
+      "Agregar agua y cocinar a fuego lento.",
+      "Incorporar los fideos y cocinar hasta que estén listos.",
+      "Servir la sopa caliente.",
     ],
   },
   {
@@ -310,394 +351,87 @@ const dataRecipes = [
     thumbnail:
       "https://www.paulinacocina.net/wp-content/uploads/2015/08/1-P1090553.jpg",
     ingredients: [
-      {
-        id: 1,
-        quantity: 1,
-      },
-      {
-        id: 3,
-        quantity: 1,
-      },
-      {
-        id: 4,
-        quantity: 1,
-      },
-      {
-        id: 5,
-        quantity: 1,
-      },
-      {
-        id: 6,
-        quantity: 50,
-      },
-      {
-        id: 7,
-        quantity: 50,
-      },
-      {
-        id: 8,
-        quantity: 100,
-      },
-      {
-        id: 9,
-        quantity: 50,
-      },
-      {
-        id: 17,
-        quantity: 1,
-      },
+      { name: "Espinacas", quantity: 200 },
+      { name: "Cebolla", quantity: 1 },
+      { name: "Masa de Empanadas", quantity: 1 },
+      { name: "Mantequilla", quantity: 100 },
+      { name: "Agua", quantity: 50 },
     ],
     steps: [
-      {
-        number: 1,
-        instruction:
-          "Picar cebolla y espinaca, para luego sofreír en aceite caliente.",
-      },
-      {
-        number: 2,
-        instruction: "Mezclar la harina, la manteca y el agua.",
-      },
-      {
-        number: 3,
-        instruction: "Forrar un molde con la masa y cocinar en horno.",
-      },
-      {
-        number: 4,
-        instruction: "Agregar las espinacas cocidas y cocinar hasta dorar.",
-      },
+      "Picar cebolla y espinaca, para luego sofreír en aceite caliente.",
+      "Mezclar la harina, la manteca y el agua.",
+      "Forrar un molde con la masa y cocinar en horno.",
+      "Agregar las espinacas cocidas y cocinar hasta dorar.",
     ],
   },
   {
-    name: "Sopa de lentejas",
-    description: "Sopa de lentejas con panceta",
-    idCategory: 1,
+    name: "Lentejas",
+    description: "Sopa de Lentejas",
+    idCategory: 3,
     idOrigin: 15,
     score: Score.GOOD,
     thumbnail: "https://i.ytimg.com/vi/Q3GXmHJCcgg/maxresdefault.jpg",
     ingredients: [
-      {
-        id: 1,
-        quantity: 1,
-      },
-      {
-        id: 2,
-        quantity: 1,
-      },
-      {
-        id: 3,
-        quantity: 1,
-      },
-      {
-        id: 4,
-        quantity: 1,
-      },
-      {
-        id: 5,
-        quantity: 1,
-      },
-      {
-        id: 6,
-        quantity: 50,
-      },
-      {
-        id: 7,
-        quantity: 50,
-      },
-      {
-        id: 8,
-        quantity: 100,
-      },
-      {
-        id: 9,
-        quantity: 50,
-      },
-      {
-        id: 21,
-        quantity: 1,
-      },
+      { name: "Cebolla", quantity: 1 },
+      { name: "Zanahoria", quantity: 1 },
+      { name: "Puerro", quantity: 1 },
+      { name: "Apio", quantity: 1 },
+      { name: "Lentejas", quantity: 200 },
+      { name: "Aceite Vegetal", quantity: 0.1 },
+      { name: "Agua", quantity: 500 },
     ],
     steps: [
-      {
-        number: 1,
-        instruction:
-          "Picar cebolla, zanahoria, puerro y apio, para luego sofreír en aceite caliente.",
-      },
-      {
-        number: 2,
-        instruction: "Agregar agua y cocinar a fuego lento.",
-      },
-      {
-        number: 3,
-        instruction:
-          "Incorporar las lentejas y cocinar hasta que estén listas.",
-      },
-      {
-        number: 4,
-        instruction: "Servir la sopa caliente con panceta.",
-      },
-    ],
-  },
-  {
-    name: "Tarta de zapallitos",
-    description: "Tarta de zapallitos con queso",
-    idCategory: 3,
-    idOrigin: 15,
-    score: Score.GOOD,
-    thumbnail:
-      "https://resizer.glanacion.com/resizer/v2/tarta-o-pastel-de-zapallitos-K4YSGZEASZEDRC26ACGGG3EZO4.jpeg?auth=8a91c6faf71a742520bc81181db76d90e30c540d32d55fb3f1a31ad214b2f06c&width=768&height=512&quality=70&smart=true",
-    ingredients: [
-      {
-        id: 1,
-        quantity: 1,
-      },
-      {
-        id: 3,
-        quantity: 1,
-      },
-      {
-        id: 4,
-        quantity: 1,
-      },
-      {
-        id: 5,
-        quantity: 1,
-      },
-      {
-        id: 6,
-        quantity: 50,
-      },
-      {
-        id: 7,
-        quantity: 50,
-      },
-      {
-        id: 8,
-        quantity: 100,
-      },
-      {
-        id: 9,
-        quantity: 50,
-      },
-      {
-        id: 22,
-        quantity: 1,
-      },
-    ],
-    steps: [
-      {
-        number: 1,
-        instruction:
-          "Picar cebolla y zapallitos, para luego sofreír en aceite caliente.",
-      },
-      {
-        number: 2,
-        instruction: "Mezclar la harina, la manteca y el agua.",
-      },
-      {
-        number: 3,
-        instruction: "Forrar un molde con la masa y cocinar en horno.",
-      },
-      {
-        number: 4,
-        instruction: "Agregar los zapallitos cocidos y cocinar hasta dorar.",
-      },
-    ],
-  },
-  {
-    name: "Sopa de calabaza",
-    description: "Sopa de calabaza con queso",
-    idCategory: 1,
-    idOrigin: 15,
-    score: Score.GOOD,
-    thumbnail: "https://i.ytimg.com/vi/SjFVZX2wPe0/maxresdefault.jpg",
-    ingredients: [
-      {
-        id: 1,
-        quantity: 1,
-      },
-      {
-        id: 2,
-        quantity: 1,
-      },
-      {
-        id: 3,
-        quantity: 1,
-      },
-      {
-        id: 4,
-        quantity: 1,
-      },
-      {
-        id: 5,
-        quantity: 1,
-      },
-      {
-        id: 6,
-        quantity: 50,
-      },
-      {
-        id: 7,
-        quantity: 50,
-      },
-      {
-        id: 8,
-        quantity: 100,
-      },
-      {
-        id: 9,
-        quantity: 50,
-      },
-      {
-        id: 23,
-        quantity: 1,
-      },
-    ],
-    steps: [
-      {
-        number: 1,
-        instruction:
-          "Picar cebolla, zanahoria, puerro y apio, para luego sofreír en aceite caliente.",
-      },
-      {
-        number: 2,
-        instruction: "Agregar agua y cocinar a fuego lento.",
-      },
-      {
-        number: 3,
-        instruction: "Incorporar la calabaza y cocinar hasta que esté lista.",
-      },
-      {
-        number: 4,
-        instruction: "Servir la sopa caliente con queso.",
-      },
+      "Picar cebolla, zanahoria, puerro y apio, para luego sofreír en aceite caliente.",
+      "Agregar agua y cocinar a fuego lento.",
+      "Incorporar las lentejas y cocinar hasta que estén listas.",
+      "Servir la sopa de lentejas caliente.",
     ],
   },
   {
     name: "Tarta de choclo",
-    description: "Tarta de choclo con queso",
+    description: "Tarta de choclo con cebolla y queso",
     idCategory: 3,
     idOrigin: 15,
     score: Score.GOOD,
     thumbnail:
       "https://cocinaderestauranteencasa.com/wp-content/uploads/2023/03/TARTA-DE-CHOCLO-C-scaled.jpg",
     ingredients: [
-      {
-        id: 1,
-        quantity: 1,
-      },
-      {
-        id: 3,
-        quantity: 1,
-      },
-      {
-        id: 4,
-        quantity: 1,
-      },
-      {
-        id: 5,
-        quantity: 1,
-      },
-      {
-        id: 6,
-        quantity: 50,
-      },
-      {
-        id: 7,
-        quantity: 50,
-      },
-      {
-        id: 8,
-        quantity: 100,
-      },
-      {
-        id: 9,
-        quantity: 50,
-      },
+      { name: "Choclo", quantity: 1 },
+      { name: "Cebolla", quantity: 1 },
+      { name: "Masa de Empanadas", quantity: 1 },
+      { name: "Mantequilla", quantity: 100 },
+      { name: "Agua", quantity: 50 },
     ],
     steps: [
-      {
-        number: 1,
-        instruction:
-          "Picar cebolla y choclo, para luego sofreír en aceite caliente.",
-      },
-      {
-        number: 2,
-        instruction: "Mezclar la harina, la manteca y el agua.",
-      },
-      {
-        number: 3,
-        instruction: "Forrar un molde con la masa y cocinar en horno.",
-      },
-      {
-        number: 4,
-        instruction: "Agregar el choclo cocido y cocinar hasta dorar.",
-      },
+      "Picar cebolla y choclo, para luego sofreír en aceite caliente.",
+      "Mezclar la harina, la manteca y el agua.",
+      "Forrar un molde con la masa y cocinar en horno.",
+      "Agregar el choclo cocido y cocinar hasta dorar.",
     ],
   },
   {
-    name: "Sopa de arvejas",
-    description: "Sopa de arvejas con panceta",
-    idCategory: 1,
+    name: "Sopa de Arvejas",
+    description: "Sopa de arvejas con verduras y arroz",
+    idCategory: 3,
     idOrigin: 15,
     score: Score.GOOD,
     thumbnail:
       "https://www.recetasnestle.com.ar/sites/default/files/srh_recipes/22f58d55aa4622dfabedbed545dff876.jpg",
     ingredients: [
-      {
-        id: 1,
-        quantity: 1,
-      },
-      {
-        id: 2,
-        quantity: 1,
-      },
-      {
-        id: 3,
-        quantity: 1,
-      },
-      {
-        id: 4,
-        quantity: 1,
-      },
-      {
-        id: 5,
-        quantity: 1,
-      },
-      {
-        id: 6,
-        quantity: 50,
-      },
-      {
-        id: 7,
-        quantity: 50,
-      },
-      {
-        id: 8,
-        quantity: 100,
-      },
-      {
-        id: 9,
-        quantity: 50,
-      },
+      { name: "Cebolla", quantity: 1 },
+      { name: "Zanahoria", quantity: 1 },
+      { name: "Puerro", quantity: 1 },
+      { name: "Apio", quantity: 1 },
+      { name: "Arvejas", quantity: 200 },
+      { name: "Aceite Vegetal", quantity: 0.1 },
+      { name: "Agua", quantity: 500 },
+      { name: "Arroz", quantity: 0.5 },
     ],
     steps: [
-      {
-        number: 1,
-        instruction:
-          "Picar cebolla, zanahoria, puerro y apio, para luego sofreír en aceite caliente.",
-      },
-      {
-        number: 2,
-        instruction: "Agregar agua y cocinar a fuego lento.",
-      },
-      {
-        number: 3,
-        instruction: "Incorporar las arvejas y cocinar hasta que estén listas.",
-      },
-      {
-        number: 4,
-        instruction: "Servir la sopa caliente con panceta.",
-      },
+      "Picar cebolla, zanahoria, puerro y apio, para luego sofreír en aceite caliente.",
+      "Agregar agua y cocinar a fuego lento.",
+      "Incorporar las arvejas y el arroz, cocinar hasta que estén listos.",
+      "Servir la sopa de arvejas caliente.",
     ],
   },
 ];
