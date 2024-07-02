@@ -47,7 +47,7 @@ export const parseDateRange = (query: QueryParams) => {
     ...(query.to && { lt: moment(query.to).add(1, "days").format() }),
   };
 
-  query.createdAt = createdAt.gte || createdAt.lt ? createdAt : {};
+  (createdAt.gte || createdAt.lt) && (query.createdAt = createdAt);
 
   delete query.from;
   delete query.to;
