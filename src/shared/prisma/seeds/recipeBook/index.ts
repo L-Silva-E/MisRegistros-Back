@@ -7,9 +7,7 @@ import dataIngredients from "./ingredients";
 import dataOrigins from "./origins";
 import dataRecipes from "./recipes";
 
-async function main() {
-  console.log("🌱 Seeding... 🌱");
-
+export async function seedRecipeBook() {
   await generateCategories();
   await generateIngredients();
   await generateOrigins();
@@ -53,14 +51,22 @@ async function generateRecipes() {
   console.log("> 🍝 Recipes");
 
   for (const recipe of dataRecipes) {
-    let stepsFormatted = recipe.steps.map((step, index) => ({
+    const idCategory = await prisma.category.findFirst({
+      where: { name: recipe.category },
+    });
+
+    const idOrigin = await prisma.origin.findFirst({
+      where: { name: recipe.origin },
+    });
+
+    const stepsFormatted = recipe.steps.map((step, index) => ({
       number: index + 1,
       instruction: step,
     }));
 
-    let ingredientsFormatted = await Promise.all(
+    const ingredientsFormatted = await Promise.all(
       recipe.ingredients.map(async (ingredient) => {
-        let ingredientData = await prisma.ingredient.findFirst({
+        const ingredientData = await prisma.ingredient.findFirst({
           where: {
             name: ingredient.name,
           },
@@ -85,6 +91,12 @@ async function generateRecipes() {
     await prisma.recipe.create({
       data: {
         ...recipe,
+        category: {
+          connect: { id: idCategory?.id },
+        },
+        origin: {
+          connect: { id: idOrigin?.id },
+        },
         steps: {
           create: stepsFormatted,
         },
@@ -96,14 +108,3 @@ async function generateRecipes() {
     console.log("  > " + recipe.name);
   }
 }
-
-main()
-  .then(async () => {
-    console.log("🌳 Seeded! 🌳");
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
