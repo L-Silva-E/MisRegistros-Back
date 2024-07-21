@@ -8,6 +8,16 @@ const dataFeatures = {
       name: "Eventos",
       description: "Eventos importantes para recordar",
     },
+    {
+      name: "Ideas para Desarrollar",
+      description: "Ideas para desarrollar en el futuro",
+      isActive: false,
+    },
+    {
+      name: "Apuntes",
+      description: "Apuntes importantes",
+      isActive: false,
+    },
   ],
 };
 
