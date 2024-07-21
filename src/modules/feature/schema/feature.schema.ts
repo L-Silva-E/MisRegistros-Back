@@ -7,6 +7,7 @@ import {
 // ~ Base Zod Squema
 export const FeatureBaseZodSchema = z.object({
   name: z.string().min(1, "El campo 'nombre' no puede estar vacío"),
+  description: z.string().min(1, "El campo 'descripción' no puede estar vacío"),
   isActive: z.boolean().default(true),
 });
 

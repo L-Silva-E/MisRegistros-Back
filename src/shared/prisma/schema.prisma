@@ -79,9 +79,10 @@ model Origin {
 
 // ~ Feature
 model Feature {
-  id        Int      @id @default(autoincrement())
-  name      String
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
