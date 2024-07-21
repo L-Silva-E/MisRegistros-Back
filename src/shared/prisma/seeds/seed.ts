@@ -2,18 +2,21 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 import { seedRecipeBook } from "./recipeBook";
+import { seedFeatures } from "./feature";
 
 async function main() {
   console.log("🌱 Seeding... 🌱");
 
-  seedRecipeBook();
+  console.log("\n>>>📚 Recipe Book");
+  await seedRecipeBook();
 
-  // seedFeatures(); // WIP
+  console.log("\n>>>💡 Feature");
+  await seedFeatures();
 }
 
 main()
   .then(async () => {
-    console.log("🌳 Seeded! 🌳");
+    console.log("\n🌳 Seeded! 🌳");
     await prisma.$disconnect();
   })
   .catch(async (e) => {

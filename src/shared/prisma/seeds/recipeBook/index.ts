@@ -15,7 +15,7 @@ export async function seedRecipeBook() {
 }
 
 async function generateCategories() {
-  console.log("> 🍽️ Categories");
+  console.log(" > 🍽️  Categories");
 
   for (const category of dataCategories) {
     await prisma.category.create({
@@ -26,7 +26,7 @@ async function generateCategories() {
 }
 
 async function generateIngredients() {
-  console.log("> 🍅 Ingredients");
+  console.log(" > 🍅 Ingredients");
 
   for (const ingredient of dataIngredients) {
     await prisma.ingredient.create({
@@ -37,7 +37,7 @@ async function generateIngredients() {
 }
 
 async function generateOrigins() {
-  console.log("> 🌍 Origins");
+  console.log(" > 🌍 Origins");
 
   for (const origin of dataOrigins) {
     await prisma.origin.create({
@@ -48,7 +48,7 @@ async function generateOrigins() {
 }
 
 async function generateRecipes() {
-  console.log("> 🍝 Recipes");
+  console.log(" > 🍝 Recipes");
 
   for (const recipe of dataRecipes) {
     const idCategory = await prisma.category.findFirst({
