@@ -7,6 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ~ Recipe Book
 model Recipe {
   id          Int      @id @default(autoincrement())
   idCategory  Int
@@ -74,4 +75,13 @@ model Origin {
   updatedAt DateTime @updatedAt
 
   recipes Recipe[]
+}
+
+// ~ Feature
+model Feature {
+  id        Int      @id @default(autoincrement())
+  name      String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
