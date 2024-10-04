@@ -47,7 +47,7 @@ export default class RecipeService {
           ingredients: {
             select: {
               quantity: true,
-              ingredient: { select: { name: true, unit: true } },
+              ingredient: { select: { id: true, name: true, unit: true } },
             },
           },
           steps: {
@@ -81,7 +81,7 @@ export default class RecipeService {
           ingredients: {
             select: {
               quantity: true,
-              ingredient: { select: { name: true, unit: true } },
+              ingredient: { select: { id: true, name: true, unit: true } },
             },
           },
           steps: {
@@ -122,7 +122,7 @@ export default class RecipeService {
           ingredients: {
             select: {
               quantity: true,
-              ingredient: { select: { name: true, unit: true } },
+              ingredient: { select: { id: true, name: true, unit: true } },
             },
           },
           steps: {
@@ -153,7 +153,7 @@ export default class RecipeService {
           ingredients: {
             select: {
               quantity: true,
-              ingredient: { select: { name: true, unit: true } },
+              ingredient: { select: { id: true, name: true, unit: true } },
             },
           },
           steps: {
