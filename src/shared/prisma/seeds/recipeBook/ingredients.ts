@@ -1,4 +1,4 @@
-import { Unit } from "../../enums";
+import { Unit } from "../../../enums";
 
 const dataIngredients = [
   { name: "Aceite de Oliva", unit: Unit.LITER },

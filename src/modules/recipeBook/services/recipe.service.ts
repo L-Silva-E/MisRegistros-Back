@@ -47,7 +47,7 @@ export default class RecipeService {
           ingredients: {
             select: {
               quantity: true,
-              ingredient: { select: { name: true, unit: true } },
+              ingredient: { select: { id: true, name: true, unit: true } },
             },
           },
           steps: {
@@ -81,7 +81,7 @@ export default class RecipeService {
           ingredients: {
             select: {
               quantity: true,
-              ingredient: { select: { name: true, unit: true } },
+              ingredient: { select: { id: true, name: true, unit: true } },
             },
           },
           steps: {
@@ -103,15 +103,32 @@ export default class RecipeService {
 
   public async patch(
     id: number,
-    recipe: RecipeModel,
+    recipe: FullRecipeModel,
     ctx?: Context
-  ): Promise<RecipeModel> {
+  ): Promise<FullRecipeModel> {
     const prisma = ctx?.prisma || prismaClient;
 
     try {
       const recipeUpdated = await prisma.recipe.update({
         where: { id },
-        data: recipe,
+        data: {
+          ...recipe,
+          steps: {
+            deleteMany: {},
+            create: recipe.steps,
+          },
+          ingredients: {
+            deleteMany: {},
+            create: recipe.ingredients.map((ingredient) => ({
+              quantity: ingredient.quantity,
+              ingredient: {
+                connect: {
+                  id: ingredient.id,
+                },
+              },
+            })),
+          },
+        },
         include: {
           category: {
             select: { name: true },
@@ -122,7 +139,7 @@ export default class RecipeService {
           ingredients: {
             select: {
               quantity: true,
-              ingredient: { select: { name: true, unit: true } },
+              ingredient: { select: { id: true, name: true, unit: true } },
             },
           },
           steps: {
@@ -153,7 +170,7 @@ export default class RecipeService {
           ingredients: {
             select: {
               quantity: true,
-              ingredient: { select: { name: true, unit: true } },
+              ingredient: { select: { id: true, name: true, unit: true } },
             },
           },
           steps: {

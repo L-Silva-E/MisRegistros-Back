@@ -20,9 +20,12 @@ beforeEach(() => {
 test("Create - Recipe", async () => {
   const recipe = {
     id: 1,
+    idCategory: 1,
+    idOrigin: 1,
     name: "string",
     description: "string",
     score: 5,
+    thumbnail: "string",
     createdAt: currentDate,
     updatedAt: currentDate,
     ingredients: [
@@ -50,9 +53,12 @@ test("Create - Recipe", async () => {
 
   await expect(recipeService.create(recipe, ctx)).resolves.toEqual({
     id: 1,
+    idCategory: 1,
+    idOrigin: 1,
     name: "string",
     description: "string",
     score: 5,
+    thumbnail: "string",
     createdAt: currentDate,
     updatedAt: currentDate,
     ingredients: [
@@ -85,9 +91,12 @@ test("Get - Recipe", async () => {
   const recipes = [
     {
       id: 1,
+      idCategory: 1,
+      idOrigin: 1,
       name: "string",
       description: "string",
       score: 5,
+      thumbnail: "string",
       createdAt: currentDate,
       updatedAt: currentDate,
       ingredients: [
@@ -124,8 +133,11 @@ test("Get - Recipe", async () => {
       {
         id: 1,
         name: "string",
+        idCategory: 1,
+        idOrigin: 1,
         description: "string",
         score: 5,
+        thumbnail: "string",
         createdAt: currentDate,
         updatedAt: currentDate,
         ingredients: [
@@ -159,9 +171,12 @@ test("Get - Recipe", async () => {
 test("Patch - Recipe", async () => {
   const recipe = {
     id: 1,
+    idCategory: 1,
+    idOrigin: 1,
     name: "string",
     description: "string",
     score: 5,
+    thumbnail: "string",
     createdAt: currentDate,
     updatedAt: currentDate,
     ingredients: [
@@ -189,9 +204,12 @@ test("Patch - Recipe", async () => {
 
   await expect(recipeService.patch(1, recipe, ctx)).resolves.toEqual({
     id: 1,
+    idCategory: 1,
+    idOrigin: 1,
     name: "string",
     description: "string",
     score: 5,
+    thumbnail: "string",
     createdAt: currentDate,
     updatedAt: currentDate,
     ingredients: [
@@ -220,9 +238,12 @@ test("Patch - Recipe", async () => {
 test("Delete - Recipe", async () => {
   const recipe = {
     id: 1,
+    idCategory: 1,
+    idOrigin: 1,
     name: "string",
     description: "string",
     score: 5,
+    thumbnail: "string",
     createdAt: currentDate,
     updatedAt: currentDate,
     ingredients: [
@@ -250,9 +271,12 @@ test("Delete - Recipe", async () => {
 
   await expect(recipeService.delete(1, ctx)).resolves.toEqual({
     id: 1,
+    idCategory: 1,
+    idOrigin: 1,
     name: "string",
     description: "string",
     score: 5,
+    thumbnail: "string",
     createdAt: currentDate,
     updatedAt: currentDate,
     ingredients: [

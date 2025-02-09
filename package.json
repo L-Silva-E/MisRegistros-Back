@@ -30,6 +30,6 @@
   },
   "prisma": {
     "schema": "src/shared/prisma/schema.prisma",
-    "seed": "ts-node src/shared/prisma/seed/seed.ts"
+    "seed": "ts-node src/shared/prisma/seeds/seed.ts"
   }
 }
