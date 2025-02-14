@@ -61,6 +61,8 @@ export const getOrder = (query: QueryParams) => {
 
   if (query.orderByField != null) {
     order.orderBy = { [query.orderByField]: orderBy };
+  } else {
+    order.orderBy = { id: 'asc' };
   }
 
   delete query.orderByField;
