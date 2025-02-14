@@ -61,6 +61,8 @@ export const getOrder = (query: QueryParams) => {
 
   if (query.orderByField != null) {
     order.orderBy = { [query.orderByField]: orderBy };
+  } else {
+    order.orderBy = { id: 'asc' };
   }
 
   delete query.orderByField;
@@ -70,7 +72,11 @@ export const getOrder = (query: QueryParams) => {
 };
 
 export const getPagination = (query: QueryParams) => {
-  const take = query.limit ? +query.limit : 10;
+  if (!('limit' in query) && !('page' in query)) {
+    return {};
+  }
+
+  const take = query.limit ? +query.limit : undefined;
   const skip = query.page && query.limit ? query.page * query.limit : 0;
 
   delete query.limit;
