@@ -5,7 +5,7 @@ import { seedRecipeBook } from "./recipeBook";
 import { seedFeatures } from "./feature";
 
 async function main() {
-  console.log("🌱 Seeding... 🌱");
+  console.log("🌱 Seeding...🌱");
 
   console.log("\n>>>📚 Recipe Book");
   await seedRecipeBook();
@@ -16,7 +16,7 @@ async function main() {
 
 main()
   .then(async () => {
-    console.log("\n🌳 Seeded! 🌳");
+    console.log("\n🌳 Seeded!🌳");
     await prisma.$disconnect();
   })
   .catch(async (e) => {

@@ -8,7 +8,7 @@ const dataRecipes = [
     category: "Almuerzo",
     origin: "Italiana",
     score: Score.EXCELLENT,
-    thumbnail: "https://i.blogs.es/927bbe/salsa-pasta/840_560.jpg",
+    thumbnail: "https://i.imgur.com/6HydxA5.jpeg",
     ingredients: [
       { name: "Fideos N°77", quantity: 0.5 },
       { name: "Cebolla", quantity: 1 },
@@ -33,7 +33,7 @@ const dataRecipes = [
     category: "Snack",
     origin: "Argentina",
     score: Score.GOOD,
-    thumbnail: "https://assets.megamediaradios.fm/sites/2/2022/09/dadino.jpg",
+    thumbnail: "https://i.imgur.com/2HrnIiK.jpeg",
     ingredients: [
       { name: "Masa de Empanadas", quantity: 4 },
       { name: "Carne Picada", quantity: 300 },
@@ -59,8 +59,7 @@ const dataRecipes = [
     category: "Almuerzo",
     origin: "Española",
     score: Score.EXCELLENT,
-    thumbnail:
-      "https://i0.wp.com/imag.bonviveur.com/paella-mixta.jpg?resize=1150%2C764&ssl=1",
+    thumbnail: "https://i.imgur.com/aB8thnu.png",
     ingredients: [
       { name: "Arroz", quantity: 1 },
       { name: "Langostinos", quantity: 500 },
@@ -89,8 +88,7 @@ const dataRecipes = [
     category: "Almuerzo",
     origin: "Americana",
     score: Score.GREAT,
-    thumbnail:
-      "https://lacocinadefrabisa.lavozdegalicia.es/wp-content/uploads/2016/04/ensalada-cesar.jpg",
+    thumbnail: "https://i.imgur.com/8k2dGZH.jpeg",
     ingredients: [
       { name: "Lechuga Romana", quantity: 1 },
       { name: "Pollo Asado", quantity: 200 },
@@ -114,8 +112,7 @@ const dataRecipes = [
     category: "Desayuno",
     origin: "Americana",
     score: Score.EXCELLENT,
-    thumbnail:
-      "https://img-global.cpcdn.com/recipes/7167956f2eac5fc1/680x482cq70/tostadas-de-aguacate-y-huevo-foto-principal.jpg",
+    thumbnail: "https://i.imgur.com/rrQHbDE.jpeg",
     ingredients: [
       { name: "Huevo", quantity: 2 },
       { name: "Aguacate", quantity: 1 },
@@ -141,8 +138,7 @@ const dataRecipes = [
     category: "Trago",
     origin: "Peruana",
     score: Score.EXCELLENT,
-    thumbnail:
-      "https://ombligoparao.cl/wp-content/uploads/2023/10/Receta-de-Pisco-Sour.jpg",
+    thumbnail: "https://i.imgur.com/YRzKPa3.png",
     ingredients: [
       { name: "Pisco", quantity: 60 },
       { name: "Jugo de Limón", quantity: 30 },
@@ -166,8 +162,7 @@ const dataRecipes = [
     category: "Trago",
     origin: "Mexicana",
     score: Score.GOOD,
-    thumbnail:
-      "https://www.finedininglovers.com/es/sites/g/files/xknfdk1706/files/styles/recipes_1200_800_fallback/public/2023-03/margarita%C2%A9iStock.jpg?itok=Ir0T3tYT",
+    thumbnail: "https://i.imgur.com/0E3eKjr.jpeg",
     ingredients: [
       { name: "Tequila Blanco", quantity: 60 },
       { name: "Triple Sec", quantity: 30 },
@@ -190,8 +185,7 @@ const dataRecipes = [
     category: "Snack",
     origin: "Americana",
     score: Score.GREAT,
-    thumbnail:
-      "https://mellerware.com/cdn/shop/articles/blog-palomitas-1_1024x.jpg?v=1638448364",
+    thumbnail: "https://i.imgur.com/JMr2FRD.png",
     ingredients: [
       { name: "Maíz para Palomitas", quantity: 50 },
       { name: "Azúcar Blanca", quantity: 30 },
@@ -207,14 +201,13 @@ const dataRecipes = [
     ],
   },
   {
-    name: "Guacamole con nachos",
+    name: "Nachos con Guacamole",
     description:
       "Delicioso guacamole casero preparado con aguacates maduros, tomate, cebolla morada y cilantro fresco, todo sazonado con limón y sal. Se sirve con Tostitos crujientes para disfrutar como aperitivo o acompañamiento. La combinación de sabores frescos y la textura cremosa del guacamole hacen de este plato una opción siempre popular.",
     category: "Snack",
     origin: "Mexicana",
     score: Score.EXCELLENT,
-    thumbnail:
-      "https://www.panchovilla.cl/wp-content/uploads/2022/07/Nachos-con-guacamole.jpg",
+    thumbnail: "https://i.imgur.com/EAPZNFy.jpeg",
     ingredients: [
       { name: "Palta", quantity: 2 },
       { name: "Tomate", quantity: 1 },
@@ -240,8 +233,7 @@ const dataRecipes = [
     category: "Snack",
     origin: "Italiana",
     score: Score.GOOD,
-    thumbnail:
-      "https://i.pinimg.com/736x/db/51/06/db5106c288e26e8d02f94d58e75cf3bf.jpg",
+    thumbnail: "https://i.imgur.com/ydZbnKS.jpeg",
     ingredients: [
       { name: "Panecillos de Pizza", quantity: 6 },
       { name: "Salsa de Tomate", quantity: 50 },
@@ -265,8 +257,7 @@ const dataRecipes = [
     category: "Almuerzo",
     origin: "Americana",
     score: Score.GOOD,
-    thumbnail:
-      "https://www.deliciosi.com/images/200/215/ensalada-de-atun-light.jpg",
+    thumbnail: "https://i.imgur.com/AheT9aK.jpeg",
     ingredients: [
       { name: "Huevo", quantity: 2 },
       { name: "Lechuga", quantity: 1 },
@@ -282,14 +273,13 @@ const dataRecipes = [
     ],
   },
   {
-    name: "Arroz con pollo",
+    name: "Arroz con pollo y verduras",
     description:
       "Arroz con pollo y verduras, una receta reconfortante donde el pollo se cocina con cebolla y zanahoria en aceite caliente, luego se mezcla con arroz y se cocina lentamente hasta que esté listo. Esta comida abundante se sirve con pollo tierno y arroz aromático, perfecta para una comida familiar satisfactoria.",
     category: "Almuerzo",
     origin: "Española",
     score: Score.GREAT,
-    thumbnail:
-      "https://myplate-prod.azureedge.us/sites/default/files/styles/recipe_525_x_350_/public/2021-01/MeetingYourMyPlateGoalsOnABudget_0_Page_26_0.jpg?itok=z88eO-eY",
+    thumbnail: "https://i.imgur.com/OkUvyUP.jpeg",
     ingredients: [
       { name: "Pollo", quantity: 500 },
       { name: "Arroz", quantity: 1 },
@@ -313,8 +303,7 @@ const dataRecipes = [
     category: "Postre",
     origin: "Americana",
     score: Score.GOOD,
-    thumbnail:
-      "https://img-global.cpcdn.com/recipes/b58f260e56bd4a11/680x482cq70/tarta-de-manzana-con-canela-en-licuadora-bolo-de-maca-com-casca-e-pedacos-foto-principal.jpg",
+    thumbnail: "https://i.imgur.com/zHssjys.jpeg",
     ingredients: [
       { name: "Manzana", quantity: 3 },
       { name: "Masa de Empanadas", quantity: 1 },
@@ -337,8 +326,7 @@ const dataRecipes = [
     category: "Cena",
     origin: "Alemana",
     score: Score.GOOD,
-    thumbnail:
-      "https://imag.bonviveur.com/sopa-de-fideos-con-verduras-en-el-plato.jpg",
+    thumbnail: "https://i.imgur.com/wtX9KjX.jpeg",
     ingredients: [
       { name: "Cebolla", quantity: 1 },
       { name: "Zanahoria", quantity: 1 },
@@ -362,8 +350,7 @@ const dataRecipes = [
     category: "Cena",
     origin: "Francesa",
     score: Score.GOOD,
-    thumbnail:
-      "https://www.paulinacocina.net/wp-content/uploads/2015/08/1-P1090553.jpg",
+    thumbnail: "https://i.imgur.com/CqmnLLo.jpeg",
     ingredients: [
       { name: "Espinacas", quantity: 200 },
       { name: "Cebolla", quantity: 1 },
@@ -385,7 +372,7 @@ const dataRecipes = [
     category: "Cena",
     origin: "Española",
     score: Score.GOOD,
-    thumbnail: "https://i.ytimg.com/vi/Q3GXmHJCcgg/maxresdefault.jpg",
+    thumbnail: "https://i.imgur.com/G4OZdjB.jpeg",
     ingredients: [
       { name: "Cebolla", quantity: 1 },
       { name: "Zanahoria", quantity: 1 },
@@ -409,8 +396,7 @@ const dataRecipes = [
     category: "Cena",
     origin: "Argentina",
     score: Score.GOOD,
-    thumbnail:
-      "https://cocinaderestauranteencasa.com/wp-content/uploads/2023/03/TARTA-DE-CHOCLO-C-scaled.jpg",
+    thumbnail: "https://i.imgur.com/R3vVNGm.jpeg",
     ingredients: [
       { name: "Choclo", quantity: 1 },
       { name: "Cebolla", quantity: 1 },
@@ -432,8 +418,7 @@ const dataRecipes = [
     category: "Cena",
     origin: "Alemana",
     score: Score.GOOD,
-    thumbnail:
-      "https://www.recetasnestle.com.ar/sites/default/files/srh_recipes/22f58d55aa4622dfabedbed545dff876.jpg",
+    thumbnail: "https://i.imgur.com/iPs3qKQ.jpeg",
     ingredients: [
       { name: "Cebolla", quantity: 1 },
       { name: "Zanahoria", quantity: 1 },
