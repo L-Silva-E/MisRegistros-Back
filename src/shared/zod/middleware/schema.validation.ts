@@ -26,7 +26,7 @@ const validateSchemas =
     } catch (error: any) {
       const apiError: IResponse = {
         code: 500,
-        message: "Error internal server 500",
+        message: "Error internal server",
         data: {},
         stackError: error.message,
       };

@@ -1,22 +1,23 @@
+import "./shared/config";
 import app from "./shared/app";
 import environment from "./shared/environment";
 
-// * Routers
-// ~ RecipeBook Model
+//* Routers
+//~ RecipeBook Model
 import CategoryRouter from "./modules/recipeBook/routes/category.routes";
 import IngredientRouter from "./modules/recipeBook/routes/ingredient.routes";
 import OriginRouter from "./modules/recipeBook/routes/origin.routes";
 import RecipeRouter from "./modules/recipeBook/routes/recipe.routes";
 import StepRouter from "./modules/recipeBook/routes/step.routes";
 
-// ~ Feature Model
+//~ Feature Model
 import FeatureRouter from "./modules/feature/routes/feature.routes";
 
-// * Init all Routers
+//* Init all Routers
 async function init() {
   const version = environment.API_VERSION;
 
-  // ~ Init all routers
+  //~ Init all routers
   await new app(
     [
       new CategoryRouter(version),
