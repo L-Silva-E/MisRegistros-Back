@@ -8,8 +8,10 @@ export interface RecipeModel extends IBaseModel {
   idOrigin: number;
   name: string;
   description: string;
-  score: number;
   thumbnail: string;
+  score: number;
+  time: number;
+  servings: number;
 }
 
 export interface RecipeCountModel {

@@ -16,12 +16,20 @@ export const RecipeBaseZodSchema = z.object({
     .positive("Ingrese una 'id' válida"),
   name: z.string().min(1, "El campo 'nombre' no puede estar vacío"),
   description: z.string().min(1, "El campo 'descripción' no puede estar vacío"),
+  thumbnail: z.string().min(1, "El campo 'thumbnail' no puede estar vacío"),
   score: z
     .number()
     .int()
     .gte(0, "El campo 'puntuación' debe ser mayor o igual a 0")
     .lte(5, "El campo 'puntuación' debe ser menor o igual a 5"),
-  thumbnail: z.string().min(1, "El campo 'thumbnail' no puede estar vacío"),
+  time: z.coerce
+    .number()
+    .int()
+    .positive("El campo 'tiempo' debe ser mayor o igual a 0"),
+  servings: z.coerce
+    .number()
+    .int()
+    .positive("El campo 'porciones' debe ser mayor o igual a 0"),
   ingredients: z
     .array(
       z.object({
