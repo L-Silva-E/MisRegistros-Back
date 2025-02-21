@@ -14,8 +14,10 @@ model Recipe {
   idOrigin    Int
   name        String
   description String
-  score       Int
   thumbnail   String
+  score       Int
+  time        Int
+  servings    Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
