@@ -1,4 +1,5 @@
 export interface IformatEnvironments {
+  API_ENV: string;
   API_KEY: string;
   API_URL: string;
   API_PORT: number;

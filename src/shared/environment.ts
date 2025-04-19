@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const environments: IformatEnvironments = {
+  API_ENV: process.env.API_ENV || "development",
   API_KEY: process.env.API_KEY || "MISSING_API_KEY",
   API_URL: process.env.API_URL || "http://localhost:9000",
   API_PORT: Number(process.env.API_PORT) || 9000,
