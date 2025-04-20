@@ -4,9 +4,14 @@ import { RecipeStepModel } from "./step.model";
 
 // ~ Base
 export interface RecipeModel extends IBaseModel {
+  idCategory: number;
+  idOrigin: number;
   name: string;
   description: string;
+  thumbnail: string;
   score: number;
+  time: number;
+  servings: number;
 }
 
 export interface RecipeCountModel {

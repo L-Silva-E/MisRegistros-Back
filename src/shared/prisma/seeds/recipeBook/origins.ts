@@ -1,0 +1,28 @@
+const dataOrigins = [
+  { name: "Desconocida" },
+  { name: "Alemana" },
+  { name: "Americana" },
+  { name: "Argentina" },
+  { name: "Boliviana" },
+  { name: "Brasileña" },
+  { name: "Chilena" },
+  { name: "China" },
+  { name: "Colombiana" },
+  { name: "Española" },
+  { name: "Francesa" },
+  { name: "Griega" },
+  { name: "India" },
+  { name: "Inglesa" },
+  { name: "Italiana" },
+  { name: "Japonesa" },
+  { name: "Mexicana" },
+  { name: "Peruana" },
+  { name: "Portuguesa" },
+  { name: "Rusa" },
+  { name: "Tailandesa" },
+  { name: "Turca" },
+  { name: "Venezolana" },
+  { name: "Uruguaya" },
+];
+
+export default dataOrigins;

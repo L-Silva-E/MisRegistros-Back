@@ -7,16 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ~ Recipe Book
 model Recipe {
   id          Int      @id @default(autoincrement())
+  idCategory  Int
+  idOrigin    Int
   name        String
   description String
+  thumbnail   String
   score       Int
+  time        Int
+  servings    Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   ingredients RecipeIngredient[]
   steps       Step[]
+  category    Category           @relation(fields: [idCategory], references: [id])
+  origin      Origin             @relation(fields: [idOrigin], references: [id])
 }
 
 model RecipeIngredient {
@@ -51,4 +59,32 @@ model Step {
   updatedAt   DateTime @updatedAt
 
   Recipe Recipe @relation(fields: [idRecipe], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  recipes Recipe[]
+}
+
+model Origin {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  recipes Recipe[]
+}
+
+// ~ Feature
+model Feature {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

@@ -1,8 +1,13 @@
 export interface IformatEnvironments {
+  API_ENV: string;
   API_KEY: string;
   API_URL: string;
   API_PORT: number;
   API_VERSION: string;
+
+  FRONT_URL_LOCAL: string;
+  FRONT_URL_DEV: string;
+  FRONT_URL_PROD: string;
 
   DB_HOST: string;
   DB_PORT: number;
