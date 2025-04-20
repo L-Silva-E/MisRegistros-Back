@@ -15,3 +15,6 @@
 
 # Docker
 /docker-data
+
+# Logs
+/logs
