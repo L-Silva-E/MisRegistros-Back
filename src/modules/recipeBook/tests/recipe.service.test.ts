@@ -26,6 +26,8 @@ test("Create - Recipe", async () => {
     description: "string",
     score: 5,
     thumbnail: "string",
+    time: 60,
+    servings: 4,
     createdAt: currentDate,
     updatedAt: currentDate,
     ingredients: [
@@ -59,6 +61,8 @@ test("Create - Recipe", async () => {
     description: "string",
     score: 5,
     thumbnail: "string",
+    time: 60,
+    servings: 4,
     createdAt: currentDate,
     updatedAt: currentDate,
     ingredients: [
@@ -97,6 +101,8 @@ test("Get - Recipe", async () => {
       description: "string",
       score: 5,
       thumbnail: "string",
+      time: 60,
+      servings: 4,
       createdAt: currentDate,
       updatedAt: currentDate,
       ingredients: [
@@ -138,6 +144,8 @@ test("Get - Recipe", async () => {
         description: "string",
         score: 5,
         thumbnail: "string",
+        time: 60,
+        servings: 4,
         createdAt: currentDate,
         updatedAt: currentDate,
         ingredients: [
@@ -177,6 +185,8 @@ test("Patch - Recipe", async () => {
     description: "string",
     score: 5,
     thumbnail: "string",
+    time: 60,
+    servings: 4,
     createdAt: currentDate,
     updatedAt: currentDate,
     ingredients: [
@@ -210,6 +220,8 @@ test("Patch - Recipe", async () => {
     description: "string",
     score: 5,
     thumbnail: "string",
+    time: 60,
+    servings: 4,
     createdAt: currentDate,
     updatedAt: currentDate,
     ingredients: [
@@ -244,6 +256,8 @@ test("Delete - Recipe", async () => {
     description: "string",
     score: 5,
     thumbnail: "string",
+    time: 60,
+    servings: 4,
     createdAt: currentDate,
     updatedAt: currentDate,
     ingredients: [
@@ -277,6 +291,8 @@ test("Delete - Recipe", async () => {
     description: "string",
     score: 5,
     thumbnail: "string",
+    time: 60,
+    servings: 4,
     createdAt: currentDate,
     updatedAt: currentDate,
     ingredients: [
