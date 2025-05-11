@@ -1,20 +1,20 @@
 import { Request, Response } from "express";
 import CategoryService from "../services/category.service";
+import LoggerService from "../../../services/logger";
 import ErrorCodes from "../../../shared/prisma/middlewares/error.codes";
 import IResponse from "../../../shared/interfaces/Iresponse";
-import logger from "../../../config/logger";
 
 const categoryService = new CategoryService();
+const logger = new LoggerService("Category");
 
 export default class CategoryController {
   public async create(req: Request, res: Response): Promise<Response> {
     try {
       const { body } = req;
 
-      logger.info("Creating category", { metadata: { body: body } });
       const category = await categoryService.create(body);
+      logger.info("Created", { id: category.id });
 
-      logger.info("Category created", { metadata: { id: category.id } });
       const response: IResponse = {
         code: 201,
         message: "Created",
@@ -23,16 +23,13 @@ export default class CategoryController {
 
       return res.status(response.code).send(response);
     } catch (error: any) {
-      logger.error(`Error creating category: ${error.message}`, {
-        metadata: {
-          body: req.body,
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while creating:", {
+        body: req.body,
+        error: error.message,
+        stack: error.stack,
       });
 
       const errorBody = ErrorCodes(error);
-
       return res.status(errorBody.code).send(errorBody);
     }
   }
@@ -41,12 +38,9 @@ export default class CategoryController {
     try {
       const { query } = req;
 
-      logger.info("Getting categories", { metadata: { query: query } });
       const dataCategories = await categoryService.get(query);
+      logger.info("Retrieved", { count: dataCategories.count });
 
-      logger.info("Categories obtained", {
-        metadata: { count: dataCategories.count },
-      });
       const response: IResponse = {
         code: 200,
         message: "Done",
@@ -56,17 +50,14 @@ export default class CategoryController {
 
       return res.status(response.code).send(response);
     } catch (error: any) {
-      logger.error(`Error getting categories: ${error.message}`, {
-        metadata: {
-          method: "get",
-          query: req.query,
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while fetching", {
+        method: "get",
+        query: req.query,
+        error: error.message,
+        stack: error.stack,
       });
 
       const errorBody = ErrorCodes(error);
-
       return res.status(errorBody.code).send(errorBody);
     }
   }
@@ -76,12 +67,9 @@ export default class CategoryController {
       const { body, params } = req;
       const id = Number(params.id);
 
-      logger.info(`Updating category`, { metadata: { id: id, body: body } });
       const category = await categoryService.patch(id, body);
+      logger.info("Updated", { id: category.id });
 
-      logger.info(`Category updated`, {
-        metadata: { id: category.id },
-      });
       const response: IResponse = {
         code: 200,
         message: "Updated",
@@ -90,17 +78,14 @@ export default class CategoryController {
 
       return res.status(response.code).send(response);
     } catch (error: any) {
-      logger.error(`Error updating category: ${error.message}`, {
-        metadata: {
-          id: Number(req.params.id),
-          body: req.body,
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while updating", {
+        id: Number(req.params.id),
+        body: req.body,
+        error: error.message,
+        stack: error.stack,
       });
 
       const errorBody = ErrorCodes(error);
-
       return res.status(errorBody.code).send(errorBody);
     }
   }
@@ -110,10 +95,9 @@ export default class CategoryController {
       const { params } = req;
       const id = Number(params.id);
 
-      logger.info(`Deleting category`, { metadata: { id: id } });
       const category = await categoryService.delete(id);
+      logger.info("Deleted", { id: category.id });
 
-      logger.info(`Category deleted`, { metadata: { id: category.id } });
       const response: IResponse = {
         code: 200,
         message: "Deleted",
@@ -122,12 +106,10 @@ export default class CategoryController {
 
       return res.status(response.code).send(response);
     } catch (error: any) {
-      logger.error(`Error deleting category: ${error.message}`, {
-        metadata: {
-          id: Number(req.params.id),
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while deleting", {
+        id: Number(req.params.id),
+        error: error.message,
+        stack: error.stack,
       });
 
       const errorBody = ErrorCodes(error);

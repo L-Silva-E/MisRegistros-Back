@@ -1,6 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
 import IResponse from "../../interfaces/Iresponse";
+import LoggerService from "../../../services/logger";
+
+const logger = new LoggerService("Step");
 
 const validateSchemas =
   (schema: any) => (req: Request, res: Response, next: NextFunction) => {
@@ -36,6 +39,11 @@ const validateSchemas =
         apiError.message = "Bad request";
         apiError.stackError = error.issues;
       }
+
+      logger.error("Unexpected error in validation middleware", {
+        endpoint: req.originalUrl,
+        message: error.message,
+      });
 
       return res.status(apiError.code).send(apiError);
     }
