@@ -1,20 +1,20 @@
 import { Request, Response } from "express";
 import IngredientService from "../services/ingredient.service";
+import LoggerService from "../../../services/logger";
 import ErrorCodes from "../../../shared/prisma/middlewares/error.codes";
 import IResponse from "../../../shared/interfaces/Iresponse";
-import logger from "../../../config/logger";
 
 const ingredientService = new IngredientService();
+const logger = new LoggerService("Ingredient");
 
 export default class IngredientController {
   public async create(req: Request, res: Response): Promise<Response> {
     try {
       const { body } = req;
 
-      logger.info("Creating ingredient", { metadata: { body: body } });
       const ingredient = await ingredientService.create(body);
+      logger.info("Created", { id: ingredient.id });
 
-      logger.info("Ingredient created", { metadata: { id: ingredient.id } });
       const response: IResponse = {
         code: 201,
         message: "Created",
@@ -23,16 +23,13 @@ export default class IngredientController {
 
       return res.status(response.code).send(response);
     } catch (error: any) {
-      logger.error(`Error creating ingredient: ${error.message}`, {
-        metadata: {
-          body: req.body,
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while creating:", {
+        body: req.body,
+        error: error.message,
+        stack: error.stack,
       });
 
       const errorBody = ErrorCodes(error);
-
       return res.status(errorBody.code).send(errorBody);
     }
   }
@@ -41,12 +38,9 @@ export default class IngredientController {
     try {
       const { query } = req;
 
-      logger.info("Getting ingredients", { metadata: { query: query } });
       const dataIngredients = await ingredientService.get(query);
+      logger.info("Retrieved", { count: dataIngredients.count });
 
-      logger.info("Ingredients obtained", {
-        metadata: { count: dataIngredients.count },
-      });
       const response: IResponse = {
         code: 200,
         message: "Done",
@@ -56,17 +50,14 @@ export default class IngredientController {
 
       return res.status(response.code).send(response);
     } catch (error: any) {
-      logger.error(`Error getting ingredients: ${error.message}`, {
-        metadata: {
-          method: "get",
-          query: req.query,
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while fetching", {
+        filter: req.query,
+        message: error.message,
+        stack: error.stack,
+        name: error.name,
       });
 
       const errorBody = ErrorCodes(error);
-
       return res.status(errorBody.code).send(errorBody);
     }
   }
@@ -76,12 +67,9 @@ export default class IngredientController {
       const { body, params } = req;
       const id = Number(params.id);
 
-      logger.info(`Updating ingredient`, { metadata: { id: id, body: body } });
       const ingredient = await ingredientService.patch(id, body);
+      logger.info("Updated", { id: ingredient.id });
 
-      logger.info(`Ingredient updated`, {
-        metadata: { id: ingredient.id },
-      });
       const response: IResponse = {
         code: 200,
         message: "Updated",
@@ -90,17 +78,14 @@ export default class IngredientController {
 
       return res.status(response.code).send(response);
     } catch (error: any) {
-      logger.error(`Error updating ingredient: ${error.message}`, {
-        metadata: {
-          id: Number(req.params.id),
-          body: req.body,
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while updating", {
+        id: Number(req.params.id),
+        body: req.body,
+        error: error.message,
+        stack: error.stack,
       });
 
       const errorBody = ErrorCodes(error);
-
       return res.status(errorBody.code).send(errorBody);
     }
   }
@@ -110,10 +95,9 @@ export default class IngredientController {
       const { params } = req;
       const id = Number(params.id);
 
-      logger.info(`Deleting ingredient`, { metadata: { id: id } });
       const ingredient = await ingredientService.delete(id);
+      logger.info("Deleted", { id: ingredient.id });
 
-      logger.info(`Ingredient deleted`, { metadata: { id: ingredient.id } });
       const response: IResponse = {
         code: 200,
         message: "Deleted",
@@ -122,16 +106,13 @@ export default class IngredientController {
 
       return res.status(response.code).send(response);
     } catch (error: any) {
-      logger.error(`Error deleting ingredient: ${error.message}`, {
-        metadata: {
-          id: Number(req.params.id),
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while deleting", {
+        id: Number(req.params.id),
+        error: error.message,
+        stack: error.stack,
       });
 
       const errorBody = ErrorCodes(error);
-
       return res.status(errorBody.code).send(errorBody);
     }
   }

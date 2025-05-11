@@ -34,7 +34,16 @@ const colors: Record<keyof LogLevels, string> = {
 
 winston.addColors(colors);
 
+const customMessageFormatter = winston.format((info) => {
+  const { entity, action } = info;
+
+  if (entity && action) info.message = `[${entity}] ${action}`;
+
+  return info;
+});
+
 const consoleFormat = winston.format.combine(
+  customMessageFormatter(),
   winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
   winston.format.colorize({ all: true }),
   winston.format.printf(
@@ -46,6 +55,7 @@ const consoleFormat = winston.format.combine(
 );
 
 const fileFormat = winston.format.combine(
+  customMessageFormatter(),
   winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
   winston.format.json()
 );
