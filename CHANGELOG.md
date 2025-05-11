@@ -5,6 +5,24 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2025-05-10
+
+### Added
+
+- Introduced `LoggerService` to standardize logging across the application using Winston.
+- Custom log format supporting `[Entity] Action - Message` with structured metadata.
+- Helper support for logging per-entity with semantic actions like `"Creating"` and `"Created"`.
+
+### Changed
+
+- Refactored all direct calls to the logger to use `LoggerService`.
+- Updated Winston configuration to support structured logs for both console and file transports.
+- Enhanced error logs to include stack trace, error name, and query context.
+
+### Removed
+
+- Redundant `info` log entries before actions when sufficient context is provided by success or error logs.
+
 ## [1.0.1] - 2025-04-20
 
 ### Fixed
