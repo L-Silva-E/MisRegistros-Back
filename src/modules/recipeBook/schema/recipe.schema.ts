@@ -33,10 +33,7 @@ export const RecipeBaseZodSchema = z.object({
   ingredients: z
     .array(
       z.object({
-        quantity: z
-          .number()
-          .int()
-          .gte(0, "La 'cantidad' debe ser mayor o igual a 0"),
+        quantity: z.number().gte(0, "La 'cantidad' debe ser mayor o igual a 0"),
         id: z.coerce
           .number({ invalid_type_error: "La 'id' debe ser un número" })
           .positive("Ingrese una 'id' válida"),
