@@ -14,7 +14,7 @@ model Recipe {
   idOrigin    Int
   name        String
   description String
-  thumbnail   String
+  thumbnail   String?  @default("https://placehold.co/900x600/1C4532/C6F6D5.png?text=Imagen+de\\nla+Receta")
   score       Int
   time        Int
   servings    Int

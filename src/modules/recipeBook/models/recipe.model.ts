@@ -8,7 +8,7 @@ export interface RecipeModel extends IBaseModel {
   idOrigin: number;
   name: string;
   description: string;
-  thumbnail: string;
+  thumbnail?: string | null;
   score: number;
   time: number;
   servings: number;
