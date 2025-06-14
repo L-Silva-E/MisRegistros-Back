@@ -5,6 +5,21 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2025-06-14
+
+### Added
+
+- Nothing added in this version.
+
+### Changed
+
+- Modified `thumbnail` field in Recipe model to be optional (`String?`) and updated with default placeholder value: `https://placehold.co/900x600/1C4532/C6F6D5.png?text=Imagen+de+la+Receta`.
+- Enhanced Zod validation for Recipe `thumbnail` field to properly handle URLs with query parameters.
+
+### Fixed
+
+- Fixed wrong entity name in middleware of schema validation.
+
 ## [1.0.2] - 2025-05-10
 
 ### Added
