@@ -16,7 +16,19 @@ export const RecipeBaseZodSchema = z.object({
     .positive("Ingrese una 'id' válida"),
   name: z.string().min(1, "El campo 'nombre' no puede estar vacío"),
   description: z.string().min(1, "El campo 'descripción' no puede estar vacío"),
-  thumbnail: z.string().min(1, "El campo 'thumbnail' no puede estar vacío"),
+  thumbnail: z
+    .string()
+    .url("El campo 'thumbnail' debe ser una URL válida")
+    .refine((url) => {
+      try {
+        const urlObj = new URL(url);
+        const pathname = urlObj.pathname;
+        return /\.(jpg|jpeg|png|gif|webp|svg|avif)$/i.test(pathname);
+      } catch {
+        return false;
+      }
+    }, "Debe ser una URL de imagen válida")
+    .optional(),
   score: z
     .number()
     .int()

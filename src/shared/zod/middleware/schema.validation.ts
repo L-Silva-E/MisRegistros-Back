@@ -3,7 +3,7 @@ import { z } from "zod";
 import IResponse from "../../interfaces/Iresponse";
 import LoggerService from "../../../services/logger";
 
-const logger = new LoggerService("Step");
+const logger = new LoggerService("SchemaValidation");
 
 const validateSchemas =
   (schema: any) => (req: Request, res: Response, next: NextFunction) => {
