@@ -2,7 +2,11 @@ import { Request, Response } from "express";
 import RecipeService from "../services/recipe.service";
 import LoggerService from "../../../services/logger";
 import ErrorCodes from "../../../shared/prisma/middlewares/error.codes";
-import IResponse from "../../../shared/interfaces/Iresponse";
+import {
+  CollectionResponse,
+  ItemResponse,
+  DeleteResponse,
+} from "../../../shared/interfaces/api.response";
 
 const recipeService = new RecipeService();
 const logger = new LoggerService("Recipe");
@@ -15,13 +19,11 @@ export default class RecipeController {
       const recipe = await recipeService.create(body);
       logger.info("Created", { id: recipe.id });
 
-      const response: IResponse = {
-        code: 201,
-        message: "Created",
+      const response: ItemResponse<typeof recipe> = {
         data: recipe,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(201).send(response);
     } catch (error: any) {
       logger.error("Error while creating", {
         body: req.body,
@@ -30,7 +32,7 @@ export default class RecipeController {
       });
 
       const errorBody = ErrorCodes(error);
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
@@ -41,14 +43,12 @@ export default class RecipeController {
       const dataRecipes = await recipeService.get(query);
       logger.info("Retrieved", { count: dataRecipes.count });
 
-      const response: IResponse = {
-        code: 200,
-        message: "Done",
+      const response: CollectionResponse<(typeof dataRecipes.recipes)[0]> = {
         count: dataRecipes.count,
         data: dataRecipes.recipes,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(200).send(response);
     } catch (error: any) {
       logger.error("Error while fetching", {
         filter: req.query,
@@ -58,7 +58,7 @@ export default class RecipeController {
       });
 
       const errorBody = ErrorCodes(error);
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
@@ -70,13 +70,11 @@ export default class RecipeController {
       const recipe = await recipeService.patch(id, body);
       logger.info("Updated", { id: recipe.id });
 
-      const response: IResponse = {
-        code: 200,
-        message: "Updated",
+      const response: ItemResponse<typeof recipe> = {
         data: recipe,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(200).send(response);
     } catch (error: any) {
       logger.error("Error while updating", {
         id: Number(req.params.id),
@@ -86,7 +84,7 @@ export default class RecipeController {
       });
 
       const errorBody = ErrorCodes(error);
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
@@ -98,13 +96,12 @@ export default class RecipeController {
       const recipe = await recipeService.delete(id);
       logger.info("Deleted", { id: recipe.id });
 
-      const response: IResponse = {
-        code: 200,
-        message: "Deleted",
-        data: recipe,
+      const response: DeleteResponse = {
+        deleted: true,
+        id: recipe.id!,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(200).send(response);
     } catch (error: any) {
       logger.error("Error while deleting", {
         id: Number(req.params.id),
@@ -113,7 +110,7 @@ export default class RecipeController {
       });
 
       const errorBody = ErrorCodes(error);
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 }
