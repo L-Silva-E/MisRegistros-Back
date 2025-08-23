@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import IResponse from "../../interfaces/Iresponse";
+import { ErrorResponse } from "../../interfaces/api.response";
 import LoggerService from "../../../services/logger";
 
 const logger = new LoggerService("SchemaValidation");
@@ -27,17 +27,20 @@ const validateSchemas =
 
       return next();
     } catch (error: any) {
-      const apiError: IResponse = {
-        code: 500,
-        message: "Error internal server",
-        data: {},
-        stackError: error.message,
+      let apiError: ErrorResponse = {
+        error: "Internal Server Error",
+        details: error.message,
       };
 
+      let statusCode = 500;
+
       if (error instanceof z.ZodError) {
-        apiError.code = 400;
-        apiError.message = "Bad request";
-        apiError.stackError = error.issues;
+        statusCode = 400;
+        apiError = {
+          error: "Bad Request",
+          details: "Validation failed",
+          field: error.issues[0]?.path.join(".") || undefined,
+        };
       }
 
       logger.error("Unexpected error in validation middleware", {
@@ -45,7 +48,7 @@ const validateSchemas =
         message: error.message,
       });
 
-      return res.status(apiError.code).send(apiError);
+      return res.status(statusCode).send(apiError);
     }
   };
 
