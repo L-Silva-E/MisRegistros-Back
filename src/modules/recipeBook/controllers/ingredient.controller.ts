@@ -2,7 +2,11 @@ import { Request, Response } from "express";
 import IngredientService from "../services/ingredient.service";
 import LoggerService from "../../../services/logger";
 import ErrorCodes from "../../../shared/prisma/middlewares/error.codes";
-import IResponse from "../../../shared/interfaces/Iresponse";
+import {
+  CollectionResponse,
+  ItemResponse,
+  DeleteResponse,
+} from "../../../shared/interfaces/api.response";
 
 const ingredientService = new IngredientService();
 const logger = new LoggerService("Ingredient");
@@ -15,13 +19,11 @@ export default class IngredientController {
       const ingredient = await ingredientService.create(body);
       logger.info("Created", { id: ingredient.id });
 
-      const response: IResponse = {
-        code: 201,
-        message: "Created",
+      const response: ItemResponse<typeof ingredient> = {
         data: ingredient,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(201).send(response);
     } catch (error: any) {
       logger.error("Error while creating:", {
         body: req.body,
@@ -30,7 +32,7 @@ export default class IngredientController {
       });
 
       const errorBody = ErrorCodes(error);
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
@@ -41,14 +43,14 @@ export default class IngredientController {
       const dataIngredients = await ingredientService.get(query);
       logger.info("Retrieved", { count: dataIngredients.count });
 
-      const response: IResponse = {
-        code: 200,
-        message: "Done",
+      const response: CollectionResponse<
+        (typeof dataIngredients.ingredients)[0]
+      > = {
         count: dataIngredients.count,
         data: dataIngredients.ingredients,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(200).send(response);
     } catch (error: any) {
       logger.error("Error while fetching", {
         filter: req.query,
@@ -58,7 +60,7 @@ export default class IngredientController {
       });
 
       const errorBody = ErrorCodes(error);
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
@@ -70,13 +72,11 @@ export default class IngredientController {
       const ingredient = await ingredientService.patch(id, body);
       logger.info("Updated", { id: ingredient.id });
 
-      const response: IResponse = {
-        code: 200,
-        message: "Updated",
+      const response: ItemResponse<typeof ingredient> = {
         data: ingredient,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(200).send(response);
     } catch (error: any) {
       logger.error("Error while updating", {
         id: Number(req.params.id),
@@ -86,7 +86,7 @@ export default class IngredientController {
       });
 
       const errorBody = ErrorCodes(error);
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
@@ -98,13 +98,12 @@ export default class IngredientController {
       const ingredient = await ingredientService.delete(id);
       logger.info("Deleted", { id: ingredient.id });
 
-      const response: IResponse = {
-        code: 200,
-        message: "Deleted",
-        data: ingredient,
+      const response: DeleteResponse = {
+        deleted: true,
+        id: ingredient.id!,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(200).send(response);
     } catch (error: any) {
       logger.error("Error while deleting", {
         id: Number(req.params.id),
@@ -113,7 +112,7 @@ export default class IngredientController {
       });
 
       const errorBody = ErrorCodes(error);
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 }

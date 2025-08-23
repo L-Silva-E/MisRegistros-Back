@@ -1,68 +1,73 @@
 import { Prisma } from "@prisma/client";
-import IResponse from "../../interfaces/Iresponse";
+import { ErrorWithCode } from "../../interfaces/api.response";
 
-const ErrorCodes = (err: Error): IResponse => {
+const ErrorCodes = (err: Error): ErrorWithCode => {
   const stringError = err.message.toString();
   const splitError = stringError.replace(/\n/gi, "").split(":");
   const customError = splitError;
 
-  let response: IResponse = {
+  let result: ErrorWithCode = {
     code: 500,
-    message: "Internal Server Error",
-    data: {},
-    stackError: { message: customError },
+    response: {
+      error: "Internal Server Error",
+      details: customError.join(": "),
+    },
   };
 
   if (err instanceof Prisma.PrismaClientKnownRequestError) {
-    response.code = 400;
-    response.message = "Bad Request";
-    response.stackError = err.message;
+    result.code = 400;
+    result.response.error = "Bad Request";
+    result.response.details = err.message;
 
     if (err.code == "P2025") {
-      response.code = 404;
-      response.message = "Not Found";
+      result.code = 404;
+      result.response.error = "Not Found";
+      result.response.details = "The requested resource was not found";
     }
     if (err.code == "P1008" || err.code == "P5009") {
-      response.code = 408;
-      response.message = "Request Timeout";
+      result.code = 408;
+      result.response.error = "Request Timeout";
+      result.response.details = "Database connection timeout";
     }
     if (err.code == "P2002") {
-      response.code = 409;
-      response.message = "Conflict Unique Constraint";
+      result.code = 409;
+      result.response.error = "Conflict";
+      result.response.details = "Unique constraint violation";
     }
     if (err.code == "P2028" || err.code == "P5015") {
-      response.code = 500;
-      response.message = "Internal Server Error";
+      result.code = 500;
+      result.response.error = "Internal Server Error";
+      result.response.details = "Database operation failed";
     }
   }
 
   if (err instanceof Prisma.PrismaClientValidationError) {
-    response.code = 400;
-    response.message = "Bad Request";
-    response.stackError.message = customError;
+    result.code = 400;
+    result.response.error = "Bad Request";
+    result.response.details = "Invalid data provided";
   }
 
   if (err instanceof Prisma.PrismaClientUnknownRequestError) {
-    response.code = 500;
-    response.message = "Internal Server Error";
-    response.stackError.message = "Unknown Prisma Code Error" + customError;
+    result.code = 500;
+    result.response.error = "Internal Server Error";
+    result.response.details = "Unknown database error occurred";
   }
 
   if (err instanceof Prisma.PrismaClientInitializationError) {
-    response.code = 500;
-    response.message = "Internal Server Error";
-    response.stackError.message = "Prisma Initialization Error" + customError;
+    result.code = 500;
+    result.response.error = "Internal Server Error";
+    result.response.details = "Database initialization failed";
   }
 
   if (err instanceof Prisma.PrismaClientRustPanicError) {
-    response.code = 500;
-    response.message = "Internal Server Error";
-    response.stackError.message = "Database Connection Error" + customError;
+    result.code = 500;
+    result.response.error = "Internal Server Error";
+    result.response.details = "Database connection error";
   }
 
   console.error(err);
 
-  return response;
+  return result;
 };
 
 export default ErrorCodes;
