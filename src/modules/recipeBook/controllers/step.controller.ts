@@ -1,39 +1,38 @@
 import { Request, Response } from "express";
 import StepService from "../services/step.service";
+import LoggerService from "../../../services/logger";
 import ErrorCodes from "../../../shared/prisma/middlewares/error.codes";
-import IResponse from "../../../shared/interfaces/Iresponse";
-import logger from "../../../config/logger";
+import {
+  CollectionResponse,
+  ItemResponse,
+  DeleteResponse,
+} from "../../../shared/interfaces/api.response";
 
 const stepService = new StepService();
+const logger = new LoggerService("Step");
 
 export default class StepController {
   public async create(req: Request, res: Response): Promise<Response> {
     try {
       const { body } = req;
 
-      logger.info("Creating step", { metadata: { body: body } });
       const step = await stepService.create(body);
+      logger.info("Created", { id: step.id });
 
-      logger.info("Step created", { metadata: { id: step.id } });
-      const response: IResponse = {
-        code: 201,
-        message: "Created",
+      const response: ItemResponse<typeof step> = {
         data: step,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(201).send(response);
     } catch (error: any) {
-      logger.error(`Error creating step: ${error.message}`, {
-        metadata: {
-          body: req.body,
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while creating:", {
+        body: req.body,
+        error: error.message,
+        stack: error.stack,
       });
 
       const errorBody = ErrorCodes(error);
-
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
@@ -41,33 +40,25 @@ export default class StepController {
     try {
       const { query } = req;
 
-      logger.info("Getting steps", { metadata: { query: query } });
       const dataSteps = await stepService.get(query);
+      logger.info("Retrieved", { count: dataSteps.count });
 
-      logger.info("Steps obtained", {
-        metadata: { count: dataSteps.count },
-      });
-      const response: IResponse = {
-        code: 200,
-        message: "Done",
+      const response: CollectionResponse<(typeof dataSteps.steps)[0]> = {
         count: dataSteps.count,
         data: dataSteps.steps,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(200).send(response);
     } catch (error: any) {
-      logger.error(`Error getting steps: ${error.message}`, {
-        metadata: {
-          method: "get",
-          query: req.query,
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while fetching", {
+        filter: req.query,
+        message: error.message,
+        stack: error.stack,
+        name: error.name,
       });
 
       const errorBody = ErrorCodes(error);
-
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
@@ -76,32 +67,24 @@ export default class StepController {
       const { body, params } = req;
       const id = Number(params.id);
 
-      logger.info(`Updating step`, { metadata: { id: id, body: body } });
       const step = await stepService.patch(id, body);
+      logger.info("Updated", { id: step.id });
 
-      logger.info(`Step updated`, {
-        metadata: { id: step.id },
-      });
-      const response: IResponse = {
-        code: 200,
-        message: "Updated",
+      const response: ItemResponse<typeof step> = {
         data: step,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(200).send(response);
     } catch (error: any) {
-      logger.error(`Error updating step: ${error.message}`, {
-        metadata: {
-          id: Number(req.params.id),
-          body: req.body,
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while updating", {
+        id: Number(req.params.id),
+        body: req.body,
+        error: error.message,
+        stack: error.stack,
       });
 
       const errorBody = ErrorCodes(error);
-
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
@@ -110,29 +93,24 @@ export default class StepController {
       const { params } = req;
       const id = Number(params.id);
 
-      logger.info(`Deleting step`, { metadata: { id: id } });
       const step = await stepService.delete(id);
+      logger.info("Deleted", { id: step.id });
 
-      logger.info(`Step deleted`, { metadata: { id: step.id } });
-      const response: IResponse = {
-        code: 200,
-        message: "Deleted",
-        data: step,
+      const response: DeleteResponse = {
+        deleted: true,
+        id: step.id!,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(200).send(response);
     } catch (error: any) {
-      logger.error(`Error deleting step: ${error.message}`, {
-        metadata: {
-          id: Number(req.params.id),
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while deleting", {
+        id: Number(req.params.id),
+        error: error.message,
+        stack: error.stack,
       });
 
       const errorBody = ErrorCodes(error);
-
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 }

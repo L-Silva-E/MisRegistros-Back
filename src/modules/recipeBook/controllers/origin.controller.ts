@@ -1,39 +1,38 @@
 import { Request, Response } from "express";
 import OriginService from "../services/origin.service";
+import LoggerService from "../../../services/logger";
 import ErrorCodes from "../../../shared/prisma/middlewares/error.codes";
-import IResponse from "../../../shared/interfaces/Iresponse";
-import logger from "../../../config/logger";
+import {
+  CollectionResponse,
+  ItemResponse,
+  DeleteResponse,
+} from "../../../shared/interfaces/api.response";
 
 const originService = new OriginService();
+const logger = new LoggerService("Origin");
 
 export default class OriginController {
   public async create(req: Request, res: Response): Promise<Response> {
     try {
       const { body } = req;
 
-      logger.info("Creating origin", { metadata: { body: body } });
       const origin = await originService.create(body);
+      logger.info("Created", { id: origin.id });
 
-      logger.info(`Origin created`, { metadata: { id: origin.id } });
-      const response: IResponse = {
-        code: 201,
-        message: "Created",
+      const response: ItemResponse<typeof origin> = {
         data: origin,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(201).send(response);
     } catch (error: any) {
-      logger.error(`Error creating origin: ${error.message}`, {
-        metadata: {
-          body: req.body,
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while creating:", {
+        body: req.body,
+        error: error.message,
+        stack: error.stack,
       });
 
       const errorBody = ErrorCodes(error);
-
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
@@ -41,32 +40,25 @@ export default class OriginController {
     try {
       const { query } = req;
 
-      logger.info("Getting origins", { metadata: { query: query } });
       const dataOrigins = await originService.get(query);
+      logger.info("Retrieved", { count: dataOrigins.count });
 
-      logger.info("Origins obtained", {
-        metadata: { count: dataOrigins.count },
-      });
-      const response: IResponse = {
-        code: 200,
-        message: "Done",
+      const response: CollectionResponse<(typeof dataOrigins.origins)[0]> = {
         count: dataOrigins.count,
         data: dataOrigins.origins,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(200).send(response);
     } catch (error: any) {
-      logger.error(`Error getting origins: ${error.message}`, {
-        metadata: {
-          query: req.query,
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while fetching", {
+        filter: req.query,
+        message: error.message,
+        stack: error.stack,
+        name: error.name,
       });
 
       const errorBody = ErrorCodes(error);
-
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
@@ -75,30 +67,24 @@ export default class OriginController {
       const { body, params } = req;
       const id = Number(params.id);
 
-      logger.info(`Updating origin`, { metadata: { id: id, body: body } });
       const origin = await originService.patch(id, body);
+      logger.info("Updated", { id: origin.id });
 
-      logger.info(`Origin updated`, { metadata: { id: origin.id } });
-      const response: IResponse = {
-        code: 200,
-        message: "Updated",
+      const response: ItemResponse<typeof origin> = {
         data: origin,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(200).send(response);
     } catch (error: any) {
-      logger.error(`Error updating origin: ${error.message}`, {
-        metadata: {
-          id: Number(req.params.id),
-          body: req.body,
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while updating", {
+        id: Number(req.params.id),
+        body: req.body,
+        error: error.message,
+        stack: error.stack,
       });
 
       const errorBody = ErrorCodes(error);
-
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
@@ -107,29 +93,24 @@ export default class OriginController {
       const { params } = req;
       const id = Number(params.id);
 
-      logger.info(`Deleting origin`, { metadata: { id: id } });
       const origin = await originService.delete(id);
+      logger.info("Deleted", { id: origin.id });
 
-      logger.info(`Origin deleted`, { metadata: { id: origin.id } });
-      const response: IResponse = {
-        code: 200,
-        message: "Deleted",
-        data: origin,
+      const response: DeleteResponse = {
+        deleted: true,
+        id: origin.id!,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(200).send(response);
     } catch (error: any) {
-      logger.error(`Error deleting origin: ${error.message}`, {
-        metadata: {
-          id: Number(req.params.id),
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while deleting", {
+        id: Number(req.params.id),
+        error: error.message,
+        stack: error.stack,
       });
 
       const errorBody = ErrorCodes(error);
-
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 }

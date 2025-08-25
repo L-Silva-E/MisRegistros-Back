@@ -1,6 +1,6 @@
-import { IBaseModel } from "../../../shared/interfaces/Ibase.model";
+import { BaseEntity } from "../../../shared/interfaces/base.entity";
 
 // ~ Base
-export interface RecipeIngredientModel extends IBaseModel {
+export interface RecipeIngredientModel extends BaseEntity {
   quantity: number;
 }

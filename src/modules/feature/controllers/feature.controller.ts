@@ -1,39 +1,38 @@
 import { Request, Response } from "express";
 import FeatureService from "../services/feature.service";
+import LoggerService from "../../../services/logger";
 import ErrorCodes from "../../../shared/prisma/middlewares/error.codes";
-import IResponse from "../../../shared/interfaces/Iresponse";
-import logger from "../../../config/logger";
+import {
+  CollectionResponse,
+  ItemResponse,
+  DeleteResponse,
+} from "../../../shared/interfaces/api.response";
 
 const featureService = new FeatureService();
+const logger = new LoggerService("Feature");
 
 export default class FeatureController {
   public async create(req: Request, res: Response): Promise<Response> {
     try {
       const { body } = req;
 
-      logger.info("Creating feature", { metadata: { body: body } });
       const feature = await featureService.create(body);
+      logger.info("Created", { id: feature.id });
 
-      logger.info("Feature created", { metadata: { id: feature.id } });
-      const response: IResponse = {
-        code: 201,
-        message: "Created",
+      const response: ItemResponse<typeof feature> = {
         data: feature,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(201).send(response);
     } catch (error: any) {
-      logger.error(`Error creating feature: ${error.message}`, {
-        metadata: {
-          body: req.body,
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while creating:", {
+        body: req.body,
+        error: error.message,
+        stack: error.stack,
       });
 
       const errorBody = ErrorCodes(error);
-
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
@@ -41,32 +40,25 @@ export default class FeatureController {
     try {
       const { query } = req;
 
-      logger.info("Getting features", { metadata: { query: query } });
       const dataFeatures = await featureService.get(query);
+      logger.info("Retrieved", { count: dataFeatures.count });
 
-      logger.info("Features obtained", {
-        metadata: { count: dataFeatures.count },
-      });
-      const response: IResponse = {
-        code: 200,
-        message: "Done",
+      const response: CollectionResponse<(typeof dataFeatures.features)[0]> = {
         count: dataFeatures.count,
         data: dataFeatures.features,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(200).send(response);
     } catch (error: any) {
-      logger.error(`Error getting features: ${error.message}`, {
-        metadata: {
-          query: req.query,
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while fetching", {
+        filter: req.query,
+        message: error.message,
+        stack: error.stack,
+        name: error.name,
       });
 
       const errorBody = ErrorCodes(error);
-
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
@@ -75,30 +67,24 @@ export default class FeatureController {
       const { body, params } = req;
       const id = Number(params.id);
 
-      logger.info(`Updating feature`, { metadata: { id: id, body: body } });
       const feature = await featureService.patch(id, body);
+      logger.info("Updated", { id: feature.id });
 
-      logger.info("Feature updated", { metadata: { id: feature.id } });
-      const response: IResponse = {
-        code: 200,
-        message: "Updated",
+      const response: ItemResponse<typeof feature> = {
         data: feature,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(200).send(response);
     } catch (error: any) {
-      logger.error(`Error updating feature: ${error.message}`, {
-        metadata: {
-          id: Number(req.params.id),
-          body: req.body,
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while updating", {
+        id: Number(req.params.id),
+        body: req.body,
+        error: error.message,
+        stack: error.stack,
       });
 
       const errorBody = ErrorCodes(error);
-
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
@@ -107,29 +93,24 @@ export default class FeatureController {
       const { params } = req;
       const id = Number(params.id);
 
-      logger.info(`Deleting feature`, { metadata: { id: id } });
       const feature = await featureService.delete(id);
+      logger.info("Deleted", { id: feature.id });
 
-      logger.info("Feature deleted", { metadata: { id: feature.id } });
-      const response: IResponse = {
-        code: 200,
-        message: "Deleted",
-        data: feature,
+      const response: DeleteResponse = {
+        deleted: true,
+        id: feature.id!,
       };
 
-      return res.status(response.code).send(response);
+      return res.status(200).send(response);
     } catch (error: any) {
-      logger.error(`Error deleting feature: ${error.message}`, {
-        metadata: {
-          id: Number(req.params.id),
-          error: error.message,
-          stack: error.stack,
-        },
+      logger.error("Error while deleting", {
+        id: Number(req.params.id),
+        error: error.message,
+        stack: error.stack,
       });
 
       const errorBody = ErrorCodes(error);
-
-      return res.status(errorBody.code).send(errorBody);
+      return res.status(errorBody.code).send(errorBody.response);
     }
   }
 }

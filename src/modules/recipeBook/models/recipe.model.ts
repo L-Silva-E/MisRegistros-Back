@@ -1,14 +1,14 @@
-import { IBaseModel } from "../../../shared/interfaces/Ibase.model";
+import { BaseEntity } from "../../../shared/interfaces/base.entity";
 import { RecipeIngredientModel } from "./recipe.ingredient.model";
 import { RecipeStepModel } from "./step.model";
 
 // ~ Base
-export interface RecipeModel extends IBaseModel {
+export interface RecipeModel extends BaseEntity {
   idCategory: number;
   idOrigin: number;
   name: string;
   description: string;
-  thumbnail: string;
+  thumbnail?: string | null;
   score: number;
   time: number;
   servings: number;

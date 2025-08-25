@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import IResponse from "../../../shared/interfaces/Iresponse";
+import { ErrorResponse } from "../../interfaces/api.response";
 import environment from "../../environment";
 
 export default function AuthorizationApiKey(
@@ -10,13 +10,12 @@ export default function AuthorizationApiKey(
   const apiKey = req?.get("api-key");
 
   if (!apiKey || apiKey !== environment.API_KEY) {
-    const apiError: IResponse = {
-      code: 401,
-      message: "Unauthorized",
-      data: {},
+    const apiError: ErrorResponse = {
+      error: "Unauthorized",
+      details: "Invalid or missing API key",
     };
 
-    return res.status(apiError.code).send(apiError);
+    return res.status(401).send(apiError);
   }
 
   next();
