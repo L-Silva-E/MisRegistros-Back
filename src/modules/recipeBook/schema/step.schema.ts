@@ -7,14 +7,16 @@ import {
 // ~ Base Zod Squema
 export const StepBaseZodSchema = z.object({
   idRecipe: z.coerce
-    .number({ invalid_type_error: "La 'id' debe ser un número" })
+    .number({ invalid_type_error: "Ingrese una 'id' válida" })
     .positive("Ingrese una 'id' válida")
     .optional(),
   number: z.coerce
-    .number({ invalid_type_error: "El 'orden' debe ser un número" })
+    .number({ invalid_type_error: "Ingrese un 'orden' válido" })
     .positive("Ingrese un 'orden' válido")
     .optional(),
-  instruction: z.string().min(1, "El campo 'instrucción' no puede estar vacío"),
+  instruction: z
+    .string({ invalid_type_error: "El campo 'instrucción' debe ser un texto" })
+    .min(1, "El campo 'instrucción' no puede estar vacío"),
 });
 
 // ~ CRUD Zod Schemas
