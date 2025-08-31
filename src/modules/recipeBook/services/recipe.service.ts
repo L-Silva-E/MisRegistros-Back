@@ -6,6 +6,7 @@ import {
   FullRecipeModel,
   RecipeCountModel,
 } from "../models/recipe.model";
+import { assignStepNumbers } from "../utils/recipe.utils";
 
 const prismaClient = new PrismaClient();
 
@@ -19,13 +20,12 @@ export default class RecipeService {
     try {
       const ingredients = recipe.ingredients;
       const steps = recipe.steps;
+      const stepsWithNumbers = assignStepNumbers(steps || []);
 
       let recipeCreated = await prisma.recipe.create({
         data: {
           ...recipe,
-          steps: {
-            create: steps,
-          },
+          steps: { create: stepsWithNumbers },
           ingredients: {
             create: ingredients.map((ingredient) => ({
               quantity: ingredient.quantity,
@@ -109,13 +109,15 @@ export default class RecipeService {
     const prisma = ctx?.prisma || prismaClient;
 
     try {
+      const stepsWithNumbers = assignStepNumbers(recipe.steps || []);
+
       const recipeUpdated = await prisma.recipe.update({
         where: { id },
         data: {
           ...recipe,
           steps: {
             deleteMany: {},
-            create: recipe.steps,
+            create: stepsWithNumbers,
           },
           ingredients: {
             deleteMany: {},

@@ -2,37 +2,33 @@ import { z } from "zod";
 
 export const PrimaryKeySchema = z.object({
   id: z.coerce
-    .number({ invalid_type_error: "La 'id' debe ser un número" })
+    .number({ invalid_type_error: "Ingrese una 'id' válida" })
     .positive("Ingrese una 'id' válida")
     .optional(),
 });
 
 export const GetZodSchema = z.object({
   id: z.coerce
-    .number({ invalid_type_error: "La 'id' debe ser un número" })
+    .number({ invalid_type_error: "Ingrese una 'id' válida" })
     .positive("Ingrese una 'id' válida")
     .optional(),
   createdAt: z
     .string()
-    .min(1, "El campo 'creado' no puede estar vacío")
+    .min(1, "El campo 'fecha de creación' no puede estar vacío")
     .optional(),
   updatedAt: z
     .string()
-    .min(1, "El campo 'actualizado' no puede estar vacío")
+    .min(1, "El campo 'fecha de actualización' no puede estar vacío")
     .optional(),
-  page: z
-    .string()
-    .transform((val) => parseInt(val, 10))
-    .refine((val) => !isNaN(val), {
-      message: "La 'página' debe ser un número válido",
-    })
+  page: z.coerce
+    .number({ invalid_type_error: "La 'página' debe ser un número válido" })
+    .int("La 'página' debe ser un número entero")
+    .min(0, "La 'página' debe ser mayor o igual a 0")
     .optional(),
-  limit: z
-    .string()
-    .transform((val) => parseInt(val, 10))
-    .refine((val) => !isNaN(val), {
-      message: "El 'límite' debe ser un número válido",
-    })
+  limit: z.coerce
+    .number({ invalid_type_error: "El 'límite' debe ser un número válido" })
+    .int("El 'límite' debe ser un número entero")
+    .positive("El 'límite' debe ser mayor a 0")
     .optional(),
   from: z.string().min(1, "El campo 'desde' no puede estar vacío").optional(),
   to: z.string().min(1, "El campo 'hasta' no puede estar vacío").optional(),

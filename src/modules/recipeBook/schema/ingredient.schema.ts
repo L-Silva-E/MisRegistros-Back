@@ -8,7 +8,9 @@ import { Unit } from "../../../shared/enums";
 
 // ~ Base Zod Squema
 export const IngredientBaseZodSchema = z.object({
-  name: z.string().min(1, "El campo 'nombre' no puede estar vacío"),
+  name: z
+    .string({ invalid_type_error: "El campo 'nombre' debe ser un texto" })
+    .min(1, "El campo 'nombre' no puede estar vacío"),
   unit: z.nativeEnum(Unit, {
     errorMap: () => {
       return {
