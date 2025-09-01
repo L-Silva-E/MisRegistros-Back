@@ -41,7 +41,7 @@ const validateSchemas =
         apiError = {
           error: "Bad Request",
           details: detailMessage,
-          validation: error.issues.map((issue) => ({
+          validations: error.issues.map((issue) => ({
             path: issue.path.join("."),
             code: issue.code,
             expected: (issue as any)?.expected || undefined,
@@ -53,11 +53,7 @@ const validateSchemas =
         logger.error(detailMessage, {
           endpoint: req.originalUrl,
           method: req.method,
-          validationErrors: error.issues.map((issue) => ({
-            path: issue.path.join("."),
-            code: issue.code,
-            message: issue.message,
-          })),
+          validationErrors: apiError.validations,
           totalErrors: error.issues.length,
         });
       } else {
