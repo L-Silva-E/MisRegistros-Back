@@ -1,6 +1,5 @@
 import { BaseEntity } from "../../../shared/interfaces/base.entity";
 import { RecipeIngredientModel } from "./recipe.ingredient.model";
-import { RecipeStepModel } from "./step.model";
 
 // ~ Base
 export interface RecipeModel extends BaseEntity {
@@ -23,4 +22,15 @@ export interface RecipeCountModel {
 export interface FullRecipeModel extends RecipeModel {
   ingredients: RecipeIngredientModel[];
   steps?: RecipeStepModel[];
+}
+
+// ~ Step in Recipe context
+export interface RecipeStepModel {
+  number: number;
+  instruction: string;
+}
+
+export interface RecipeStepInput {
+  number?: number;
+  instruction: string;
 }

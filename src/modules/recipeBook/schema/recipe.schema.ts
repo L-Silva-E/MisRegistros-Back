@@ -9,13 +9,17 @@ import { StepBaseZodSchema } from "./step.schema";
 // ~ Base Zod Squema
 export const RecipeBaseZodSchema = z.object({
   idCategory: z.coerce
-    .number({ invalid_type_error: "La 'id' de 'Categoría' debe ser un número" })
+    .number({ invalid_type_error: "Ingrese una 'id' válida" })
     .positive("Ingrese una 'id' válida"),
   idOrigin: z.coerce
-    .number({ invalid_type_error: "La 'id' de 'Origen' debe ser un número" })
+    .number({ invalid_type_error: "Ingrese una 'id' válida" })
     .positive("Ingrese una 'id' válida"),
-  name: z.string().min(1, "El campo 'nombre' no puede estar vacío"),
-  description: z.string().min(1, "El campo 'descripción' no puede estar vacío"),
+  name: z
+    .string({ invalid_type_error: "El campo 'nombre' debe ser un texto" })
+    .min(1, "El campo 'nombre' no puede estar vacío"),
+  description: z
+    .string({ invalid_type_error: "El campo 'descripción' debe ser un texto" })
+    .min(1, "El campo 'descripción' no puede estar vacío"),
   thumbnail: z
     .string()
     .url("El campo 'thumbnail' debe ser una URL válida")
@@ -27,7 +31,7 @@ export const RecipeBaseZodSchema = z.object({
       } catch {
         return false;
       }
-    }, "Debe ser una URL de imagen válida")
+    }, "El campo 'thumbnail' debe ser una URL de imagen válida (jpg, png, gif, webp, svg, avif)")
     .optional(),
   score: z
     .number()
@@ -35,19 +39,23 @@ export const RecipeBaseZodSchema = z.object({
     .gte(0, "El campo 'puntuación' debe ser mayor o igual a 0")
     .lte(5, "El campo 'puntuación' debe ser menor o igual a 5"),
   time: z.coerce
-    .number()
+    .number({
+      invalid_type_error: "El campo 'tiempo' debe ser un número válido",
+    })
     .int()
-    .positive("El campo 'tiempo' debe ser mayor o igual a 0"),
+    .positive("El campo 'tiempo' debe ser mayor a 0"),
   servings: z.coerce
-    .number()
+    .number({
+      invalid_type_error: "El campo 'porciones' debe ser un número válido",
+    })
     .int()
-    .positive("El campo 'porciones' debe ser mayor o igual a 0"),
+    .positive("El campo 'porciones' debe ser mayor a 0"),
   ingredients: z
     .array(
       z.object({
         quantity: z.number().gte(0, "La 'cantidad' debe ser mayor o igual a 0"),
         id: z.coerce
-          .number({ invalid_type_error: "La 'id' debe ser un número" })
+          .number({ invalid_type_error: "Ingrese una 'id' válida" })
           .positive("Ingrese una 'id' válida"),
       })
     )

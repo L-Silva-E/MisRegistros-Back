@@ -5,6 +5,48 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2025-09-01
+
+### Changed
+
+- **Standardized cooking measurement units**: Refined `Unit` enum in `enums.ts` to focus on practical culinary measurements:
+  - Changed `unit` to `u` for brevity
+  - Added `pinch`, `cup` and `cl` for better representation of small quantities
+- **Enhanced seed data realism**: Updated ingredient and recipe seed data for more practical cooking scenarios:
+  - Migrated ingredient units to appropriate measurements (e.g., spices to `tsp`/`pinch`, liquids to `tbsp`/`cup`)
+  - Adjusted recipe quantities to match realistic cooking proportions
+  - Improved ingredient-to-unit consistency across all recipes
+- **Improved validation error structure**: Renamed `validation` to `validations` in `ErrorResponse` interface for better semantic clarity
+
+## [1.2.0] - 2025-08-31
+
+### Added
+
+- **Centralized step numbering utility**: Created `assignStepNumbers()` utility function in `recipe.utils.ts` for consistent step number assignment across recipe operations
+- **Enhanced type safety**: `RecipeStepInput` interface for recipe-specific step operations
+- **Comprehensive validation error messages**: Added custom `invalid_type_error` messages for all Zod schema fields to replace generic error messages
+
+### Changed
+
+- **Improved validation error responses**: Enhanced Zod validation middleware to provide detailed error arrays with all validation issues:
+  - Removed redundant `field` property from `ErrorResponse` interface
+  - Added `validation` array containing all error details
+- **Refactored recipe service**: Moved recipe-specific interfaces (`RecipeStepModel`, `RecipeStepInput`) from `step.model.ts` to `recipe.model.ts`
+- **Standardized validation messages**: Unified all validation error messages for consistency and improved clarity
+- **Improved pagination validation**: Updated page validation to accept 0-based pagination (page >= 0)
+
+### Removed
+
+- **Code duplication**: Eliminated duplicate step numbering logic between recipe create and update operations
+
+### Fixed
+
+- **Step numbering logic**: Resolved issues with step number assignment, ensuring proper handling of:
+  - Existing step numbers are preserved
+  - Missing numbers are auto-assigned sequentially
+  - Duplicate numbers are avoided
+  - Steps are returned sorted by number
+
 ## [1.1.0] - 2025-08-23
 
 ### Added

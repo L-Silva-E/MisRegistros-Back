@@ -35,18 +35,35 @@ const validateSchemas =
       let statusCode = 500;
 
       if (error instanceof z.ZodError) {
+        const detailMessage = "Validation failed";
         statusCode = 400;
+
         apiError = {
           error: "Bad Request",
-          details: "Validation failed",
-          field: error.issues[0]?.path.join(".") || undefined,
+          details: detailMessage,
+          validations: error.issues.map((issue) => ({
+            path: issue.path.join("."),
+            code: issue.code,
+            expected: (issue as any)?.expected || undefined,
+            received: (issue as any)?.received || undefined,
+            message: issue.message,
+          })),
         };
-      }
 
-      logger.error("Unexpected error in validation middleware", {
-        endpoint: req.originalUrl,
-        message: error.message,
-      });
+        logger.error(detailMessage, {
+          endpoint: req.originalUrl,
+          method: req.method,
+          validationErrors: apiError.validations,
+          totalErrors: error.issues.length,
+        });
+      } else {
+        logger.error("Unexpected error in validation middleware", {
+          endpoint: req.originalUrl,
+          method: req.method,
+          message: error.message,
+          stack: error.stack,
+        });
+      }
 
       return res.status(statusCode).send(apiError);
     }

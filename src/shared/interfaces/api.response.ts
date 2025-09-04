@@ -16,7 +16,13 @@ export interface DeleteResponse {
 export interface ErrorResponse {
   error: string;
   details?: string;
-  field?: string;
+  validations?: Array<{
+    path: string;
+    code: string;
+    expected?: any;
+    received?: any;
+    message: string;
+  }>;
 }
 
 //~ For internal error handling with HTTP codes

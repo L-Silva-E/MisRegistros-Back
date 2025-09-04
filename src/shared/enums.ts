@@ -1,12 +1,17 @@
-export enum Unit {
-  UNIT = "Unit",
-
-  MILLILITER = "ml",
-  LITER = "l",
-
+export enum UnitList {
   MILIGRAM = "mg",
   GRAM = "g",
   KILOGRAM = "kg",
+
+  MILLILITER = "ml",
+  CENTILITER = "cl",
+  LITER = "l",
+
+  UNIT = "u",
+  TEASPOON = "tsp",
+  TABLESPOON = "tbsp",
+  CUP = "cup",
+  PINCH = "pinch",
 }
 
 export enum Score {
