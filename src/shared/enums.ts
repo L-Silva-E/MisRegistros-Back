@@ -1,4 +1,4 @@
-export enum Unit {
+export enum UnitList {
   MILIGRAM = "mg",
   GRAM = "g",
   KILOGRAM = "kg",
