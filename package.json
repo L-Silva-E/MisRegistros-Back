@@ -1,6 +1,6 @@
 {
   "name": "misregistros-back",
-  "version": "1.0.0",
+  "version": "1.4.0",
   "description": "App to register all personal data",
   "main": "server.js",
   "scripts": {

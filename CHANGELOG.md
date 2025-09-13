@@ -5,6 +5,20 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2025-09-13
+
+### Added
+
+- **Test coverage script**: New `test:coverage` npm script for comprehensive code coverage analysis using Jest
+- **Enhanced test robustness**: Improved error validation tests for ingredient units with exact API error messages
+
+### Changed
+
+- **Standardized unit test structure**: Complete refactoring of all `recipeBook` module controller tests:
+  - Unified mock structure across all controllers (`category`, `ingredient`, `origin`, `step`, `recipe`)
+  - Consistent implementation of AAA pattern (Arrange, Act, Assert) in all test cases
+- **Test maintainability**: Consistent code structure and naming conventions across all test files
+
 ## [1.3.0] - 2025-09-01
 
 ### Changed
