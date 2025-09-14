@@ -11,7 +11,7 @@ module.exports = {
     "!src/**/*.spec.ts",
   ],
 
-  // Exclude directories we don't need in coverage
+  // Exclude directories that are not relevant for coverage
   coveragePathIgnorePatterns: [
     "/node_modules/",
     "/build/",
@@ -28,7 +28,6 @@ module.exports = {
       lines: 60, // Reduced to be more realistic
       statements: 60, // Reduced to be more realistic
     },
-    // Specific thresholds for the recipeBook module (your work)
     "src/modules/recipeBook/controllers/**/*.ts": {
       branches: 100,
       functions: 100,
