@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Context } from "../../../shared/jest/context";
+import { QueryParams } from "../../../shared/prisma/interfaces/Iquery";
 import { getQueryOptions } from "../../../shared/prisma/utils/prisma.utils";
 import {
   RecipeModel,
@@ -62,7 +63,10 @@ export default class RecipeService {
     }
   }
 
-  public async get(query: any, ctx?: Context): Promise<RecipeCountModel> {
+  public async get(
+    query: QueryParams,
+    ctx?: Context
+  ): Promise<RecipeCountModel> {
     const prisma = ctx?.prisma || prismaClient;
 
     try {

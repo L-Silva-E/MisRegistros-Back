@@ -24,14 +24,16 @@ export default class FeatureController {
       };
 
       return res.status(201).send(response);
-    } catch (error: any) {
+    } catch (error: unknown) {
       logger.error("Error while creating:", {
         body: req.body,
-        error: error.message,
-        stack: error.stack,
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
       });
 
-      const errorBody = ErrorCodes(error);
+      const errorBody = ErrorCodes(
+        error instanceof Error ? error : new Error(String(error))
+      );
       return res.status(errorBody.code).send(errorBody.response);
     }
   }
@@ -49,15 +51,17 @@ export default class FeatureController {
       };
 
       return res.status(200).send(response);
-    } catch (error: any) {
+    } catch (error: unknown) {
       logger.error("Error while fetching", {
         filter: req.query,
-        message: error.message,
-        stack: error.stack,
-        name: error.name,
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+        name: error instanceof Error ? error.name : "UnknownError",
       });
 
-      const errorBody = ErrorCodes(error);
+      const errorBody = ErrorCodes(
+        error instanceof Error ? error : new Error(String(error))
+      );
       return res.status(errorBody.code).send(errorBody.response);
     }
   }
@@ -75,15 +79,17 @@ export default class FeatureController {
       };
 
       return res.status(200).send(response);
-    } catch (error: any) {
+    } catch (error: unknown) {
       logger.error("Error while updating", {
         id: Number(req.params.id),
         body: req.body,
-        error: error.message,
-        stack: error.stack,
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
       });
 
-      const errorBody = ErrorCodes(error);
+      const errorBody = ErrorCodes(
+        error instanceof Error ? error : new Error(String(error))
+      );
       return res.status(errorBody.code).send(errorBody.response);
     }
   }
@@ -102,14 +108,16 @@ export default class FeatureController {
       };
 
       return res.status(200).send(response);
-    } catch (error: any) {
+    } catch (error: unknown) {
       logger.error("Error while deleting", {
         id: Number(req.params.id),
-        error: error.message,
-        stack: error.stack,
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
       });
 
-      const errorBody = ErrorCodes(error);
+      const errorBody = ErrorCodes(
+        error instanceof Error ? error : new Error(String(error))
+      );
       return res.status(errorBody.code).send(errorBody.response);
     }
   }

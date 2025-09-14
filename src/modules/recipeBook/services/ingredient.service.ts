@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Context } from "../../../shared/jest/context";
+import { QueryParams } from "../../../shared/prisma/interfaces/Iquery";
 import { getQueryOptions } from "../../../shared/prisma/utils/prisma.utils";
 import {
   IngredientModel,
@@ -26,7 +27,10 @@ export default class IngredientService {
     }
   }
 
-  public async get(query: any, ctx?: Context): Promise<IngredientCountModel> {
+  public async get(
+    query: QueryParams,
+    ctx?: Context
+  ): Promise<IngredientCountModel> {
     const prisma = ctx?.prisma || prismaClient;
 
     try {
