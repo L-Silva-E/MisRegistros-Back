@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ~ Recipe Book
+//~ Recipe Book
 model Recipe {
   id          Int      @id @default(autoincrement())
   idCategory  Int
@@ -79,7 +79,7 @@ model Origin {
   recipes Recipe[]
 }
 
-// ~ Feature
+//~ Feature
 model Feature {
   id          Int      @id @default(autoincrement())
   name        String

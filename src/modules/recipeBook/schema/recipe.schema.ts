@@ -6,7 +6,7 @@ import {
 
 import { StepBaseZodSchema } from "./step.schema";
 
-// ~ Base Zod Squema
+//~ Base Zod Squema
 export const RecipeBaseZodSchema = z.object({
   idCategory: z.coerce
     .number({ invalid_type_error: "Ingrese una 'id' válida" })
@@ -66,7 +66,7 @@ export const RecipeBaseZodSchema = z.object({
     .optional(),
 });
 
-// ~ CRUD Zod Schemas
+//~ CRUD Zod Schemas
 export const RecipeCreateZodSchema = z.object({
   body: RecipeBaseZodSchema.strict(),
 });

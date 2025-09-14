@@ -4,7 +4,7 @@ import {
   GetZodSchema,
 } from "../../../shared/zod/schema/base.schema";
 
-// ~ Base Zod Squema
+//~ Base Zod Schema
 export const FeatureBaseZodSchema = z.object({
   name: z
     .string({ invalid_type_error: "El campo 'nombre' debe ser un texto" })
@@ -15,7 +15,7 @@ export const FeatureBaseZodSchema = z.object({
   isActive: z.coerce.boolean().default(true),
 });
 
-// ~ CRUD Zod Schemas
+//~ CRUD Zod Schemas
 export const FeatureCreateZodSchema = z.object({
   body: FeatureBaseZodSchema.strict(),
 });

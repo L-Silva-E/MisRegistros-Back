@@ -1,6 +1,6 @@
 import { BaseEntity } from "../../../shared/interfaces/base.entity";
 
-// ~ Base
+//~ Base
 export interface FeatureModel extends BaseEntity {
   name: string;
   description: string;
