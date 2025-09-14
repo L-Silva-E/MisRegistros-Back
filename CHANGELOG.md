@@ -5,6 +5,21 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2025-09-14
+
+### Changed
+
+- **Enhanced TypeScript type safety**: Comprehensive refactoring to eliminate `any` types across the codebase:
+
+  - **Controllers**: Replaced `any` error types with `unknown` and proper type guards in all controllers (`category`, `ingredient`, `origin`, `recipe`, `step`, `feature`)
+  - **Services**: Updated all service `get` methods to use `QueryParams` interface instead of `any` for query parameters
+  - **Tests**: Improved type safety in all test files:
+    - Replaced `any[]` arrays with proper model types (`CategoryModel[]`, `IngredientModel[]`, etc.)
+    - Updated mock functions to use `unknown` with type guards instead of `any`
+    - Fixed query parameter typing issues with `as const` assertions
+
+- **Improved interface naming**: Renamed `Iquery.ts` to `query.types.ts` following modern TypeScript conventions:
+
 ## [1.5.0] - 2025-09-13
 
 ### Added
