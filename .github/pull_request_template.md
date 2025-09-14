@@ -25,3 +25,5 @@ Descripción
 ### 🗒️ Notas adicionales
 
 Sin detalles importantes que mencionar
+
+---
