@@ -1,23 +1,4 @@
-version: "3.9"
-
 services:
-  # Service for production
-  api-mis-registros:
-    container_name: api-mis-registros
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      - API_KEY=${API_KEY}
-      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?schema=public
-    ports:
-      - ${API_PORT}:${API_PORT}
-    networks:
-      - mis-registros-network
-    profiles:
-      - production
-
-  # Service for development with hot reload
   api-mis-registros-dev:
     container_name: api-mis-registros-dev
     build:
@@ -30,15 +11,14 @@ services:
     ports:
       - ${API_PORT}:${API_PORT}
     volumes:
-      - ./src:/app/src:ro
-      - ./tsconfig.json:/app/tsconfig.json:ro
+      - ./src:/app/src
+      - ./tsconfig.json:/app/tsconfig.json
       - /app/node_modules
     networks:
       - mis-registros-network
-    profiles:
-      - development
     depends_on:
       - db-mis-registros
+    restart: unless-stopped
 
   db-mis-registros:
     container_name: db-mis-registros
