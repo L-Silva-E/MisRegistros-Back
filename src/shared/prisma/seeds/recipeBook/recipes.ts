@@ -12,13 +12,13 @@ const dataRecipes = [
     time: 45,
     servings: 4,
     ingredients: [
-      { name: "Fideos N°77", quantity: 1 }, // 1 porción/paquete
+      { name: "Fideos N°77", quantity: 1 },
       { name: "Cebolla", quantity: 1 },
       { name: "Zanahoria", quantity: 1 },
-      { name: "Aceite Vegetal", quantity: 2 }, // 2 tbsp
-      { name: "Carne Molida", quantity: 250 }, // sigue en gramos
+      { name: "Aceite Vegetal", quantity: 2 },
+      { name: "Carne Molida", quantity: 250 },
       { name: "Tomate", quantity: 1 },
-      { name: "Salsa de Tomate", quantity: 1 }, // 1 cup
+      { name: "Salsa de Tomate", quantity: 1 },
     ],
     steps: [
       "Picar cebolla y zanahoria, para luego sofreír en aceite caliente.",
@@ -43,10 +43,10 @@ const dataRecipes = [
       { name: "Carne Picada", quantity: 300 },
       { name: "Cebolla", quantity: 1 },
       { name: "Huevo Duro", quantity: 2 },
-      { name: "Aceitunas", quantity: 100 }, // sigue en gramos
-      { name: "Comino Molido", quantity: 1 }, // 1 tsp
+      { name: "Aceitunas", quantity: 100 },
+      { name: "Comino Molido", quantity: 1 },
       { name: "Pimentón Rojo", quantity: 1 },
-      { name: "Aceite Vegetal", quantity: 2 }, // 2 tbsp
+      { name: "Aceite Vegetal", quantity: 2 },
     ],
     steps: [
       "Picar la cebolla y sofreír en aceite caliente.",
@@ -67,14 +67,14 @@ const dataRecipes = [
     time: 90,
     servings: 6,
     ingredients: [
-      { name: "Arroz", quantity: 2 }, // 2 cups
-      { name: "Langostinos", quantity: 500 }, // sigue en gramos
-      { name: "Calamar", quantity: 300 }, // sigue en gramos
-      { name: "Chorizo Español", quantity: 200 }, // sigue en gramos
+      { name: "Arroz", quantity: 2 },
+      { name: "Langostinos", quantity: 500 },
+      { name: "Calamar", quantity: 300 },
+      { name: "Chorizo Español", quantity: 200 },
       { name: "Pimentón Rojo", quantity: 2 },
       { name: "Cebolla", quantity: 1 },
       { name: "Ajo", quantity: 3 },
-      { name: "Caldo de Pescado", quantity: 4 }, // 4 cups
+      { name: "Caldo de Pescado", quantity: 4 },
       { name: "Azafrán", quantity: 1 },
     ],
     steps: [
@@ -99,10 +99,10 @@ const dataRecipes = [
     servings: 2,
     ingredients: [
       { name: "Lechuga Romana", quantity: 1 },
-      { name: "Pollo Asado", quantity: 200 }, // sigue en gramos
-      { name: "Pan Tostado", quantity: 2 }, // 2 unidades/rebanadas
-      { name: "Queso Parmesano", quantity: 3 }, // 3 tbsp
-      { name: "Aderezo César", quantity: 3 }, // 3 tbsp
+      { name: "Pollo Asado", quantity: 200 },
+      { name: "Pan Tostado", quantity: 2 },
+      { name: "Queso Parmesano", quantity: 3 },
+      { name: "Aderezo César", quantity: 3 },
     ],
     steps: [
       "Lavar y cortar la lechuga en trozos grandes.",
@@ -126,11 +126,11 @@ const dataRecipes = [
     ingredients: [
       { name: "Huevo", quantity: 2 },
       { name: "Aguacate", quantity: 1 },
-      { name: "Pan Tostado", quantity: 2 }, // 2 unidades
+      { name: "Pan Tostado", quantity: 2 },
       { name: "Tomate Cherry", quantity: 6 },
-      { name: "Aceite de Oliva", quantity: 1 }, // 1 tbsp
-      { name: "Sal", quantity: 0.25 }, // 1/4 tsp
-      { name: "Pimienta", quantity: 0.25 }, // 1/4 pinch
+      { name: "Aceite de Oliva", quantity: 1 },
+      { name: "Sal", quantity: 0.25 },
+      { name: "Pimienta", quantity: 0.25 },
     ],
     steps: [
       "Cortar el aguacate en rodajas finas.",
@@ -152,12 +152,12 @@ const dataRecipes = [
     time: 10,
     servings: 1,
     ingredients: [
-      { name: "Pisco", quantity: 4 }, // 4 tbsp
-      { name: "Jugo de Limón", quantity: 2 }, // 2 tbsp
-      { name: "Jarabe de Goma", quantity: 1 }, // 1 tbsp
+      { name: "Pisco", quantity: 4 },
+      { name: "Jugo de Limón", quantity: 2 },
+      { name: "Jarabe de Goma", quantity: 1 },
       { name: "Clara de Huevo", quantity: 1 },
       { name: "Gotas de Amargo de Angostura", quantity: 2 },
-      { name: "Hielo", quantity: 1 }, // 1 cup
+      { name: "Hielo", quantity: 1 },
     ],
     steps: [
       "En una coctelera, mezclar el pisco, jugo de limón, jarabe de goma y clara de huevo.",
@@ -178,11 +178,11 @@ const dataRecipes = [
     time: 10,
     servings: 1,
     ingredients: [
-      { name: "Tequila Blanco", quantity: 4 }, // 4 tbsp
-      { name: "Triple Sec", quantity: 2 }, // 2 tbsp
-      { name: "Jugo de Lima", quantity: 2 }, // 2 tbsp
-      { name: "Sal", quantity: 0.25 }, // 1/4 tsp
-      { name: "Hielo", quantity: 1 }, // 1 cup
+      { name: "Tequila Blanco", quantity: 4 },
+      { name: "Triple Sec", quantity: 2 },
+      { name: "Jugo de Lima", quantity: 2 },
+      { name: "Sal", quantity: 0.25 },
+      { name: "Hielo", quantity: 1 },
     ],
     steps: [
       "Rellenar la mitad del borde de un vaso con sal.",
@@ -203,10 +203,10 @@ const dataRecipes = [
     time: 15,
     servings: 4,
     ingredients: [
-      { name: "Maíz para Palomitas", quantity: 0.25 }, // 1/4 cup (50g aprox)
-      { name: "Azúcar Blanca", quantity: 30 }, // sigue en gramos
-      { name: "Mantequilla", quantity: 20 }, // sigue en gramos
-      { name: "Sal", quantity: 0.25 }, // 1/4 tsp
+      { name: "Maíz para Palomitas", quantity: 0.25 },
+      { name: "Azúcar Blanca", quantity: 30 },
+      { name: "Mantequilla", quantity: 20 },
+      { name: "Sal", quantity: 0.25 },
     ],
     steps: [
       "Preparar las palomitas de maíz según las instrucciones del paquete.",
@@ -230,10 +230,10 @@ const dataRecipes = [
       { name: "Palta", quantity: 2 },
       { name: "Tomate", quantity: 1 },
       { name: "Cebolla Morada", quantity: 1 },
-      { name: "Cilantro", quantity: 2 }, // 2 tbsp
+      { name: "Cilantro", quantity: 2 },
       { name: "Limón", quantity: 1 },
-      { name: "Sal", quantity: 0.5 }, // 1/2 tsp
-      { name: "Tostitos", quantity: 1 }, // 1 cup
+      { name: "Sal", quantity: 0.5 },
+      { name: "Tostitos", quantity: 1 },
     ],
     steps: [
       "Pelar y machacar los aguacates en un tazón.",
@@ -256,10 +256,10 @@ const dataRecipes = [
     servings: 6,
     ingredients: [
       { name: "Panecillos de Pizza", quantity: 6 },
-      { name: "Salsa de Tomate", quantity: 0.5 }, // 1/2 cup
-      { name: "Queso Mozzarella", quantity: 1 }, // 1 cup
-      { name: "Pepperoni", quantity: 50 }, // sigue en gramos
-      { name: "Orégano", quantity: 0.5 }, // 1/2 tsp
+      { name: "Salsa de Tomate", quantity: 0.5 },
+      { name: "Queso Mozzarella", quantity: 1 },
+      { name: "Pepperoni", quantity: 50 },
+      { name: "Orégano", quantity: 0.5 },
     ],
     steps: [
       "Precalentar el horno a la temperatura indicada en los panecillos de pizza.",
@@ -305,12 +305,12 @@ const dataRecipes = [
     time: 45,
     servings: 4,
     ingredients: [
-      { name: "Pollo", quantity: 500 }, // sigue en gramos
-      { name: "Arroz", quantity: 1.5 }, // 1.5 cups
+      { name: "Pollo", quantity: 500 },
+      { name: "Arroz", quantity: 1.5 },
       { name: "Cebolla", quantity: 1 },
       { name: "Zanahoria", quantity: 1 },
-      { name: "Aceite Vegetal", quantity: 2 }, // 2 tbsp
-      { name: "Agua", quantity: 500 }, // sigue en ml
+      { name: "Aceite Vegetal", quantity: 2 },
+      { name: "Agua", quantity: 500 },
     ],
     steps: [
       "Picar cebolla y zanahoria, para luego sofreír en aceite caliente.",
@@ -333,9 +333,9 @@ const dataRecipes = [
     ingredients: [
       { name: "Manzana", quantity: 3 },
       { name: "Masa de Empanadas", quantity: 1 },
-      { name: "Mantequilla", quantity: 100 }, // sigue en gramos
-      { name: "Azúcar Blanca", quantity: 100 }, // sigue en gramos
-      { name: "Canela Molida", quantity: 1 }, // 1 tsp
+      { name: "Mantequilla", quantity: 100 },
+      { name: "Azúcar Blanca", quantity: 100 },
+      { name: "Canela Molida", quantity: 1 },
     ],
     steps: [
       "Pelar y cortar las manzanas en rodajas finas.",
@@ -360,9 +360,9 @@ const dataRecipes = [
       { name: "Zanahoria", quantity: 1 },
       { name: "Puerro", quantity: 1 },
       { name: "Apio", quantity: 1 },
-      { name: "Fideos N°5", quantity: 0.5 }, // 1/2 porción
-      { name: "Aceite Vegetal", quantity: 2 }, // 2 tbsp
-      { name: "Agua", quantity: 500 }, // sigue en ml
+      { name: "Fideos N°5", quantity: 0.5 },
+      { name: "Aceite Vegetal", quantity: 2 },
+      { name: "Agua", quantity: 500 },
     ],
     steps: [
       "Picar cebolla, zanahoria, puerro y apio, para luego sofreír en aceite caliente.",
@@ -382,11 +382,11 @@ const dataRecipes = [
     time: 50,
     servings: 6,
     ingredients: [
-      { name: "Espinacas", quantity: 2 }, // 2 cups
+      { name: "Espinacas", quantity: 2 },
       { name: "Cebolla", quantity: 1 },
       { name: "Masa de Empanadas", quantity: 1 },
-      { name: "Mantequilla", quantity: 100 }, // sigue en gramos
-      { name: "Agua", quantity: 50 }, // sigue en ml
+      { name: "Mantequilla", quantity: 100 },
+      { name: "Agua", quantity: 50 },
     ],
     steps: [
       "Picar cebolla y espinaca, para luego sofreír en aceite caliente.",
@@ -410,9 +410,9 @@ const dataRecipes = [
       { name: "Zanahoria", quantity: 1 },
       { name: "Puerro", quantity: 1 },
       { name: "Apio", quantity: 1 },
-      { name: "Lentejas", quantity: 200 }, // sigue en gramos
-      { name: "Aceite Vegetal", quantity: 2 }, // 2 tbsp
-      { name: "Agua", quantity: 500 }, // sigue en ml
+      { name: "Lentejas", quantity: 200 },
+      { name: "Aceite Vegetal", quantity: 2 },
+      { name: "Agua", quantity: 500 },
     ],
     steps: [
       "Picar cebolla, zanahoria, puerro y apio, para luego sofreír en aceite caliente.",
@@ -460,10 +460,10 @@ const dataRecipes = [
       { name: "Zanahoria", quantity: 1 },
       { name: "Puerro", quantity: 1 },
       { name: "Apio", quantity: 1 },
-      { name: "Arvejas", quantity: 200 }, // sigue en gramos
-      { name: "Aceite Vegetal", quantity: 2 }, // 2 tbsp
-      { name: "Agua", quantity: 500 }, // sigue en ml
-      { name: "Arroz", quantity: 0.5 }, // 1/2 cup
+      { name: "Arvejas", quantity: 200 },
+      { name: "Aceite Vegetal", quantity: 2 },
+      { name: "Agua", quantity: 500 },
+      { name: "Arroz", quantity: 0.5 },
     ],
     steps: [
       "Picar cebolla, zanahoria, puerro y apio, para luego sofreír en aceite caliente.",

@@ -6,7 +6,7 @@ import {
 
 import { UnitList } from "../../../shared/enums";
 
-// ~ Base Zod Squema
+//~ Base Zod Squema
 export const IngredientBaseZodSchema = z.object({
   name: z
     .string({ invalid_type_error: "El campo 'nombre' debe ser un texto" })
@@ -22,7 +22,7 @@ export const IngredientBaseZodSchema = z.object({
   }),
 });
 
-// ~ CRUD Zod Schemas
+//~ CRUD Zod Schemas
 export const IngredientCreateZodSchema = z.object({
   body: IngredientBaseZodSchema.strict(),
 });

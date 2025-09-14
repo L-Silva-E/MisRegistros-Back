@@ -1,14 +1,21 @@
 {
   "name": "misregistros-back",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "App to register all personal data",
   "main": "server.js",
   "scripts": {
     "dev": "ts-node-dev src/server.ts",
+    "dev:container": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules --poll src/server.ts",
     "start": "node build/server.js",
     "build": "tsc",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "docker:dev": "docker-compose -f docker-compose.dev.yml up --build",
+    "docker:dev:down": "docker-compose -f docker-compose.dev.yml down",
+    "docker:dev:stop": "docker-compose -f docker-compose.dev.yml stop",
+    "docker:prod": "docker-compose --profile production up --build",
+    "docker:prod:down": "docker-compose --profile production down",
+    "docker:prod:stop": "docker-compose --profile production stop"
   },
   "author": "Lucas Silva",
   "license": "ISC",

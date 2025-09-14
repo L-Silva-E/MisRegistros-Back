@@ -3,7 +3,7 @@ module.exports = {
   testEnvironment: "node",
   clearMocks: true,
 
-  // Solo incluir archivos TypeScript para coverage
+  // Just include TypeScript files for coverage
   collectCoverageFrom: [
     "src/**/*.{ts,tsx}",
     "!src/**/*.d.ts",
@@ -11,7 +11,7 @@ module.exports = {
     "!src/**/*.spec.ts",
   ],
 
-  // Excluir directorios que no necesitamos en coverage
+  // Exclude directories that are not relevant for coverage
   coveragePathIgnorePatterns: [
     "/node_modules/",
     "/build/",
@@ -20,15 +20,14 @@ module.exports = {
     "/.github/",
   ],
 
-  // Configurar umbrales de coverage específicos por módulo
+  // Configure specific coverage thresholds per module
   coverageThreshold: {
     global: {
-      branches: 50, // Reducido porque feature module no tiene tests
-      functions: 60, // Reducido para ser más realista
-      lines: 60, // Reducido para ser más realista
-      statements: 60, // Reducido para ser más realista
+      branches: 50, // Reduced because feature module has no tests
+      functions: 60, // Reduced to be more realistic
+      lines: 60, // Reduced to be more realistic
+      statements: 60, // Reduced to be more realistic
     },
-    // Umbrales específicos para el módulo recipeBook (tu trabajo)
     "src/modules/recipeBook/controllers/**/*.ts": {
       branches: 100,
       functions: 100,
@@ -36,7 +35,7 @@ module.exports = {
       statements: 100,
     },
     "src/modules/recipeBook/services/**/*.ts": {
-      branches: 64, // Ajustado para recipe.service.ts que tiene 64.28%
+      branches: 64,
       functions: 100,
       lines: 100,
       statements: 100,

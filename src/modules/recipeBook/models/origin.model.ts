@@ -1,6 +1,6 @@
 import { BaseEntity } from "../../../shared/interfaces/base.entity";
 
-// ~ Base
+//~ Base
 export interface OriginModel extends BaseEntity {
   name: string;
 }

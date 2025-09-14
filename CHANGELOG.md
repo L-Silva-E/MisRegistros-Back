@@ -5,6 +5,18 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2025-09-13
+
+### Added
+
+- **Docker hot reload support**: Implemented automatic code reloading for Docker development environment:
+  - New `dev:container` npm script with polling-based file watching for reliable change detection in containers
+  - Enhanced Docker development workflow with real-time code updates without container rebuilds
+- **Optimized Docker development configuration**:
+  - Separate `docker-compose.dev.yml` with writable volume mounts for source code synchronization
+  - Anonymous volume for `node_modules` to prevent host/container dependency conflicts
+  - Improved `Dockerfile.dev` optimized for development with proper hot reload support
+
 ## [1.4.0] - 2025-09-13
 
 ### Added
