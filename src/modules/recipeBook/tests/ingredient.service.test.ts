@@ -1,3 +1,4 @@
+import { IngredientModel } from "../models/ingredient.model";
 import IngredientService from "../services/ingredient.service";
 import {
   Context,
@@ -154,7 +155,7 @@ describe("IngredientService", () => {
     it("should return empty result when no ingredients found", async () => {
       // Arrange
       const query = { where: { name: "NonExistent" } };
-      const ingredients: any[] = [];
+      const ingredients: IngredientModel[] = [];
       const count = 0;
       mockCtx.prisma.$transaction.mockResolvedValue([ingredients, count]);
 

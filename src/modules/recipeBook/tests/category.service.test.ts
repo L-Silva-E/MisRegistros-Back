@@ -1,3 +1,4 @@
+import { CategoryModel } from "../models/category.model";
 import CategoryService from "../services/category.service";
 import {
   Context,
@@ -100,7 +101,7 @@ describe("CategoryService", () => {
     it("should return empty result when no categories found", async () => {
       // Arrange
       const query = { where: { name: "NonExistent" } };
-      const categories: any[] = [];
+      const categories: CategoryModel[] = [];
       const count = 0;
       mockCtx.prisma.$transaction.mockResolvedValue([categories, count]);
 

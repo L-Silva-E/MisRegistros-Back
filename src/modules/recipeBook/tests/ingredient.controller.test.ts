@@ -19,16 +19,17 @@ jest.mock("../../../services/logger", () => {
   return jest.fn().mockImplementation(() => mockLoggerService);
 });
 
-const mockErrorCodes = jest.fn().mockImplementation((error: any) => {
-  if (error.message.includes("Retrieval failed")) {
+const mockErrorCodes = jest.fn().mockImplementation((error: unknown) => {
+  const errorMessage = error instanceof Error ? error.message : String(error);
+  if (errorMessage.includes("Retrieval failed")) {
     return {
       code: 500,
       response: { error: "Internal Server Error" },
     };
   }
   if (
-    error.message.includes("Deletion failed") ||
-    error.message.includes("not found")
+    errorMessage.includes("Deletion failed") ||
+    errorMessage.includes("not found")
   ) {
     return {
       code: 404,

@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Context } from "../../../shared/jest/context";
+import { QueryParams } from "../../../shared/prisma/interfaces/query.types";
 import { getQueryOptions } from "../../../shared/prisma/utils/prisma.utils";
 import { StepModel, StepCountModel } from "../models/step.model";
 
@@ -20,7 +21,7 @@ export default class StepService {
     }
   }
 
-  public async get(query: any, ctx?: Context): Promise<StepCountModel> {
+  public async get(query: QueryParams, ctx?: Context): Promise<StepCountModel> {
     const prisma = ctx?.prisma || prismaClient;
 
     try {

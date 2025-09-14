@@ -1,3 +1,4 @@
+import { RecipeModel } from "../models/recipe.model";
 import RecipeService from "../services/recipe.service";
 import {
   Context,
@@ -245,7 +246,7 @@ describe("RecipeService", () => {
     it("should return empty result when no recipes found", async () => {
       // Arrange
       const query = { where: { name: "NonExistentRecipe" } };
-      const recipes: any[] = [];
+      const recipes: RecipeModel[] = [];
       const count = 0;
       mockCtx.prisma.$transaction.mockResolvedValue([recipes, count]);
 

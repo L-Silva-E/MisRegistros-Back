@@ -1,3 +1,4 @@
+import { StepModel } from "../models/step.model";
 import StepService from "../services/step.service";
 import {
   Context,
@@ -98,7 +99,8 @@ describe("StepService", () => {
       // Arrange
       const query = {
         where: { idRecipe: 1 },
-        orderBy: { number: "asc" },
+        orderBy: "asc" as const,
+        orderByField: "number",
       };
 
       const steps = [
@@ -137,7 +139,7 @@ describe("StepService", () => {
     it("should return empty result when no steps found", async () => {
       // Arrange
       const query = { where: { idRecipe: 999 } };
-      const steps: any[] = [];
+      const steps: StepModel[] = [];
       const count = 0;
       mockCtx.prisma.$transaction.mockResolvedValue([steps, count]);
 

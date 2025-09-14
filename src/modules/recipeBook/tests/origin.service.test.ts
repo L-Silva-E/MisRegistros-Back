@@ -1,3 +1,4 @@
+import { OriginModel } from "../models/origin.model";
 import OriginService from "../services/origin.service";
 import {
   Context,
@@ -100,7 +101,7 @@ describe("OriginService", () => {
     it("should return empty result when no origins found", async () => {
       // Arrange
       const query = { where: { name: "NonExistent" } };
-      const origins: any[] = [];
+      const origins: OriginModel[] = [];
       const count = 0;
       mockCtx.prisma.$transaction.mockResolvedValue([origins, count]);
 

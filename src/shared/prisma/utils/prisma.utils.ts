@@ -1,6 +1,6 @@
 import moment from "moment";
 
-import { QueryParams } from "../interfaces/Iquery";
+import { QueryParams } from "../interfaces/query.types";
 
 export const getQueryOptions = (
   query: QueryParams,
@@ -62,7 +62,7 @@ export const getOrder = (query: QueryParams) => {
   if (query.orderByField != null) {
     order.orderBy = { [query.orderByField]: orderBy };
   } else {
-    order.orderBy = { id: 'asc' };
+    order.orderBy = { id: "asc" };
   }
 
   delete query.orderByField;
@@ -72,7 +72,7 @@ export const getOrder = (query: QueryParams) => {
 };
 
 export const getPagination = (query: QueryParams) => {
-  if (!('limit' in query) && !('page' in query)) {
+  if (!("limit" in query) && !("page" in query)) {
     return {};
   }
 
