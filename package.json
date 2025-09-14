@@ -12,8 +12,10 @@
     "test:coverage": "jest --coverage",
     "docker:dev": "docker-compose -f docker-compose.dev.yml up --build",
     "docker:dev:down": "docker-compose -f docker-compose.dev.yml down",
+    "docker:dev:stop": "docker-compose -f docker-compose.dev.yml stop",
     "docker:prod": "docker-compose --profile production up --build",
-    "docker:prod:down": "docker-compose --profile production down"
+    "docker:prod:down": "docker-compose --profile production down",
+    "docker:prod:stop": "docker-compose --profile production stop"
   },
   "author": "Lucas Silva",
   "license": "ISC",
