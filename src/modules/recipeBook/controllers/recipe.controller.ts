@@ -121,4 +121,31 @@ export default class RecipeController {
       return res.status(errorBody.code).send(errorBody.response);
     }
   }
+
+  public async duplicate(req: Request, res: Response): Promise<Response> {
+    try {
+      const { params } = req;
+      const id = Number(params.id);
+
+      const duplicatedRecipe = await recipeService.duplicate(id);
+      logger.info("Recipe duplicated for editing", { originalId: id });
+
+      const response: ItemResponse<typeof duplicatedRecipe> = {
+        data: duplicatedRecipe,
+      };
+
+      return res.status(200).send(response);
+    } catch (error: unknown) {
+      logger.error("Error while duplicating recipe", {
+        id: Number(req.params.id),
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+
+      const errorBody = ErrorCodes(
+        error instanceof Error ? error : new Error(String(error))
+      );
+      return res.status(errorBody.code).send(errorBody.response);
+    }
+  }
 }
