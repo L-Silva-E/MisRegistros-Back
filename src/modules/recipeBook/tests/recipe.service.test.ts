@@ -33,10 +33,14 @@ describe("RecipeService", () => {
         ingredients: [
           {
             id: 1,
+            name: "Fideos",
+            unit: "g",
             quantity: 500,
           },
           {
             id: 2,
+            name: "Salsa de Tomate",
+            unit: "ml",
             quantity: 200,
           },
         ],
@@ -104,7 +108,6 @@ describe("RecipeService", () => {
       // Assert
       expect(result).toEqual(expectedRecipe);
       expect(mockCtx.prisma.recipe.create).toHaveBeenCalledTimes(1);
-      // Cast result to any to access the included properties that are returned but not in the type
       expect((result as any).ingredients).toHaveLength(2);
       expect((result as any).steps).toHaveLength(3);
     });
@@ -119,7 +122,9 @@ describe("RecipeService", () => {
         score: 3,
         time: 15,
         servings: 2,
-        ingredients: [{ id: 1, quantity: 100 }],
+        ingredients: [
+          { id: 1, name: "Test Ingredient", unit: "g", quantity: 100 },
+        ],
         steps: [],
       };
 
@@ -166,7 +171,9 @@ describe("RecipeService", () => {
         score: 5,
         time: 30,
         servings: 4,
-        ingredients: [{ id: 1, quantity: 100 }],
+        ingredients: [
+          { id: 1, name: "Test Ingredient", unit: "g", quantity: 100 },
+        ],
         steps: [{ instruction: "Do something" }] as any,
       };
 
@@ -330,17 +337,21 @@ describe("RecipeService", () => {
         ingredients: [
           {
             id: 1,
-            quantity: 600, // updated quantity
+            name: "Fideos",
+            unit: "g",
+            quantity: 600,
           },
           {
-            id: 3, // new ingredient
+            id: 3,
+            name: "Queso Parmesano",
+            unit: "g",
             quantity: 50,
           },
         ],
         steps: [
           {
             number: 1,
-            instruction: "Hervir agua con sal en una olla grande", // updated
+            instruction: "Hervir agua con sal en una olla grande",
           },
           {
             number: 2,
@@ -348,7 +359,7 @@ describe("RecipeService", () => {
           },
           {
             number: 3,
-            instruction: "Servir caliente", // new step
+            instruction: "Servir caliente",
           },
         ] as any,
       };
@@ -541,6 +552,79 @@ describe("RecipeService", () => {
       expect(result).toEqual(expectedRecipe);
       expect((result as any).ingredients).toHaveLength(10);
       expect((result as any).steps).toHaveLength(15);
+    });
+  });
+
+  describe("duplicate", () => {
+    test("should duplicate a recipe successfully", async () => {
+      // Mock data
+      const originalRecipeFromDB = {
+        id: 1,
+        idCategory: 1,
+        idOrigin: 1,
+        name: "Paella Valenciana",
+        description: "Receta tradicional de paella",
+        score: 5,
+        time: 60,
+        servings: 4,
+        thumbnail: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        category: { name: "Arroces" },
+        origin: { name: "España" },
+        ingredients: [
+          {
+            quantity: 400,
+            ingredient: { id: 1, name: "Arroz", unit: "gramos" },
+          },
+          {
+            quantity: 500,
+            ingredient: { id: 2, name: "Pollo", unit: "gramos" },
+          },
+        ],
+        steps: [
+          { number: 1, instruction: "Preparar los ingredientes" },
+          { number: 2, instruction: "Cocinar el arroz" },
+        ],
+      };
+
+      mockCtx.prisma.recipe.findUnique.mockResolvedValue(originalRecipeFromDB);
+
+      const duplicatedRecipe = await recipeService.duplicate(1, ctx);
+
+      expect(duplicatedRecipe.name).toBe("Paella Valenciana (Copia)");
+      expect(duplicatedRecipe.description).toBe("Receta tradicional de paella");
+      expect(duplicatedRecipe.idCategory).toBe(1);
+      expect(duplicatedRecipe.idOrigin).toBe(1);
+      expect(duplicatedRecipe.score).toBe(5);
+      expect(duplicatedRecipe.time).toBe(60);
+      expect(duplicatedRecipe.servings).toBe(4);
+      expect(duplicatedRecipe.id).toBeUndefined();
+
+      // Verify ingredients
+      expect(duplicatedRecipe.ingredients).toHaveLength(2);
+      expect(duplicatedRecipe.ingredients[0]).toEqual({
+        id: 1,
+        name: "Arroz",
+        unit: "gramos",
+        quantity: 400,
+      });
+
+      // Verify steps
+      expect(duplicatedRecipe.steps).toHaveLength(2);
+      expect(duplicatedRecipe.steps![0]).toEqual({
+        number: 1,
+        instruction: "Preparar los ingredientes",
+      });
+    });
+
+    test("should throw error when recipe does not exist", async () => {
+      // Mock not found
+      mockCtx.prisma.recipe.findUnique.mockResolvedValue(null);
+
+      await expect(recipeService.duplicate(999, ctx)).rejects.toThrow(
+        "Recipe with id 999 not found"
+      );
     });
   });
 });
