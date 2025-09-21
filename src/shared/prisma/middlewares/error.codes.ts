@@ -34,6 +34,16 @@ const ErrorCodes = (err: Error): ErrorWithCode => {
       result.response.error = "Conflict";
       result.response.details = "Unique constraint violation";
     }
+    if (err.code == "P2003") {
+      result.code = 409;
+      result.response.error = "Conflict";
+      if (err.message && err.message.includes("Cannot delete")) {
+        result.response.details = err.message;
+      } else {
+        result.response.details =
+          "Cannot delete this record because it is referenced by other records. Please remove the dependencies first.";
+      }
+    }
     if (err.code == "P2028" || err.code == "P5015") {
       result.code = 500;
       result.response.error = "Internal Server Error";
