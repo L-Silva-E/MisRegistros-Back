@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Context } from "../../../shared/jest/context";
+import { QueryParams } from "../../../shared/prisma/interfaces/query.types";
 import { getQueryOptions } from "../../../shared/prisma/utils/prisma.utils";
 import { CategoryModel, CategoryCountModel } from "../models/category.model";
 
@@ -23,7 +24,10 @@ export default class CategoryService {
     }
   }
 
-  public async get(query: any, ctx?: Context): Promise<CategoryCountModel> {
+  public async get(
+    query: QueryParams,
+    ctx?: Context
+  ): Promise<CategoryCountModel> {
     const prisma = ctx?.prisma || prismaClient;
 
     try {

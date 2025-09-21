@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Context } from "../../../shared/jest/context";
+import { QueryParams } from "../../../shared/prisma/interfaces/query.types";
 import { getQueryOptions } from "../../../shared/prisma/utils/prisma.utils";
 import { OriginModel, OriginCountModel } from "../models/origin.model";
 
@@ -23,7 +24,10 @@ export default class OriginService {
     }
   }
 
-  public async get(query: any, ctx?: Context): Promise<OriginCountModel> {
+  public async get(
+    query: QueryParams,
+    ctx?: Context
+  ): Promise<OriginCountModel> {
     const prisma = ctx?.prisma || prismaClient;
 
     try {

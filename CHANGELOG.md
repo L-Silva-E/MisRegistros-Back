@@ -5,6 +5,89 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2025-09-14
+
+### Changed
+
+- **Enhanced TypeScript type safety**: Comprehensive refactoring to eliminate `any` types across the codebase:
+
+  - **Controllers**: Replaced `any` error types with `unknown` and proper type guards in all controllers (`category`, `ingredient`, `origin`, `recipe`, `step`, `feature`)
+  - **Services**: Updated all service `get` methods to use `QueryParams` interface instead of `any` for query parameters
+  - **Tests**: Improved type safety in all test files:
+    - Replaced `any[]` arrays with proper model types (`CategoryModel[]`, `IngredientModel[]`, etc.)
+    - Updated mock functions to use `unknown` with type guards instead of `any`
+    - Fixed query parameter typing issues with `as const` assertions
+
+- **Improved interface naming**: Renamed `Iquery.ts` to `query.types.ts` following modern TypeScript conventions:
+
+## [1.5.0] - 2025-09-13
+
+### Added
+
+- **Docker hot reload support**: Implemented automatic code reloading for Docker development environment:
+  - New `dev:container` npm script with polling-based file watching for reliable change detection in containers
+  - Enhanced Docker development workflow with real-time code updates without container rebuilds
+- **Optimized Docker development configuration**:
+  - Separate `docker-compose.dev.yml` with writable volume mounts for source code synchronization
+  - Anonymous volume for `node_modules` to prevent host/container dependency conflicts
+  - Improved `Dockerfile.dev` optimized for development with proper hot reload support
+
+## [1.4.0] - 2025-09-13
+
+### Added
+
+- **Test coverage script**: New `test:coverage` npm script for comprehensive code coverage analysis using Jest
+- **Enhanced test robustness**: Improved error validation tests for ingredient units with exact API error messages
+
+### Changed
+
+- **Standardized unit test structure**: Complete refactoring of all `recipeBook` module controller tests:
+  - Unified mock structure across all controllers (`category`, `ingredient`, `origin`, `step`, `recipe`)
+  - Consistent implementation of AAA pattern (Arrange, Act, Assert) in all test cases
+- **Test maintainability**: Consistent code structure and naming conventions across all test files
+
+## [1.3.0] - 2025-09-01
+
+### Changed
+
+- **Standardized cooking measurement units**: Refined `Unit` enum in `enums.ts` to focus on practical culinary measurements:
+  - Changed `unit` to `u` for brevity
+  - Added `pinch`, `cup` and `cl` for better representation of small quantities
+- **Enhanced seed data realism**: Updated ingredient and recipe seed data for more practical cooking scenarios:
+  - Migrated ingredient units to appropriate measurements (e.g., spices to `tsp`/`pinch`, liquids to `tbsp`/`cup`)
+  - Adjusted recipe quantities to match realistic cooking proportions
+  - Improved ingredient-to-unit consistency across all recipes
+- **Improved validation error structure**: Renamed `validation` to `validations` in `ErrorResponse` interface for better semantic clarity
+
+## [1.2.0] - 2025-08-31
+
+### Added
+
+- **Centralized step numbering utility**: Created `assignStepNumbers()` utility function in `recipe.utils.ts` for consistent step number assignment across recipe operations
+- **Enhanced type safety**: `RecipeStepInput` interface for recipe-specific step operations
+- **Comprehensive validation error messages**: Added custom `invalid_type_error` messages for all Zod schema fields to replace generic error messages
+
+### Changed
+
+- **Improved validation error responses**: Enhanced Zod validation middleware to provide detailed error arrays with all validation issues:
+  - Removed redundant `field` property from `ErrorResponse` interface
+  - Added `validation` array containing all error details
+- **Refactored recipe service**: Moved recipe-specific interfaces (`RecipeStepModel`, `RecipeStepInput`) from `step.model.ts` to `recipe.model.ts`
+- **Standardized validation messages**: Unified all validation error messages for consistency and improved clarity
+- **Improved pagination validation**: Updated page validation to accept 0-based pagination (page >= 0)
+
+### Removed
+
+- **Code duplication**: Eliminated duplicate step numbering logic between recipe create and update operations
+
+### Fixed
+
+- **Step numbering logic**: Resolved issues with step number assignment, ensuring proper handling of:
+  - Existing step numbers are preserved
+  - Missing numbers are auto-assigned sequentially
+  - Duplicate numbers are avoided
+  - Steps are returned sorted by number
+
 ## [1.1.0] - 2025-08-23
 
 ### Added

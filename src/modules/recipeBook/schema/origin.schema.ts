@@ -4,14 +4,14 @@ import {
   GetZodSchema,
 } from "../../../shared/zod/schema/base.schema";
 
-// ~ Base Zod Squema
+//~ Base Zod Squema
 export const OriginBaseZodSchema = z.object({
   name: z
     .string({ invalid_type_error: "El campo 'nombre' debe ser un texto" })
     .min(1, "El campo 'nombre' no puede estar vacío"),
 });
 
-// ~ CRUD Zod Schemas
+//~ CRUD Zod Schemas
 export const OriginCreateZodSchema = z.object({
   body: OriginBaseZodSchema.strict(),
 });

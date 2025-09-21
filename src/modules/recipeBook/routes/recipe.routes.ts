@@ -48,5 +48,12 @@ export default class RecipeRouter {
       middlewareValidationSchema(RecipeDeleteZodSchema),
       this.controller.delete
     );
+
+    this.router.post(
+      `/${this.version}/recipe/:id/duplicate`,
+      AuthorizationApiKey,
+      middlewareValidationSchema(RecipeDeleteZodSchema),
+      this.controller.duplicate
+    );
   }
 }

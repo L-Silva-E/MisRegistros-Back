@@ -1,9 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import { Context } from "../../../shared/jest/context";
+import { QueryParams } from "../../../shared/prisma/interfaces/query.types";
 import { getQueryOptions } from "../../../shared/prisma/utils/prisma.utils";
 import {
-  RecipeModel,
   FullRecipeModel,
+  FullRecipeResponse,
   RecipeCountModel,
 } from "../models/recipe.model";
 import { assignStepNumbers } from "../utils/recipe.utils";
@@ -14,7 +15,7 @@ export default class RecipeService {
   public async create(
     recipe: FullRecipeModel,
     ctx?: Context
-  ): Promise<RecipeModel> {
+  ): Promise<FullRecipeResponse> {
     const prisma = ctx?.prisma || prismaClient;
 
     try {
@@ -62,7 +63,10 @@ export default class RecipeService {
     }
   }
 
-  public async get(query: any, ctx?: Context): Promise<RecipeCountModel> {
+  public async get(
+    query: QueryParams,
+    ctx?: Context
+  ): Promise<RecipeCountModel> {
     const prisma = ctx?.prisma || prismaClient;
 
     try {
@@ -105,7 +109,7 @@ export default class RecipeService {
     id: number,
     recipe: FullRecipeModel,
     ctx?: Context
-  ): Promise<FullRecipeModel> {
+  ): Promise<FullRecipeResponse> {
     const prisma = ctx?.prisma || prismaClient;
 
     try {
@@ -156,7 +160,7 @@ export default class RecipeService {
     }
   }
 
-  public async delete(id: number, ctx?: Context): Promise<RecipeModel> {
+  public async delete(id: number, ctx?: Context): Promise<FullRecipeResponse> {
     const prisma = ctx?.prisma || prismaClient;
 
     try {
@@ -182,6 +186,64 @@ export default class RecipeService {
       });
 
       return recipeDeleted;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async duplicate(id: number, ctx?: Context): Promise<FullRecipeModel> {
+    const prisma = ctx?.prisma || prismaClient;
+
+    try {
+      const originalRecipe = await prisma.recipe.findUnique({
+        where: { id },
+        include: {
+          category: {
+            select: { name: true },
+          },
+          origin: {
+            select: { name: true },
+          },
+          ingredients: {
+            select: {
+              quantity: true,
+              ingredient: { select: { id: true, name: true, unit: true } },
+            },
+          },
+          steps: {
+            select: { number: true, instruction: true },
+            orderBy: { number: "asc" },
+          },
+        },
+      });
+
+      if (!originalRecipe) {
+        throw new Error(`Recipe with id ${id} not found`);
+      }
+
+      const duplicateData: FullRecipeModel = {
+        idCategory: originalRecipe.idCategory,
+        idOrigin: originalRecipe.idOrigin,
+        name: `${originalRecipe.name} (Copia)`,
+        description: originalRecipe.description,
+        thumbnail: originalRecipe.thumbnail,
+        score: originalRecipe.score,
+        time: originalRecipe.time,
+        servings: originalRecipe.servings,
+        ingredients: originalRecipe.ingredients.map((ing) => ({
+          id: ing.ingredient.id,
+          name: ing.ingredient.name,
+          unit: ing.ingredient.unit,
+          quantity: ing.quantity,
+        })),
+        steps:
+          originalRecipe.steps?.map((step) => ({
+            number: step.number,
+            instruction: step.instruction,
+          })) || [],
+      };
+
+      return duplicateData;
     } catch (error) {
       throw error;
     }

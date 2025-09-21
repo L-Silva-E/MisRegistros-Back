@@ -60,7 +60,7 @@ const fileFormat = winston.format.combine(
   winston.format.json()
 );
 
-const maxSize = 5242880; // 5MB
+const maxSize = 5242880; //~ 5MB
 const logger = winston.createLogger({
   level: process.env.API_ENV === "production" ? "info" : "debug",
   levels,

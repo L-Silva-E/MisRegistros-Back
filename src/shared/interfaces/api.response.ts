@@ -16,7 +16,7 @@ export interface DeleteResponse {
 export interface ErrorResponse {
   error: string;
   details?: string;
-  validation?: Array<{
+  validations?: Array<{
     path: string;
     code: string;
     expected?: any;

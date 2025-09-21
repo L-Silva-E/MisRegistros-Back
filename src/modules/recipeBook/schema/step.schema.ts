@@ -4,7 +4,7 @@ import {
   GetZodSchema,
 } from "../../../shared/zod/schema/base.schema";
 
-// ~ Base Zod Squema
+//~ Base Zod Squema
 export const StepBaseZodSchema = z.object({
   idRecipe: z.coerce
     .number({ invalid_type_error: "Ingrese una 'id' válida" })
@@ -19,7 +19,7 @@ export const StepBaseZodSchema = z.object({
     .min(1, "El campo 'instrucción' no puede estar vacío"),
 });
 
-// ~ CRUD Zod Schemas
+//~ CRUD Zod Schemas
 export const StepCreateZodSchema = z.object({
   body: StepBaseZodSchema.strict(),
 });

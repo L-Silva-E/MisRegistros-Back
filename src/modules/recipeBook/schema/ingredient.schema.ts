@@ -4,25 +4,25 @@ import {
   GetZodSchema,
 } from "../../../shared/zod/schema/base.schema";
 
-import { Unit } from "../../../shared/enums";
+import { UnitList } from "../../../shared/enums";
 
-// ~ Base Zod Squema
+//~ Base Zod Squema
 export const IngredientBaseZodSchema = z.object({
   name: z
     .string({ invalid_type_error: "El campo 'nombre' debe ser un texto" })
     .min(1, "El campo 'nombre' no puede estar vacío"),
-  unit: z.nativeEnum(Unit, {
+  unit: z.nativeEnum(UnitList, {
     errorMap: () => {
       return {
         message:
           "El campo 'unidad' debe ser uno de los siguientes tipos: " +
-          Object.values(Unit).join(", "),
+          Object.values(UnitList).join(", "),
       };
     },
   }),
 });
 
-// ~ CRUD Zod Schemas
+//~ CRUD Zod Schemas
 export const IngredientCreateZodSchema = z.object({
   body: IngredientBaseZodSchema.strict(),
 });
