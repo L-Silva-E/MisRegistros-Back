@@ -5,6 +5,21 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.1] - 2025-09-21
+
+### Added
+
+- **Enhanced foreign key constraint error handling**: Implemented specific error handling for P2003 (Foreign Key Constraint) errors in Prisma middleware:
+  - Added dedicated handling for deletion conflicts when records have dependencies
+  - Improved HTTP status code from 400 Bad Request to 409 Conflict for better semantic accuracy
+  - Enhanced error messages with contextual information and actionable guidance
+
+### Changed
+
+- **Improved error response quality**:
+  - **Before**: Generic "Bad Request" with technical Prisma error details
+  - **After**: Clear "Conflict" message explaining the dependency issue and resolution steps
+
 ## [1.8.0] - 2025-09-21
 
 ### Added
