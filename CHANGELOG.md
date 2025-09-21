@@ -5,6 +5,40 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2025-09-19
+
+### Added
+
+- **Recipe duplication functionality**: Implemented comprehensive recipe duplication feature:
+
+  - New `POST /v1/recipe/:id/duplicate` endpoint for duplicating existing recipes
+  - `RecipeService.duplicate()` method with data transformation for editing workflow
+  - Automatic name modification with "(Copia)" suffix for duplicated recipes
+  - Complete preservation of recipe data (ingredients, steps, category, origin) excluding metadata (id, timestamps)
+  - Error handling for non-existent recipes with appropriate HTTP status codes
+
+- **Enhanced TypeScript interfaces**: New model interfaces for improved type safety:
+  - `RecipeIngredientInput` interface for recipe creation/update with ingredient data
+  - `FullRecipeResponse` interface for API responses with populated relations
+  - Updated `FullRecipeModel` to use proper ingredient typing
+
+### Changed
+
+- **Consolidated test organization**: Refactored test structure for better maintainability:
+
+  - Moved recipe duplication unit tests from separate `recipe.duplicate.test.ts` into `recipe.service.test.ts`
+  - Integrated duplication integration tests from `recipe.duplicate.integration.test.ts` into `integration.test.ts`
+  - Enhanced test coverage with edge cases (recipes without steps, error scenarios)
+  - Improved ingredient data structure in tests to match new `RecipeIngredientInput` interface
+
+- **Improved service return types**: Updated `RecipeService` method signatures:
+  - Enhanced return type consistency across `create`, `patch`, and `delete` methods
+  - Better type safety for API responses with populated database relations
+
+### Fixed
+
+- **Null step handling**: Fixed potential runtime error when duplicating recipes without steps by adding null safety (`originalRecipe.steps?.map()`)
+
 ## [1.6.0] - 2025-09-14
 
 ### Changed
