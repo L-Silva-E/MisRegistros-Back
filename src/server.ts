@@ -7,6 +7,7 @@ import logger from "./config/logger";
 //~ RecipeBook Model
 import CategoryRouter from "./modules/recipeBook/routes/category.routes";
 import IngredientRouter from "./modules/recipeBook/routes/ingredient.routes";
+import MetadataRouter from "./modules/recipeBook/routes/metadata.routes";
 import OriginRouter from "./modules/recipeBook/routes/origin.routes";
 import RecipeRouter from "./modules/recipeBook/routes/recipe.routes";
 import StepRouter from "./modules/recipeBook/routes/step.routes";
@@ -26,6 +27,7 @@ async function init() {
       [
         new CategoryRouter(version),
         new IngredientRouter(version),
+        new MetadataRouter(version),
         new OriginRouter(version),
         new RecipeRouter(version),
         new StepRouter(version),

@@ -5,6 +5,18 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2025-09-21
+
+### Added
+
+- **Metadata endpoint with usage statistics**: Implemented comprehensive metadata endpoint for RecipeBook module:
+
+  - New `GET /v1/metadata/usage-count` endpoint for retrieving all metadata with usage statistics
+  - Complete metadata response including ingredients, categories, and origins with their respective usage counts
+  - Alphabetical ordering of all metadata results for consistent frontend display
+
+- **Enhanced TypeScript interfaces for metadata**: New model interfaces for improved type safety:
+
 ## [1.7.0] - 2025-09-19
 
 ### Added
