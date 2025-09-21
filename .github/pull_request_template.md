@@ -1,10 +1,10 @@
-### 📋 Resumen
+## 📋 Resumen
 
 Descripción
 
 ---
 
-### 🧩 Tipo de cambio
+## 🧩 Tipo de cambio
 
 - [ ] ✨ Feature (nueva funcionalidad)
 - [ ] 🐛 Bugfix (corrección de un bug)
@@ -16,13 +16,13 @@ Descripción
 
 ---
 
-### 🔗 Relacionado
+## 🔗 Relacionado
 
 - Issue: #
 
 ---
 
-### 🗒️ Notas adicionales
+## 🗒️ Notas adicionales
 
 Sin detalles importantes que mencionar
 
