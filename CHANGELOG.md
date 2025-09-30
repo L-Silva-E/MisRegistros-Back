@@ -5,6 +5,34 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.2] - 2025-09-29
+
+### Changed
+
+- **Dependency versions updated automatically via Express cascade**:
+  - `body-parser`: `1.20.2` → `1.20.3`
+  - `cookie`: `0.6.0` → `0.7.1`
+  - `path-to-regexp`: `0.1.7` → `0.1.12`
+  - `send`: `0.18.0` → `0.19.0`
+  - `serve-static`: `1.15.0` → `1.16.2`
+  - `qs`: `6.11.0` → `6.13.0`
+  - `encodeurl`: `~1.0.2` → `~2.0.0`
+  - `finalhandler`: `1.2.0` → `1.3.1`
+
+### Fixed
+
+- **Critical security update**: Resolved **10 security vulnerabilities** across project dependencies:
+  - **EXPRESS UPDATE**: Upgraded Express from `4.19.2` to `4.21.2` (resolves 6 vulnerabilities)
+  - **HIGH severity fixes**:
+    - `body-parser` DoS vulnerability (CVSS: 7.5) - Fixed denial of service when URL encoding is enabled
+    - `cross-spawn` ReDoS vulnerability (CVSS: 7.5) - Fixed Regular Expression Denial of Service
+    - `path-to-regexp` ReDoS vulnerabilities (CVSS: 7.5) - Fixed two ReDoS issues in routing patterns
+    - `express` XSS vulnerability (CVSS: 5.0) - Fixed Cross-Site Scripting via response.redirect()
+  - **MODERATE severity fixes**:
+    - `@babel/helpers` RegExp inefficiency (CVSS: 6.2) - Fixed inefficient RegExp complexity in generated code
+    - `micromatch` ReDoS vulnerability (CVSS: 5.3) - Fixed Regular Expression Denial of Service in pattern matching
+  - **LOW severity fixes**: `cookie`, `send`, `serve-static`, `brace-expansion` - Multiple parsing and XSS vulnerabilities
+
 ## [1.8.1] - 2025-09-21
 
 ### Added
