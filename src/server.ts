@@ -4,6 +4,9 @@ import environment from "./shared/environment";
 import logger from "./config/logger";
 
 //* Routers
+//~ User Model
+import UserRouter from "./modules/user/routes/user.routes";
+
 //~ RecipeBook Model
 import CategoryRouter from "./modules/recipeBook/routes/category.routes";
 import IngredientRouter from "./modules/recipeBook/routes/ingredient.routes";
@@ -25,6 +28,7 @@ async function init() {
     //~ Init all routers
     const application = new app(
       [
+        new UserRouter(version),
         new CategoryRouter(version),
         new IngredientRouter(version),
         new MetadataRouter(version),
@@ -33,13 +37,13 @@ async function init() {
         new StepRouter(version),
         new FeatureRouter(version),
       ],
-      environment.API_PORT
+      environment.API_PORT,
     );
 
     await application.listen();
 
     logger.debug(
-      `Server is running on port: ${environment.API_PORT} in '${environment.API_ENV}' mode`
+      `Server is running on port: ${environment.API_PORT} in '${environment.API_ENV}' mode`,
     );
   } catch (error) {
     logger.error("Error starting server", {
