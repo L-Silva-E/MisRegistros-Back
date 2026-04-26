@@ -8,11 +8,17 @@ datasource db {
 }
 
 //~ User
+enum Role {
+  ADMIN
+  USER
+}
+
 model User {
   id           Int       @id @default(autoincrement())
   email        String    @unique
   username     String    @unique
   passwordHash String
+  role         Role      @default(USER)
   isActive     Boolean   @default(true)
   lastLoginAt  DateTime?
   createdAt    DateTime  @default(now())
