@@ -70,10 +70,10 @@ export default class UserController {
     res: Response,
   ): Promise<Response> {
     try {
-      const userId = req.user!.id;
+      const idUser = req.user!.id;
 
-      const user = await userService.getMe(userId);
-      logger.info("Retrieved profile", { id: userId });
+      const user = await userService.getMe(idUser);
+      logger.info("Retrieved profile", { id: idUser });
 
       const response: ItemResponse<typeof user> = { data: user };
       return res.status(HttpStatusCode.OK).send(response);

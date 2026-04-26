@@ -57,7 +57,7 @@ export const RecipeBaseZodSchema = z.object({
         id: z.coerce
           .number({ invalid_type_error: "Ingrese una 'id' válida" })
           .positive("Ingrese una 'id' válida"),
-      })
+      }),
     )
     .nonempty("Debe tener al menos un 'Ingrediente'"),
   steps: z
@@ -72,7 +72,18 @@ export const RecipeCreateZodSchema = z.object({
 });
 
 export const RecipeGetZodSchema = z.object({
-  query: GetZodSchema.merge(RecipeBaseZodSchema.partial()).strict(),
+  query: GetZodSchema.merge(RecipeBaseZodSchema.partial())
+    .extend({
+      idUser: z
+        .union([
+          z.literal("me"),
+          z.coerce
+            .number({ invalid_type_error: "Ingrese una 'id' válida" })
+            .positive("Ingrese una 'id' válida"),
+        ])
+        .optional(),
+    })
+    .strict(),
 });
 
 export const RecipeUpdateZodSchema = z.object({

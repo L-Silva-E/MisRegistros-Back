@@ -26,7 +26,7 @@ export const logError = (error: Error, context: LogContext = {}): void => {
 export const logDatabase = (
   operation: string,
   entity: string,
-  details: DatabaseLogDetails = {}
+  details: DatabaseLogDetails = {},
 ): void => {
   logger.debug(`DB ${operation.toUpperCase()} en ${entity}`, {
     metadata: {
@@ -38,13 +38,13 @@ export const logDatabase = (
 };
 
 export const logAuth = (
-  userId: string | null,
+  idUser: string | null,
   action: string,
-  details: AuthLogDetails = {}
+  details: AuthLogDetails = {},
 ): void => {
   logger.info(`AUTH ${action}`, {
     metadata: {
-      userId,
+      idUser,
       action,
       ...details,
     },

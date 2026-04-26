@@ -74,11 +74,11 @@ export default class UserService {
     return { token, user: userPublic };
   }
 
-  public async getMe(userId: number, ctx?: Context): Promise<UserPublicModel> {
+  public async getMe(idUser: number, ctx?: Context): Promise<UserPublicModel> {
     const prisma = ctx?.prisma || prismaClient;
 
     const user = await prisma.user.findUnique({
-      where: { id: userId },
+      where: { id: idUser },
       select: {
         id: true,
         email: true,

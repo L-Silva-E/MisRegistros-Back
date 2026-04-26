@@ -1,5 +1,8 @@
 import { Router } from "express";
 import AuthorizationApiKey from "../../../shared/prisma/middlewares/authorization";
+import authMiddleware, {
+  optionalAuthMiddleware,
+} from "../../../middleware/auth.middleware";
 
 import RecipeController from "../controllers/recipe.controller";
 
@@ -24,29 +27,33 @@ export default class RecipeRouter {
     this.router.post(
       `/${this.version}/recipe`,
       AuthorizationApiKey,
+      authMiddleware,
       middlewareValidationSchema(RecipeCreateZodSchema),
-      this.controller.create
+      this.controller.create,
     );
 
     this.router.get(
       `/${this.version}/recipe`,
       AuthorizationApiKey,
+      optionalAuthMiddleware,
       middlewareValidationSchema(RecipeGetZodSchema),
-      this.controller.get
+      this.controller.get,
     );
 
     this.router.patch(
       `/${this.version}/recipe/:id`,
       AuthorizationApiKey,
+      authMiddleware,
       middlewareValidationSchema(RecipeUpdateZodSchema),
-      this.controller.patch
+      this.controller.patch,
     );
 
     this.router.delete(
       `/${this.version}/recipe/:id`,
       AuthorizationApiKey,
+      authMiddleware,
       middlewareValidationSchema(RecipeDeleteZodSchema),
-      this.controller.delete
+      this.controller.delete,
     );
   }
 }

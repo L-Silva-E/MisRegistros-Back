@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import RecipeService from "../services/recipe.service";
 import LoggerService from "../../../services/logger";
 import ErrorCodes from "../../../shared/prisma/middlewares/error.codes";
@@ -7,16 +7,21 @@ import {
   ItemResponse,
   DeleteResponse,
 } from "../../../shared/interfaces/api.response";
+import { AuthenticatedRequest } from "../../../middleware/auth.middleware";
 
 const recipeService = new RecipeService();
 const logger = new LoggerService("Recipe");
 
 export default class RecipeController {
-  public async create(req: Request, res: Response): Promise<Response> {
+  public async create(
+    req: AuthenticatedRequest,
+    res: Response,
+  ): Promise<Response> {
     try {
       const { body } = req;
+      const idUser = req.user?.id;
 
-      const recipe = await recipeService.create(body);
+      const recipe = await recipeService.create({ ...body, idUser });
       logger.info("Created", { id: recipe.id });
 
       const response: ItemResponse<typeof recipe> = {
@@ -32,15 +37,30 @@ export default class RecipeController {
       });
 
       const errorBody = ErrorCodes(
-        error instanceof Error ? error : new Error(String(error))
+        error instanceof Error ? error : new Error(String(error)),
       );
       return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
-  public async get(req: Request, res: Response): Promise<Response> {
+  public async get(
+    req: AuthenticatedRequest,
+    res: Response,
+  ): Promise<Response> {
     try {
-      const { query } = req;
+      const query = { ...req.query } as Record<string, any>;
+
+      if (query.idUser === "me") {
+        if (!req.user) {
+          return res.status(401).send({
+            code: 401,
+            message: "Unauthorized: Token required to filter by idUser=me",
+          });
+        }
+        query.idUser = req.user.id;
+      } else if (query.idUser !== undefined) {
+        query.idUser = Number(query.idUser);
+      }
 
       const dataRecipes = await recipeService.get(query);
       logger.info("Retrieved", { count: dataRecipes.count });
@@ -60,13 +80,16 @@ export default class RecipeController {
       });
 
       const errorBody = ErrorCodes(
-        error instanceof Error ? error : new Error(String(error))
+        error instanceof Error ? error : new Error(String(error)),
       );
       return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
-  public async patch(req: Request, res: Response): Promise<Response> {
+  public async patch(
+    req: AuthenticatedRequest,
+    res: Response,
+  ): Promise<Response> {
     try {
       const { body, params } = req;
       const id = Number(params.id);
@@ -88,13 +111,16 @@ export default class RecipeController {
       });
 
       const errorBody = ErrorCodes(
-        error instanceof Error ? error : new Error(String(error))
+        error instanceof Error ? error : new Error(String(error)),
       );
       return res.status(errorBody.code).send(errorBody.response);
     }
   }
 
-  public async delete(req: Request, res: Response): Promise<Response> {
+  public async delete(
+    req: AuthenticatedRequest,
+    res: Response,
+  ): Promise<Response> {
     try {
       const { params } = req;
       const id = Number(params.id);
@@ -116,7 +142,7 @@ export default class RecipeController {
       });
 
       const errorBody = ErrorCodes(
-        error instanceof Error ? error : new Error(String(error))
+        error instanceof Error ? error : new Error(String(error)),
       );
       return res.status(errorBody.code).send(errorBody.response);
     }
