@@ -85,12 +85,15 @@ async function generateRecipes() {
             },
           },
         };
-      })
+      }),
     );
 
     await prisma.recipe.create({
       data: {
         ...recipe,
+        user: {
+          connect: { id: 1 },
+        },
         category: {
           connect: { id: idCategory?.id },
         },
