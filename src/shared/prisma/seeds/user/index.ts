@@ -10,6 +10,7 @@ export async function seedUsers() {
       email: "qwerty@example.com",
       username: "qwerty",
       password: "pass123",
+      role: "ADMIN" as const,
     },
   ];
 
@@ -19,7 +20,9 @@ export async function seedUsers() {
     });
 
     if (existing) {
-      console.log(`   ⏭️  User '${userData.username}' already exists, skipping`);
+      console.log(
+        `   ⏭️  User '${userData.username}' already exists, skipping`,
+      );
       continue;
     }
 
@@ -30,9 +33,12 @@ export async function seedUsers() {
         email: userData.email,
         username: userData.username,
         passwordHash,
+        role: userData.role,
       },
     });
 
-    console.log(`   ✅ User '${user.username}' created (id: ${user.id})`);
+    console.log(
+      `   ✅ User '${user.username}' created (id: ${user.id}, role: ${user.role})`,
+    );
   }
 }

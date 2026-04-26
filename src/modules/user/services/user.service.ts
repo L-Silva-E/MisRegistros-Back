@@ -27,6 +27,7 @@ export default class UserService {
         id: true,
         email: true,
         username: true,
+        role: true,
         isActive: true,
         lastLoginAt: true,
         createdAt: true,
@@ -64,7 +65,12 @@ export default class UserService {
     });
 
     const token = jwt.sign(
-      { id: user.id, email: user.email, username: user.username },
+      {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        role: user.role,
+      },
       environments.JWT_SECRET,
       { expiresIn: environments.JWT_EXPIRES_IN as any },
     );
@@ -83,6 +89,7 @@ export default class UserService {
         id: true,
         email: true,
         username: true,
+        role: true,
         isActive: true,
         lastLoginAt: true,
         createdAt: true,

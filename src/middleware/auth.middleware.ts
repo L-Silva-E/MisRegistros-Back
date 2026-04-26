@@ -2,12 +2,14 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import environments from "../shared/environment";
 import { HttpStatusCode } from "../shared/types.environment";
+import { Role } from "@prisma/client";
 
 export interface AuthenticatedRequest extends Request {
   user?: {
     id: number;
     email: string;
     username: string;
+    role: Role;
   };
 }
 
@@ -36,6 +38,7 @@ const authMiddleware = (
       id: number;
       email: string;
       username: string;
+      role: Role;
     };
     req.user = decoded;
     next();
@@ -65,6 +68,7 @@ export const optionalAuthMiddleware = (
         id: number;
         email: string;
         username: string;
+        role: Role;
       };
       req.user = decoded;
     } catch {

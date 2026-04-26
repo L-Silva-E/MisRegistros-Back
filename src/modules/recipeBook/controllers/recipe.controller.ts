@@ -94,6 +94,16 @@ export default class RecipeController {
       const { body, params } = req;
       const id = Number(params.id);
 
+      if (req.user?.role !== "ADMIN") {
+        const existing = await recipeService.findById(id);
+        if (!existing) {
+          return res.status(404).send({ error: "Not Found", details: "Recipe not found" });
+        }
+        if (existing.idUser !== req.user?.id) {
+          return res.status(403).send({ error: "Forbidden", details: "You can only edit your own recipes" });
+        }
+      }
+
       const recipe = await recipeService.patch(id, body);
       logger.info("Updated", { id: recipe.id });
 
@@ -124,6 +134,16 @@ export default class RecipeController {
     try {
       const { params } = req;
       const id = Number(params.id);
+
+      if (req.user?.role !== "ADMIN") {
+        const existing = await recipeService.findById(id);
+        if (!existing) {
+          return res.status(404).send({ error: "Not Found", details: "Recipe not found" });
+        }
+        if (existing.idUser !== req.user?.id) {
+          return res.status(403).send({ error: "Forbidden", details: "You can only delete your own recipes" });
+        }
+      }
 
       const recipe = await recipeService.delete(id);
       logger.info("Deleted", { id: recipe.id });

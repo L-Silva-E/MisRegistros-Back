@@ -14,7 +14,7 @@ const prismaClient = new PrismaClient();
 export default class RecipeService {
   public async create(
     recipe: FullRecipeModel,
-    ctx?: Context
+    ctx?: Context,
   ): Promise<RecipeModel> {
     const prisma = ctx?.prisma || prismaClient;
 
@@ -65,7 +65,7 @@ export default class RecipeService {
 
   public async get(
     query: QueryParams,
-    ctx?: Context
+    ctx?: Context,
   ): Promise<RecipeCountModel> {
     const prisma = ctx?.prisma || prismaClient;
 
@@ -105,10 +105,18 @@ export default class RecipeService {
     }
   }
 
+  public async findById(
+    id: number,
+    ctx?: Context,
+  ): Promise<RecipeModel | null> {
+    const prisma = ctx?.prisma || prismaClient;
+    return prisma.recipe.findUnique({ where: { id } });
+  }
+
   public async patch(
     id: number,
     recipe: FullRecipeModel,
-    ctx?: Context
+    ctx?: Context,
   ): Promise<FullRecipeModel> {
     const prisma = ctx?.prisma || prismaClient;
 
@@ -136,21 +144,15 @@ export default class RecipeService {
           },
         },
         include: {
-          category: {
-            select: { name: true },
-          },
-          origin: {
-            select: { name: true },
-          },
+          category: { select: { name: true } },
+          origin: { select: { name: true } },
           ingredients: {
             select: {
               quantity: true,
               ingredient: { select: { id: true, name: true, unit: true } },
             },
           },
-          steps: {
-            select: { number: true, instruction: true },
-          },
+          steps: { select: { number: true, instruction: true } },
         },
       });
 
