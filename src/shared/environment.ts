@@ -23,4 +23,8 @@ const environments: IformatEnvironments = {
   FRONT_URL_PROD: process.env.FRONT_URL_PROD || "http://localhost:5173",
 };
 
+if (environments.API_ENV === "production" && !process.env.JWT_SECRET) {
+  throw new Error("JWT_SECRET environment variable is required in production");
+}
+
 export default environments;
