@@ -5,11 +5,21 @@ import { SALT_ROUNDS } from "../../../../modules/user/constants";
 const prisma = new PrismaClient();
 
 export async function seedUsers() {
+  const adminEmail = process.env.SEED_ADMIN_EMAIL;
+  const adminUsername = process.env.SEED_ADMIN_USERNAME;
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD;
+
+  if (!adminEmail || !adminUsername || !adminPassword) {
+    throw new Error(
+      "SEED_ADMIN_EMAIL, SEED_ADMIN_USERNAME and SEED_ADMIN_PASSWORD environment variables are required to run seeds",
+    );
+  }
+
   const users = [
     {
-      email: "qwerty@example.com",
-      username: "qwerty",
-      password: "pass123",
+      email: adminEmail,
+      username: adminUsername,
+      password: adminPassword,
       role: "ADMIN" as const,
     },
   ];
