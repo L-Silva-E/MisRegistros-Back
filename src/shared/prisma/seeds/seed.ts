@@ -1,11 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+import { seedUsers } from "./user";
 import { seedRecipeBook } from "./recipeBook";
 import { seedFeatures } from "./feature";
 
 async function main() {
   console.log("🌱 Seeding...🌱");
+
+  console.log("\n>>>👤 Users");
+  await seedUsers();
 
   console.log("\n>>>📚 Recipe Book");
   await seedRecipeBook();

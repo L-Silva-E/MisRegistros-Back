@@ -7,11 +7,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//~ User
+enum Role {
+  ADMIN
+  USER
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  username     String    @unique
+  passwordHash String
+  role         Role      @default(USER)
+  isActive     Boolean   @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  recipes Recipe[]
+}
+
 //~ Recipe Book
 model Recipe {
   id          Int      @id @default(autoincrement())
   idCategory  Int
   idOrigin    Int
+  idUser      Int?
   name        String
   description String
   thumbnail   String?  @default("https://placehold.co/900x600/1C4532/C6F6D5.png?text=Imagen+de\\nla+Receta")
@@ -25,6 +46,7 @@ model Recipe {
   steps       Step[]
   category    Category           @relation(fields: [idCategory], references: [id])
   origin      Origin             @relation(fields: [idOrigin], references: [id])
+  user        User?              @relation(fields: [idUser], references: [id], onDelete: SetNull)
 }
 
 model RecipeIngredient {

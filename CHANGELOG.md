@@ -5,6 +5,50 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0] - 2026-05-09
+
+### Added
+
+- **User model and authentication infrastructure**: Implemented full user management system:
+  - New `User` model in Prisma schema with fields: `id`, `email`, `username`, `passwordHash`, `role` (ADMIN/USER enum), `isActive`, `lastLoginAt`, `createdAt`, `updatedAt`
+  - Unique constraints on `email` and `username`
+  - Three database migrations: `add_user_model`, `add_user_fk_to_recipe`, `add_role_to_user`
+  - Dependencies added: `jsonwebtoken`, `bcryptjs` and their TypeScript types (`@types/jsonwebtoken`, `@types/bcryptjs`)
+  - New environment variables: `JWT_SECRET` and `JWT_EXPIRES_IN`
+
+- **Authentication middleware**: New `src/middleware/auth.middleware.ts`:
+  - `authMiddleware` — validates `Authorization: Bearer <token>` header, injects user data into `req.user`, returns `401` if token is missing or invalid
+  - `optionalAuthMiddleware` — soft variant that resolves the user if a valid token is present but does not block the request
+
+- **User endpoints** with Zod input validation:
+  - `POST /v1/user/register` — creates user with bcrypt-hashed password, returns public profile (no `passwordHash` exposed)
+  - `POST /v1/user/login` — validates credentials, updates `lastLoginAt`, returns JWT and public user data
+  - `GET /v1/user/me` — returns the authenticated user's profile
+
+- **User–Recipe ownership**:
+  - Optional `idUser` foreign key added to `Recipe` (`onDelete: SetNull` preserves recipes if a user is deleted)
+  - `POST /v1/recipe` now associates the created recipe with the authenticated user
+  - `GET /v1/recipe` supports `idUser=<number>` and `idUser=me` filters
+  - `PATCH` and `DELETE` enforce ownership — only the owner or an `ADMIN` can modify a recipe (returns `403 Forbidden` otherwise)
+
+- **User seeding**: New seed function in `src/shared/prisma/seeds/user/index.ts` to populate an initial admin user
+
+- **Tests for user module**: 18 new unit tests covering `UserController` and `UserService` (register, login, getMe — success and error paths)
+
+### Changed
+
+- **Recipe routes secured**: `POST`, `PATCH`, `DELETE` now require JWT authentication via `authMiddleware`. `GET` uses `optionalAuthMiddleware`
+- **Standardized error response format**: All error responses across controllers and middleware now use the `ErrorResponse` interface `{ error, details }`. HTTP status codes use `HttpStatusCode` enum constants throughout
+- **Frontend URL environment variable consolidated**: Replaced `FRONT_URL_LOCAL`, `FRONT_URL_DEV` and `FRONT_URL_PROD` with a single `FRONT_URL` variable, set per deployment environment
+- **`SALT_ROUNDS` extracted to shared constant**: Moved to `src/modules/user/constants.ts` to avoid duplication between service and seed
+
+### Fixed
+
+- **Recipe count ignoring filters**: `RecipeService.get` was returning the total record count regardless of active query filters. Count now correctly applies the same `where` clause as `findMany`
+- **JWT `expiresIn` type cast**: Removed `as any` — options object is now properly typed as `SignOptions`
+- **TOCTOU race condition in recipe ownership check**: Ownership verification and the update/delete operation are now atomic inside a Prisma `$transaction`, eliminating the window between the read and write
+- **`JWT_SECRET` missing in production**: Application now throws an error at startup if `API_ENV=production` and `JWT_SECRET` is not defined, preventing tokens from being silently signed with a known fallback value
+
 ## [1.8.2] - 2025-09-29
 
 ### Changed

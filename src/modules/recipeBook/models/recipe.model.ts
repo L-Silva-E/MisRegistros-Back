@@ -5,6 +5,7 @@ import { RecipeIngredientModel } from "./recipe.ingredient.model";
 export interface RecipeModel extends BaseEntity {
   idCategory: number;
   idOrigin: number;
+  idUser?: number | null;
   name: string;
   description: string;
   thumbnail?: string | null;
