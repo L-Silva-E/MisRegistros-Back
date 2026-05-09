@@ -14,9 +14,7 @@ export interface IformatEnvironments {
   DB_PASSWORD: string;
   DB_DATABASE: string;
 
-  FRONT_URL_LOCAL: string;
-  FRONT_URL_DEV: string;
-  FRONT_URL_PROD: string;
+  FRONT_URL: string;
 }
 
 export enum HttpStatusCode {

@@ -18,9 +18,7 @@ const environments: IformatEnvironments = {
   DB_PASSWORD: process.env.DB_PASSWORD || "postgres",
   DB_DATABASE: process.env.DB_DATABASE || "postgres",
 
-  FRONT_URL_LOCAL: process.env.FRONT_URL_LOCAL || "http://localhost:5173",
-  FRONT_URL_DEV: process.env.FRONT_URL_DEV || "http://localhost:5173",
-  FRONT_URL_PROD: process.env.FRONT_URL_PROD || "http://localhost:5173",
+  FRONT_URL: process.env.FRONT_URL || "http://localhost:5173",
 };
 
 if (environments.API_ENV === "production" && !process.env.JWT_SECRET) {
