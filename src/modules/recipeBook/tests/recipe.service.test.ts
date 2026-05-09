@@ -60,6 +60,7 @@ describe("RecipeService", () => {
         id: 1,
         idCategory: 1,
         idOrigin: 1,
+        idUser: null,
         name: "Pasta Italiana",
         description: "Una deliciosa pasta italiana tradicional",
         score: 5,
@@ -127,6 +128,7 @@ describe("RecipeService", () => {
         id: 2,
         idCategory: 1,
         idOrigin: 1,
+        idUser: null,
         name: "Simple Recipe",
         description: "A simple recipe without steps",
         score: 3,
@@ -357,6 +359,7 @@ describe("RecipeService", () => {
         id: 1,
         idCategory: 1,
         idOrigin: 1,
+        idUser: null,
         name: "Pasta Italiana Mejorada",
         description: "Una versión mejorada de la pasta italiana",
         score: 5,
@@ -441,6 +444,51 @@ describe("RecipeService", () => {
         recipeService.patch(recipeId, updateData, ctx)
       ).rejects.toThrow("Recipe not found");
     });
+
+    it("should update atomically when idUser matches ownership", async () => {
+      // Arrange
+      const recipeId = 1;
+      const idUser = 5;
+      const updateData = {
+        idCategory: 1, idOrigin: 1, name: "My Recipe", description: "desc",
+        score: 4, time: 20, servings: 2, ingredients: [{ id: 1, quantity: 100 }], steps: [],
+      };
+      const expectedRecipe = { id: recipeId, ...updateData, idUser, thumbnail: null, createdAt: currentDate, updatedAt: currentDate };
+
+      mockCtx.prisma.$transaction.mockImplementation(async (fn: any) => fn(mockCtx.prisma));
+      mockCtx.prisma.recipe.findUnique.mockResolvedValue({ idUser } as any);
+      mockCtx.prisma.recipe.update.mockResolvedValue(expectedRecipe as any);
+
+      // Act
+      const result = await recipeService.patch(recipeId, updateData as any, ctx, idUser);
+
+      // Assert
+      expect(mockCtx.prisma.recipe.findUnique).toHaveBeenCalledWith({ where: { id: recipeId }, select: { idUser: true } });
+      expect(mockCtx.prisma.recipe.update).toHaveBeenCalledWith(expect.objectContaining({ where: { id: recipeId } }));
+      expect(result).toEqual(expectedRecipe);
+    });
+
+    it("should throw RECIPE_NOT_FOUND when recipe does not exist", async () => {
+      // Arrange
+      mockCtx.prisma.$transaction.mockImplementation(async (fn: any) => fn(mockCtx.prisma));
+      mockCtx.prisma.recipe.findUnique.mockResolvedValue(null);
+
+      // Act & Assert
+      await expect(
+        recipeService.patch(999, { ingredients: [], steps: [] } as any, ctx, 5)
+      ).rejects.toThrow("RECIPE_NOT_FOUND");
+    });
+
+    it("should throw RECIPE_FORBIDDEN when recipe belongs to another user", async () => {
+      // Arrange
+      mockCtx.prisma.$transaction.mockImplementation(async (fn: any) => fn(mockCtx.prisma));
+      mockCtx.prisma.recipe.findUnique.mockResolvedValue({ idUser: 99 } as any);
+
+      // Act & Assert
+      await expect(
+        recipeService.patch(1, { ingredients: [], steps: [] } as any, ctx, 5)
+      ).rejects.toThrow("RECIPE_FORBIDDEN");
+    });
   });
 
   describe("delete", () => {
@@ -451,6 +499,7 @@ describe("RecipeService", () => {
         id: 1,
         idCategory: 1,
         idOrigin: 1,
+        idUser: null,
         name: "Pasta Italiana",
         description: "Una deliciosa pasta italiana",
         score: 5,
@@ -508,6 +557,7 @@ describe("RecipeService", () => {
         id: 2,
         idCategory: 2,
         idOrigin: 3,
+        idUser: null,
         name: "Complex Recipe",
         description: "A complex recipe with many ingredients and steps",
         score: 4,
@@ -541,6 +591,43 @@ describe("RecipeService", () => {
       expect(result).toEqual(expectedRecipe);
       expect((result as any).ingredients).toHaveLength(10);
       expect((result as any).steps).toHaveLength(15);
+    });
+
+    it("should delete atomically when idUser matches ownership", async () => {
+      // Arrange
+      const recipeId = 1;
+      const idUser = 5;
+      const expectedRecipe = { id: recipeId, idUser, name: "My Recipe", createdAt: currentDate, updatedAt: currentDate };
+
+      mockCtx.prisma.$transaction.mockImplementation(async (fn: any) => fn(mockCtx.prisma));
+      mockCtx.prisma.recipe.findUnique.mockResolvedValue({ idUser } as any);
+      mockCtx.prisma.recipe.delete.mockResolvedValue(expectedRecipe as any);
+
+      // Act
+      const result = await recipeService.delete(recipeId, ctx, idUser);
+
+      // Assert
+      expect(mockCtx.prisma.recipe.findUnique).toHaveBeenCalledWith({ where: { id: recipeId }, select: { idUser: true } });
+      expect(mockCtx.prisma.recipe.delete).toHaveBeenCalledWith(expect.objectContaining({ where: { id: recipeId } }));
+      expect(result).toEqual(expectedRecipe);
+    });
+
+    it("should throw RECIPE_NOT_FOUND when recipe does not exist", async () => {
+      // Arrange
+      mockCtx.prisma.$transaction.mockImplementation(async (fn: any) => fn(mockCtx.prisma));
+      mockCtx.prisma.recipe.findUnique.mockResolvedValue(null);
+
+      // Act & Assert
+      await expect(recipeService.delete(999, ctx, 5)).rejects.toThrow("RECIPE_NOT_FOUND");
+    });
+
+    it("should throw RECIPE_FORBIDDEN when recipe belongs to another user", async () => {
+      // Arrange
+      mockCtx.prisma.$transaction.mockImplementation(async (fn: any) => fn(mockCtx.prisma));
+      mockCtx.prisma.recipe.findUnique.mockResolvedValue({ idUser: 99 } as any);
+
+      // Act & Assert
+      await expect(recipeService.delete(1, ctx, 5)).rejects.toThrow("RECIPE_FORBIDDEN");
     });
   });
 });

@@ -47,13 +47,18 @@ jest.mock(
   () => mockErrorCodes
 );
 
-import { Request, Response } from "express";
+import { Response } from "express";
 import RecipeController from "../controllers/recipe.controller";
+import { AuthenticatedRequest } from "../../../middleware/auth.middleware";
+import { Role } from "@prisma/client";
 
 describe("RecipeController", () => {
   let controller: RecipeController;
-  let mockReq: Partial<Request>;
+  let mockReq: Partial<AuthenticatedRequest>;
   let mockRes: Partial<Response>;
+
+  const adminUser = { id: 1, email: "admin@example.com", username: "admin", role: "ADMIN" as Role };
+  const regularUser = { id: 2, email: "user@example.com", username: "user", role: "USER" as Role };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -64,6 +69,7 @@ describe("RecipeController", () => {
       body: {},
       query: {},
       params: {},
+      user: undefined,
     };
 
     mockRes = {
@@ -94,7 +100,7 @@ describe("RecipeController", () => {
       mockReq.body = mockRecipeData;
       mockRecipeService.create.mockResolvedValue(mockCreatedRecipe);
 
-      await controller.create(mockReq as Request, mockRes as Response);
+      await controller.create(mockReq as AuthenticatedRequest, mockRes as Response);
 
       expect(mockRecipeService.create).toHaveBeenCalledWith(mockRecipeData);
       expect(mockLoggerService.info).toHaveBeenCalledWith("Created", { id: 1 });
@@ -111,7 +117,7 @@ describe("RecipeController", () => {
       mockReq.body = { name: "Test Recipe" };
       mockRecipeService.create.mockRejectedValue(error);
 
-      await controller.create(mockReq as Request, mockRes as Response);
+      await controller.create(mockReq as AuthenticatedRequest, mockRes as Response);
 
       expect(mockLoggerService.error).toHaveBeenCalledWith(
         "Error while creating",
@@ -161,7 +167,7 @@ describe("RecipeController", () => {
       mockReq.query = { limit: "10" };
       mockRecipeService.get.mockResolvedValue(mockResult);
 
-      await controller.get(mockReq as Request, mockRes as Response);
+      await controller.get(mockReq as AuthenticatedRequest, mockRes as Response);
 
       expect(mockRecipeService.get).toHaveBeenCalledWith(mockReq.query);
       expect(mockLoggerService.info).toHaveBeenCalledWith("Retrieved", {
@@ -184,7 +190,7 @@ describe("RecipeController", () => {
       mockReq.query = { limit: "10" };
       mockRecipeService.get.mockRejectedValue(error);
 
-      await controller.get(mockReq as Request, mockRes as Response);
+      await controller.get(mockReq as AuthenticatedRequest, mockRes as Response);
 
       expect(mockLoggerService.error).toHaveBeenCalledWith(
         "Error while fetching",
@@ -201,56 +207,87 @@ describe("RecipeController", () => {
   });
 
   describe("patch", () => {
-    it("should update a recipe successfully", async () => {
-      const mockUpdateData = { name: "Updated Recipe", score: 4 };
-      const mockUpdatedRecipe = {
-        id: 1,
-        idCategory: 1,
-        idOrigin: 1,
-        name: "Updated Recipe",
-        description: "Updated description",
-        thumbnail: null,
-        score: 4,
-        time: 30,
-        servings: 4,
-        ingredients: [],
-        steps: [],
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+    const mockUpdateData = { name: "Updated Recipe", score: 4 };
+    const mockUpdatedRecipe = {
+      id: 1,
+      idCategory: 1,
+      idOrigin: 1,
+      name: "Updated Recipe",
+      description: "Updated description",
+      thumbnail: null,
+      score: 4,
+      time: 30,
+      servings: 4,
+      ingredients: [],
+      steps: [],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
 
+    it("should update a recipe as admin (no ownership check)", async () => {
       mockReq.params = { id: "1" };
       mockReq.body = mockUpdateData;
+      mockReq.user = adminUser;
       mockRecipeService.patch.mockResolvedValue(mockUpdatedRecipe);
 
-      await controller.patch(mockReq as Request, mockRes as Response);
+      await controller.patch(mockReq as AuthenticatedRequest, mockRes as Response);
 
-      expect(mockRecipeService.patch).toHaveBeenCalledWith(1, mockUpdateData);
+      expect(mockRecipeService.patch).toHaveBeenCalledWith(1, mockUpdateData, undefined, undefined);
       expect(mockLoggerService.info).toHaveBeenCalledWith("Updated", { id: 1 });
       expect(mockRes.status).toHaveBeenCalledWith(200);
-      expect(mockRes.send).toHaveBeenCalledWith({
-        data: mockUpdatedRecipe,
-      });
+      expect(mockRes.send).toHaveBeenCalledWith({ data: mockUpdatedRecipe });
     });
 
-    it("should handle update errors", async () => {
+    it("should update a recipe as the owner", async () => {
+      mockReq.params = { id: "1" };
+      mockReq.body = mockUpdateData;
+      mockReq.user = regularUser;
+      mockRecipeService.patch.mockResolvedValue(mockUpdatedRecipe);
+
+      await controller.patch(mockReq as AuthenticatedRequest, mockRes as Response);
+
+      expect(mockRecipeService.patch).toHaveBeenCalledWith(1, mockUpdateData, undefined, regularUser.id);
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+    });
+
+    it("should return 404 when recipe not found", async () => {
+      mockReq.params = { id: "99" };
+      mockReq.body = mockUpdateData;
+      mockReq.user = regularUser;
+      mockRecipeService.patch.mockRejectedValue(new Error("RECIPE_NOT_FOUND"));
+
+      await controller.patch(mockReq as AuthenticatedRequest, mockRes as Response);
+
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.send).toHaveBeenCalledWith({ error: "Not Found", details: "Recipe not found" });
+    });
+
+    it("should return 403 when user does not own the recipe", async () => {
+      mockReq.params = { id: "1" };
+      mockReq.body = mockUpdateData;
+      mockReq.user = regularUser;
+      mockRecipeService.patch.mockRejectedValue(new Error("RECIPE_FORBIDDEN"));
+
+      await controller.patch(mockReq as AuthenticatedRequest, mockRes as Response);
+
+      expect(mockRes.status).toHaveBeenCalledWith(403);
+      expect(mockRes.send).toHaveBeenCalledWith({ error: "Forbidden", details: "You can only edit your own recipes" });
+    });
+
+    it("should handle unexpected update errors", async () => {
       const error = new Error("Update failed");
       const mockErrorBody = { code: 400, response: { error: "Bad Request" } };
 
       mockReq.params = { id: "1" };
-      mockReq.body = { name: "Updated Recipe" };
+      mockReq.body = mockUpdateData;
+      mockReq.user = adminUser;
       mockRecipeService.patch.mockRejectedValue(error);
 
-      await controller.patch(mockReq as Request, mockRes as Response);
+      await controller.patch(mockReq as AuthenticatedRequest, mockRes as Response);
 
       expect(mockLoggerService.error).toHaveBeenCalledWith(
         "Error while updating",
-        {
-          id: 1,
-          body: mockReq.body,
-          error: error.message,
-          stack: error.stack,
-        }
+        { id: 1, body: mockReq.body, error: error.message, stack: error.stack },
       );
       expect(mockRes.status).toHaveBeenCalledWith(400);
       expect(mockRes.send).toHaveBeenCalledWith(mockErrorBody.response);
@@ -258,51 +295,79 @@ describe("RecipeController", () => {
   });
 
   describe("delete", () => {
-    it("should delete a recipe successfully", async () => {
-      const mockDeletedRecipe = {
-        id: 1,
-        idCategory: 1,
-        idOrigin: 1,
-        name: "Deleted Recipe",
-        description: "Deleted description",
-        thumbnail: null,
-        score: 5,
-        time: 30,
-        servings: 4,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+    const mockDeletedRecipe = {
+      id: 1,
+      idCategory: 1,
+      idOrigin: 1,
+      name: "Deleted Recipe",
+      description: "Deleted description",
+      thumbnail: null,
+      score: 5,
+      time: 30,
+      servings: 4,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
 
+    it("should delete a recipe as admin (no ownership check)", async () => {
       mockReq.params = { id: "1" };
+      mockReq.user = adminUser;
       mockRecipeService.delete.mockResolvedValue(mockDeletedRecipe);
 
-      await controller.delete(mockReq as Request, mockRes as Response);
+      await controller.delete(mockReq as AuthenticatedRequest, mockRes as Response);
 
-      expect(mockRecipeService.delete).toHaveBeenCalledWith(1);
+      expect(mockRecipeService.delete).toHaveBeenCalledWith(1, undefined, undefined);
       expect(mockLoggerService.info).toHaveBeenCalledWith("Deleted", { id: 1 });
       expect(mockRes.status).toHaveBeenCalledWith(200);
-      expect(mockRes.send).toHaveBeenCalledWith({
-        deleted: true,
-        id: 1,
-      });
+      expect(mockRes.send).toHaveBeenCalledWith({ deleted: true, id: 1 });
     });
 
-    it("should handle deletion errors", async () => {
+    it("should delete a recipe as the owner", async () => {
+      mockReq.params = { id: "1" };
+      mockReq.user = regularUser;
+      mockRecipeService.delete.mockResolvedValue(mockDeletedRecipe);
+
+      await controller.delete(mockReq as AuthenticatedRequest, mockRes as Response);
+
+      expect(mockRecipeService.delete).toHaveBeenCalledWith(1, undefined, regularUser.id);
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+    });
+
+    it("should return 404 when recipe not found", async () => {
+      mockReq.params = { id: "99" };
+      mockReq.user = regularUser;
+      mockRecipeService.delete.mockRejectedValue(new Error("RECIPE_NOT_FOUND"));
+
+      await controller.delete(mockReq as AuthenticatedRequest, mockRes as Response);
+
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.send).toHaveBeenCalledWith({ error: "Not Found", details: "Recipe not found" });
+    });
+
+    it("should return 403 when user does not own the recipe", async () => {
+      mockReq.params = { id: "1" };
+      mockReq.user = regularUser;
+      mockRecipeService.delete.mockRejectedValue(new Error("RECIPE_FORBIDDEN"));
+
+      await controller.delete(mockReq as AuthenticatedRequest, mockRes as Response);
+
+      expect(mockRes.status).toHaveBeenCalledWith(403);
+      expect(mockRes.send).toHaveBeenCalledWith({ error: "Forbidden", details: "You can only delete your own recipes" });
+    });
+
+    it("should handle unexpected deletion errors", async () => {
       const error = new Error("Deletion failed");
       const mockErrorBody = { code: 404, response: { error: "Not Found" } };
 
       mockReq.params = { id: "1" };
+      mockReq.user = adminUser;
       mockRecipeService.delete.mockRejectedValue(error);
 
-      await controller.delete(mockReq as Request, mockRes as Response);
+      await controller.delete(mockReq as AuthenticatedRequest, mockRes as Response);
 
       expect(mockLoggerService.error).toHaveBeenCalledWith(
         "Error while deleting",
-        {
-          id: 1,
-          error: error.message,
-          stack: error.stack,
-        }
+        { id: 1, error: error.message, stack: error.stack },
       );
       expect(mockRes.status).toHaveBeenCalledWith(404);
       expect(mockRes.send).toHaveBeenCalledWith(mockErrorBody.response);
