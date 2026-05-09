@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import UserService from "../services/user.service";
 import LoggerService from "../../../services/logger";
 import ErrorCodes from "../../../shared/prisma/middlewares/error.codes";
@@ -14,7 +14,7 @@ const logger = new LoggerService("User");
 
 export default class UserController {
   public async register(
-    req: AuthenticatedRequest,
+    req: Request,
     res: Response,
   ): Promise<Response> {
     try {
@@ -39,7 +39,7 @@ export default class UserController {
   }
 
   public async login(
-    req: AuthenticatedRequest,
+    req: Request,
     res: Response,
   ): Promise<Response> {
     try {
