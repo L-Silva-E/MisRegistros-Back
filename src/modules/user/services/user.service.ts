@@ -4,9 +4,9 @@ import jwt, { SignOptions } from "jsonwebtoken";
 import { Context } from "../../../shared/jest/context";
 import environments from "../../../shared/environment";
 import { UserPublicModel, UserLoginResponse } from "../models/user.model";
+import { SALT_ROUNDS } from "../constants";
 
 const prismaClient = new PrismaClient();
-const SALT_ROUNDS = 10;
 
 export default class UserService {
   public async register(

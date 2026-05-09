@@ -2,7 +2,10 @@ import { Response } from "express";
 import UserService from "../services/user.service";
 import LoggerService from "../../../services/logger";
 import ErrorCodes from "../../../shared/prisma/middlewares/error.codes";
-import { ItemResponse } from "../../../shared/interfaces/api.response";
+import {
+  ItemResponse,
+  ErrorResponse,
+} from "../../../shared/interfaces/api.response";
 import { HttpStatusCode } from "../../../shared/types.environment";
 import { AuthenticatedRequest } from "../../../middleware/auth.middleware";
 
@@ -55,7 +58,7 @@ export default class UserController {
         return res.status(HttpStatusCode.UNAUTHORIZED).send({
           error: "Unauthorized",
           details: "Invalid email or password",
-        });
+        } satisfies ErrorResponse);
       }
 
       const errorBody = ErrorCodes(
@@ -85,7 +88,7 @@ export default class UserController {
         return res.status(HttpStatusCode.NOT_FOUND).send({
           error: "Not Found",
           details: "User not found",
-        });
+        } satisfies ErrorResponse);
       }
 
       const errorBody = ErrorCodes(

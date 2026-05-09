@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { SALT_ROUNDS } from "../../../../modules/user/constants";
 
 const prisma = new PrismaClient();
-const SALT_ROUNDS = 10;
 
 export async function seedUsers() {
   const users = [

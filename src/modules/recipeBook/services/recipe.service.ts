@@ -117,79 +117,88 @@ export default class RecipeService {
     id: number,
     recipe: FullRecipeModel,
     ctx?: Context,
+    idUser?: number,
   ): Promise<FullRecipeModel> {
     const prisma = ctx?.prisma || prismaClient;
+    const stepsWithNumbers = assignStepNumbers(recipe.steps || []);
 
-    try {
-      const stepsWithNumbers = assignStepNumbers(recipe.steps || []);
+    const data = {
+      ...recipe,
+      steps: { deleteMany: {}, create: stepsWithNumbers },
+      ingredients: {
+        deleteMany: {},
+        create: recipe.ingredients.map((ingredient) => ({
+          quantity: ingredient.quantity,
+          ingredient: { connect: { id: ingredient.id } },
+        })),
+      },
+    };
 
-      const recipeUpdated = await prisma.recipe.update({
-        where: { id },
-        data: {
-          ...recipe,
-          steps: {
-            deleteMany: {},
-            create: stepsWithNumbers,
-          },
-          ingredients: {
-            deleteMany: {},
-            create: recipe.ingredients.map((ingredient) => ({
-              quantity: ingredient.quantity,
-              ingredient: {
-                connect: {
-                  id: ingredient.id,
-                },
-              },
-            })),
-          },
+    const include = {
+      category: { select: { name: true } },
+      origin: { select: { name: true } },
+      ingredients: {
+        select: {
+          quantity: true,
+          ingredient: { select: { id: true, name: true, unit: true } },
         },
-        include: {
-          category: { select: { name: true } },
-          origin: { select: { name: true } },
-          ingredients: {
-            select: {
-              quantity: true,
-              ingredient: { select: { id: true, name: true, unit: true } },
-            },
-          },
-          steps: { select: { number: true, instruction: true } },
-        },
-      });
+      },
+      steps: { select: { number: true, instruction: true } },
+    };
 
-      return recipeUpdated;
-    } catch (error) {
-      throw error;
+    if (idUser !== undefined) {
+      return prisma.$transaction(async (tx) => {
+        const existing = await tx.recipe.findUnique({
+          where: { id },
+          select: { idUser: true },
+        });
+        if (!existing) throw new Error("RECIPE_NOT_FOUND");
+        if (existing.idUser !== idUser) throw new Error("RECIPE_FORBIDDEN");
+        return tx.recipe.update({ where: { id }, data, include });
+      }) as Promise<FullRecipeModel>;
     }
+
+    return prisma.recipe.update({
+      where: { id },
+      data,
+      include,
+    }) as Promise<FullRecipeModel>;
   }
 
-  public async delete(id: number, ctx?: Context): Promise<RecipeModel> {
+  public async delete(
+    id: number,
+    ctx?: Context,
+    idUser?: number,
+  ): Promise<RecipeModel> {
     const prisma = ctx?.prisma || prismaClient;
 
-    try {
-      const recipeDeleted = await prisma.recipe.delete({
-        where: { id },
-        include: {
-          category: {
-            select: { name: true },
-          },
-          origin: {
-            select: { name: true },
-          },
-          ingredients: {
-            select: {
-              quantity: true,
-              ingredient: { select: { id: true, name: true, unit: true } },
-            },
-          },
-          steps: {
-            select: { number: true, instruction: true },
-          },
+    const include = {
+      category: { select: { name: true } },
+      origin: { select: { name: true } },
+      ingredients: {
+        select: {
+          quantity: true,
+          ingredient: { select: { id: true, name: true, unit: true } },
         },
-      });
+      },
+      steps: { select: { number: true, instruction: true } },
+    };
 
-      return recipeDeleted;
-    } catch (error) {
-      throw error;
+    if (idUser !== undefined) {
+      return prisma.$transaction(async (tx) => {
+        const existing = await tx.recipe.findUnique({
+          where: { id },
+          select: { idUser: true },
+        });
+        if (!existing) throw new Error("RECIPE_NOT_FOUND");
+        if (existing.idUser !== idUser) throw new Error("RECIPE_FORBIDDEN");
+        return tx.recipe.delete({ where: { id }, include });
+      }) as Promise<RecipeModel>;
     }
+
+    return prisma.recipe.delete({
+      where: { id },
+      include,
+    }) as Promise<RecipeModel>;
   }
 }
