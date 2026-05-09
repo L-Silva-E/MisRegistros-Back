@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import jwt, { SignOptions } from "jsonwebtoken";
 import { Context } from "../../../shared/jest/context";
 import environments from "../../../shared/environment";
 import { UserPublicModel, UserLoginResponse } from "../models/user.model";
@@ -72,7 +72,7 @@ export default class UserService {
         role: user.role,
       },
       environments.JWT_SECRET,
-      { expiresIn: environments.JWT_EXPIRES_IN as any },
+      { expiresIn: environments.JWT_EXPIRES_IN } as SignOptions,
     );
 
     const { passwordHash: _, ...userPublic } = user;

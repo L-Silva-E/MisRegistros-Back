@@ -96,7 +96,7 @@ export default class RecipeService {
 
       const [recipes, count] = await prisma.$transaction([
         prisma.recipe.findMany(queryOptions),
-        prisma.recipe.count(),
+        prisma.recipe.count({ where: queryOptions.where }),
       ]);
 
       return { count, recipes: recipes };
