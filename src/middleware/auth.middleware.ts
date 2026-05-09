@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import environments from "../shared/environment";
 import { HttpStatusCode } from "../shared/types.environment";
+import { ErrorResponse } from "../shared/interfaces/api.response";
 import { Role } from "@prisma/client";
 
 export interface AuthenticatedRequest extends Request {
@@ -26,10 +27,9 @@ const authMiddleware = (
 
   if (!token) {
     res.status(HttpStatusCode.UNAUTHORIZED).json({
-      code: HttpStatusCode.UNAUTHORIZED,
-      message: "Unauthorized: No token provided",
-      data: {},
-    });
+      error: "Unauthorized",
+      details: "No token provided",
+    } satisfies ErrorResponse);
     return;
   }
 
@@ -44,10 +44,9 @@ const authMiddleware = (
     next();
   } catch {
     res.status(HttpStatusCode.UNAUTHORIZED).json({
-      code: HttpStatusCode.UNAUTHORIZED,
-      message: "Unauthorized: Invalid or expired token",
-      data: {},
-    });
+      error: "Unauthorized",
+      details: "Invalid or expired token",
+    } satisfies ErrorResponse);
   }
 };
 
