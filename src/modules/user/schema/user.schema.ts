@@ -25,3 +25,11 @@ export const UserLoginZodSchema = z.object({
       .min(1, "El campo 'password' no puede estar vacío"),
   }),
 });
+
+export const UserForgotPasswordZodSchema = z.object({
+  body: z.object({
+    email: z
+      .string({ invalid_type_error: "El campo 'email' debe ser un texto" })
+      .email("El campo 'email' debe ser un correo válido"),
+  }),
+});

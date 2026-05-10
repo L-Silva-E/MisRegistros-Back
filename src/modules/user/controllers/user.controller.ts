@@ -68,6 +68,31 @@ export default class UserController {
     }
   }
 
+  public async forgotPassword(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    try {
+      const { body } = req;
+
+      await userService.forgotPassword(body);
+      logger.info("Password reset email sent", { email: body.email });
+
+      const response: ItemResponse<{ message: string }> = {
+        data: { message: "If an account with that email exists, a reset link has been sent" },
+      };
+      return res.status(HttpStatusCode.OK).send(response);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      logger.error("Error while sending reset email", { error: message });
+
+      const errorBody = ErrorCodes(
+        error instanceof Error ? error : new Error(message),
+      );
+      return res.status(errorBody.code).send(errorBody.response);
+    }
+  }
+
   public async getMe(
     req: AuthenticatedRequest,
     res: Response,
