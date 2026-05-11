@@ -8,6 +8,10 @@ export interface IformatEnvironments {
   JWT_SECRET: string;
   JWT_EXPIRES_IN: string;
 
+  SENDGRID_API_KEY: string;
+  SENDGRID_EMAIL_FROM: string;
+  SENDGRID_TEMPLATE_ID_RESET_PASSWORD: string;
+
   DB_HOST: string;
   DB_PORT: number;
   DB_USERNAME: string;

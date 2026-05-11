@@ -5,6 +5,8 @@ import middlewareValidationSchema from "../../../shared/zod/middleware/schema.va
 import {
   UserRegisterZodSchema,
   UserLoginZodSchema,
+  UserForgotPasswordZodSchema,
+  UserResetPasswordZodSchema,
 } from "../schema/user.schema";
 import UserController from "../controllers/user.controller";
 
@@ -30,6 +32,20 @@ export default class UserRouter {
       AuthorizationApiKey,
       middlewareValidationSchema(UserLoginZodSchema),
       this.controller.login,
+    );
+
+    this.router.post(
+      `/${this.version}/user/forgot-password`,
+      AuthorizationApiKey,
+      middlewareValidationSchema(UserForgotPasswordZodSchema),
+      this.controller.forgotPassword,
+    );
+
+    this.router.post(
+      `/${this.version}/user/reset-password`,
+      AuthorizationApiKey,
+      middlewareValidationSchema(UserResetPasswordZodSchema),
+      this.controller.resetPassword,
     );
 
     this.router.get(

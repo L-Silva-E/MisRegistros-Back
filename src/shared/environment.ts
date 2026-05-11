@@ -12,6 +12,10 @@ const environments: IformatEnvironments = {
   JWT_SECRET: process.env.JWT_SECRET || "MISSING_JWT_SECRET",
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || "7d",
 
+  SENDGRID_API_KEY: process.env.SENDGRID_API_KEY || "",
+  SENDGRID_EMAIL_FROM: process.env.SENDGRID_EMAIL_FROM || "",
+  SENDGRID_TEMPLATE_ID_RESET_PASSWORD: process.env.SENDGRID_TEMPLATE_ID_RESET_PASSWORD || "",
+
   DB_HOST: process.env.DB_HOST || "localhost",
   DB_PORT: Number(process.env.DB_PORT) || 5432,
   DB_USERNAME: process.env.DB_USERNAME || "postgres",

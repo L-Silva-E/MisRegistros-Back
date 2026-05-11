@@ -5,6 +5,13 @@ import { Context } from "../../../shared/jest/context";
 import environments from "../../../shared/environment";
 import { UserPublicModel, UserLoginResponse } from "../models/user.model";
 import { SALT_ROUNDS } from "../constants";
+import MailService from "../../../services/mail.service";
+import {
+  generateResetToken,
+  generateResetTokenExpiry,
+} from "../utils/token.utils";
+
+const mailService = new MailService();
 
 const prismaClient = new PrismaClient();
 
@@ -78,6 +85,67 @@ export default class UserService {
     const { passwordHash: _, ...userPublic } = user;
 
     return { token, user: userPublic };
+  }
+
+  public async forgotPassword(
+    data: { email: string },
+    ctx?: Context,
+  ): Promise<void> {
+    const prisma = ctx?.prisma || prismaClient;
+
+    const user = await prisma.user.findUnique({
+      where: { email: data.email },
+    });
+
+    if (!user || !user.isActive) {
+      return;
+    }
+
+    const token = generateResetToken();
+    const expires = generateResetTokenExpiry();
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { resetToken: token, resetTokenExpires: expires },
+    });
+
+    const resetLink = `${environments.FRONT_URL}/reset-password?token=${token}`;
+
+    await mailService.sendResetPassword({
+      to: user.email,
+      username: user.username,
+      resetLink,
+    });
+  }
+
+  public async resetPassword(
+    data: { token: string; newPassword: string },
+    ctx?: Context,
+  ): Promise<void> {
+    const prisma = ctx?.prisma || prismaClient;
+
+    const user = await prisma.user.findUnique({
+      where: { resetToken: data.token },
+    });
+
+    if (!user || !user.resetTokenExpires) {
+      throw new Error("INVALID_RESET_TOKEN");
+    }
+
+    if (user.resetTokenExpires < new Date()) {
+      throw new Error("EXPIRED_RESET_TOKEN");
+    }
+
+    const passwordHash = await bcrypt.hash(data.newPassword, SALT_ROUNDS);
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        passwordHash,
+        resetToken: null,
+        resetTokenExpires: null,
+      },
+    });
   }
 
   public async getMe(idUser: number, ctx?: Context): Promise<UserPublicModel> {
