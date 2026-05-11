@@ -118,6 +118,36 @@ export default class UserService {
     });
   }
 
+  public async resetPassword(
+    data: { token: string; newPassword: string },
+    ctx?: Context,
+  ): Promise<void> {
+    const prisma = ctx?.prisma || prismaClient;
+
+    const user = await prisma.user.findUnique({
+      where: { resetToken: data.token },
+    });
+
+    if (!user || !user.resetTokenExpires) {
+      throw new Error("INVALID_RESET_TOKEN");
+    }
+
+    if (user.resetTokenExpires < new Date()) {
+      throw new Error("EXPIRED_RESET_TOKEN");
+    }
+
+    const passwordHash = await bcrypt.hash(data.newPassword, SALT_ROUNDS);
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        passwordHash,
+        resetToken: null,
+        resetTokenExpires: null,
+      },
+    });
+  }
+
   public async getMe(idUser: number, ctx?: Context): Promise<UserPublicModel> {
     const prisma = ctx?.prisma || prismaClient;
 

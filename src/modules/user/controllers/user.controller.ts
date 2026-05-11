@@ -93,6 +93,45 @@ export default class UserController {
     }
   }
 
+  public async resetPassword(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    try {
+      const { body } = req;
+
+      await userService.resetPassword(body);
+      logger.info("Password reset successfully");
+
+      const response: ItemResponse<{ message: string }> = {
+        data: { message: "Password updated successfully" },
+      };
+      return res.status(HttpStatusCode.OK).send(response);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      logger.error("Error while resetting password", { error: message });
+
+      if (message === "INVALID_RESET_TOKEN") {
+        return res.status(HttpStatusCode.BAD_REQUEST).send({
+          error: "Bad Request",
+          details: "Invalid or already used reset token",
+        } satisfies ErrorResponse);
+      }
+
+      if (message === "EXPIRED_RESET_TOKEN") {
+        return res.status(HttpStatusCode.BAD_REQUEST).send({
+          error: "Bad Request",
+          details: "Reset token has expired, please request a new one",
+        } satisfies ErrorResponse);
+      }
+
+      const errorBody = ErrorCodes(
+        error instanceof Error ? error : new Error(message),
+      );
+      return res.status(errorBody.code).send(errorBody.response);
+    }
+  }
+
   public async getMe(
     req: AuthenticatedRequest,
     res: Response,

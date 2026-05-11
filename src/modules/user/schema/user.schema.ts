@@ -33,3 +33,14 @@ export const UserForgotPasswordZodSchema = z.object({
       .email("El campo 'email' debe ser un correo válido"),
   }),
 });
+
+export const UserResetPasswordZodSchema = z.object({
+  body: z.object({
+    token: z
+      .string({ invalid_type_error: "El campo 'token' debe ser un texto" })
+      .min(1, "El campo 'token' no puede estar vacío"),
+    newPassword: z
+      .string({ invalid_type_error: "El campo 'newPassword' debe ser un texto" })
+      .min(8, "El campo 'newPassword' debe tener al menos 8 caracteres"),
+  }),
+});
