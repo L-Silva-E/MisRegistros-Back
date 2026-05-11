@@ -5,6 +5,19 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.10.0] - 2026-05-10
+
+### Added
+
+- **Password reset flow**: Implemented end-to-end forgot/reset password functionality via SendGrid:
+  - New dependency: `@sendgrid/mail`
+  - New environment variables: `SENDGRID_API_KEY`, `SENDGRID_EMAIL_FROM`, `SENDGRID_TEMPLATE_ID_RESET_PASSWORD`
+  - New `src/services/mail.service.ts` with `MailService.sendResetPassword()` — wraps SendGrid dynamic template call with `{{first_name}}` and `{{reset_link}}` variables
+  - New utility functions in `src/modules/user/utils/token.utils.ts`: `generateResetToken()` (32-byte cryptographically secure hex via Node.js `crypto`) and `generateResetTokenExpiry()` (1-hour fixed expiry)
+  - New fields on `User` model: `resetToken String? @unique` and `resetTokenExpires DateTime?` — migration `add_reset_token_to_user`
+  - `POST /v1/user/forgot-password` — receives `{ email }`, generates a reset token, persists it with expiry, and sends the reset email. Always returns the same `200` response regardless of whether the email exists (prevents user enumeration)
+  - `POST /v1/user/reset-password` — receives `{ token, newPassword }`, validates token existence and expiry, hashes the new password with bcrypt, clears reset fields. Returns `400` with distinct messages for invalid vs. expired tokens
+
 ## [1.9.0] - 2026-05-09
 
 ### Added
