@@ -22,6 +22,10 @@ const environments: IformatEnvironments = {
   DB_PASSWORD: process.env.DB_PASSWORD || "postgres",
   DB_DATABASE: process.env.DB_DATABASE || "postgres",
 
+  CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME || "",
+  CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || "",
+  CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || "",
+
   FRONT_URL: process.env.FRONT_URL || "http://localhost:5173",
 };
 
