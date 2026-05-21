@@ -41,4 +41,9 @@ export default class StorageService {
       throw error;
     }
   }
+
+  public extractPublicId(url: string): string | null {
+    const match = url.match(/\/upload\/v\d+\/(.+)\.\w+$/);
+    return match ? match[1] : null;
+  }
 }

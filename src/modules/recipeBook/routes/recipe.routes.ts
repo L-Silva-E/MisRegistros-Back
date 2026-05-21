@@ -46,6 +46,7 @@ export default class RecipeRouter {
       `/${this.version}/recipe/:id`,
       AuthorizationApiKey,
       authMiddleware,
+      uploadMiddleware,
       middlewareValidationSchema(RecipeUpdateZodSchema),
       this.controller.patch,
     );
