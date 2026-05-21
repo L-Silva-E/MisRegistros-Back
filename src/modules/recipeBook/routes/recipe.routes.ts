@@ -3,6 +3,7 @@ import AuthorizationApiKey from "../../../shared/prisma/middlewares/authorizatio
 import authMiddleware, {
   optionalAuthMiddleware,
 } from "../../../middleware/auth.middleware";
+import uploadMiddleware from "../../../middleware/upload.middleware";
 
 import RecipeController from "../controllers/recipe.controller";
 
@@ -28,6 +29,7 @@ export default class RecipeRouter {
       `/${this.version}/recipe`,
       AuthorizationApiKey,
       authMiddleware,
+      uploadMiddleware,
       middlewareValidationSchema(RecipeCreateZodSchema),
       this.controller.create,
     );

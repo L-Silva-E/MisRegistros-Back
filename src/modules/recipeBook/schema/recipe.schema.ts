@@ -66,9 +66,33 @@ export const RecipeBaseZodSchema = z.object({
     .optional(),
 });
 
+const parseJsonString = (val: unknown) => {
+  if (typeof val === "string") {
+    try {
+      return JSON.parse(val);
+    } catch {
+      return val;
+    }
+  }
+  return val;
+};
+
 //~ CRUD Zod Schemas
 export const RecipeCreateZodSchema = z.object({
-  body: RecipeBaseZodSchema.strict(),
+  body: RecipeBaseZodSchema.omit({ thumbnail: true })
+    .extend({
+      score: z.coerce
+        .number()
+        .int()
+        .gte(0, "El campo 'puntuación' debe ser mayor o igual a 0")
+        .lte(5, "El campo 'puntuación' debe ser menor o igual a 5"),
+      ingredients: z.preprocess(
+        parseJsonString,
+        RecipeBaseZodSchema.shape.ingredients,
+      ),
+      steps: z.preprocess(parseJsonString, RecipeBaseZodSchema.shape.steps),
+    })
+    .strict(),
 });
 
 export const RecipeGetZodSchema = z.object({

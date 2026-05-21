@@ -1,5 +1,6 @@
 import { Response } from "express";
 import RecipeService from "../services/recipe.service";
+import StorageService, { UploadResult } from "../../storage/services/storage.service";
 import LoggerService from "../../../services/logger";
 import ErrorCodes from "../../../shared/prisma/middlewares/error.codes";
 import {
@@ -12,6 +13,7 @@ import { HttpStatusCode } from "../../../shared/types.environment";
 import { AuthenticatedRequest } from "../../../middleware/auth.middleware";
 
 const recipeService = new RecipeService();
+const storageService = new StorageService();
 const logger = new LoggerService("Recipe");
 
 export default class RecipeController {
@@ -19,19 +21,30 @@ export default class RecipeController {
     req: AuthenticatedRequest,
     res: Response,
   ): Promise<Response> {
+    let uploadResult: UploadResult | undefined;
+
     try {
       const { body } = req;
       const idUser = req.user?.id;
 
-      const recipe = await recipeService.create({ ...body, idUser });
+      if (req.file) {
+        uploadResult = await storageService.upload(req.file.buffer);
+      }
+
+      const recipe = await recipeService.create({
+        ...body,
+        idUser,
+        thumbnail: uploadResult?.url,
+      });
       logger.info("Created", { id: recipe.id });
 
-      const response: ItemResponse<typeof recipe> = {
-        data: recipe,
-      };
-
+      const response: ItemResponse<typeof recipe> = { data: recipe };
       return res.status(HttpStatusCode.CREATED).send(response);
     } catch (error: unknown) {
+      if (uploadResult) {
+        await storageService.delete(uploadResult.public_id).catch(() => {});
+      }
+
       logger.error("Error while creating", {
         body: req.body,
         error: error instanceof Error ? error.message : String(error),
