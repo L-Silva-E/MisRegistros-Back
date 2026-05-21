@@ -28,7 +28,10 @@ export default class RecipeController {
       const idUser = req.user?.id;
 
       if (req.file) {
-        uploadResult = await storageService.upload(req.file.buffer);
+        uploadResult = await storageService.upload(
+          req.file.buffer,
+          "mis-registros/recipes",
+        );
       }
 
       const recipe = await recipeService.create({
