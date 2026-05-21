@@ -33,7 +33,7 @@ export const RecipeBaseZodSchema = z.object({
       }
     }, "El campo 'thumbnail' debe ser una URL de imagen válida (jpg, png, gif, webp, svg, avif)")
     .optional(),
-  score: z
+  score: z.coerce
     .number()
     .int()
     .gte(0, "El campo 'puntuación' debe ser mayor o igual a 0")
@@ -81,11 +81,6 @@ const parseJsonString = (val: unknown) => {
 export const RecipeCreateZodSchema = z.object({
   body: RecipeBaseZodSchema.omit({ thumbnail: true })
     .extend({
-      score: z.coerce
-        .number()
-        .int()
-        .gte(0, "El campo 'puntuación' debe ser mayor o igual a 0")
-        .lte(5, "El campo 'puntuación' debe ser menor o igual a 5"),
       ingredients: z.preprocess(
         parseJsonString,
         RecipeBaseZodSchema.shape.ingredients,
@@ -112,7 +107,13 @@ export const RecipeGetZodSchema = z.object({
 
 export const RecipeUpdateZodSchema = z.object({
   params: PrimaryKeySchema.strict(),
-  body: RecipeBaseZodSchema.partial(),
+  body: RecipeBaseZodSchema.partial().extend({
+    ingredients: z.preprocess(
+      parseJsonString,
+      RecipeBaseZodSchema.shape.ingredients.optional(),
+    ),
+    steps: z.preprocess(parseJsonString, RecipeBaseZodSchema.shape.steps),
+  }),
 });
 
 export const RecipeDeleteZodSchema = z.object({
