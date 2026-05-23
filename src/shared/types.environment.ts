@@ -18,6 +18,10 @@ export interface IformatEnvironments {
   DB_PASSWORD: string;
   DB_DATABASE: string;
 
+  CLOUDINARY_CLOUD_NAME: string;
+  CLOUDINARY_API_KEY: string;
+  CLOUDINARY_API_SECRET: string;
+
   FRONT_URL: string;
 }
 

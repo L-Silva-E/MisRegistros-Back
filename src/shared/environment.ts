@@ -14,13 +14,18 @@ const environments: IformatEnvironments = {
 
   SENDGRID_API_KEY: process.env.SENDGRID_API_KEY || "",
   SENDGRID_EMAIL_FROM: process.env.SENDGRID_EMAIL_FROM || "",
-  SENDGRID_TEMPLATE_ID_RESET_PASSWORD: process.env.SENDGRID_TEMPLATE_ID_RESET_PASSWORD || "",
+  SENDGRID_TEMPLATE_ID_RESET_PASSWORD:
+    process.env.SENDGRID_TEMPLATE_ID_RESET_PASSWORD || "",
 
   DB_HOST: process.env.DB_HOST || "localhost",
   DB_PORT: Number(process.env.DB_PORT) || 5432,
   DB_USERNAME: process.env.DB_USERNAME || "postgres",
   DB_PASSWORD: process.env.DB_PASSWORD || "postgres",
   DB_DATABASE: process.env.DB_DATABASE || "postgres",
+
+  CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME || "",
+  CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || "",
+  CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || "",
 
   FRONT_URL: process.env.FRONT_URL || "http://localhost:5173",
 };

@@ -1,5 +1,8 @@
 import { Response } from "express";
 import RecipeService from "../services/recipe.service";
+import StorageService, {
+  UploadResult,
+} from "../../storage/services/storage.service";
 import LoggerService from "../../../services/logger";
 import ErrorCodes from "../../../shared/prisma/middlewares/error.codes";
 import {
@@ -12,6 +15,7 @@ import { HttpStatusCode } from "../../../shared/types.environment";
 import { AuthenticatedRequest } from "../../../middleware/auth.middleware";
 
 const recipeService = new RecipeService();
+const storageService = new StorageService();
 const logger = new LoggerService("Recipe");
 
 export default class RecipeController {
@@ -19,19 +23,33 @@ export default class RecipeController {
     req: AuthenticatedRequest,
     res: Response,
   ): Promise<Response> {
+    let uploadResult: UploadResult | undefined;
+
     try {
       const { body } = req;
       const idUser = req.user?.id;
 
-      const recipe = await recipeService.create({ ...body, idUser });
+      if (req.file) {
+        uploadResult = await storageService.upload(
+          req.file.buffer,
+          "mis-registros/recipes",
+        );
+      }
+
+      const recipe = await recipeService.create({
+        ...body,
+        idUser,
+        thumbnail: uploadResult?.url,
+      });
       logger.info("Created", { id: recipe.id });
 
-      const response: ItemResponse<typeof recipe> = {
-        data: recipe,
-      };
-
+      const response: ItemResponse<typeof recipe> = { data: recipe };
       return res.status(HttpStatusCode.CREATED).send(response);
     } catch (error: unknown) {
+      if (uploadResult) {
+        await storageService.delete(uploadResult.public_id).catch(() => {});
+      }
+
       logger.error("Error while creating", {
         body: req.body,
         error: error instanceof Error ? error.message : String(error),
@@ -92,34 +110,57 @@ export default class RecipeController {
     req: AuthenticatedRequest,
     res: Response,
   ): Promise<Response> {
+    let uploadResult: UploadResult | undefined;
+
     try {
       const { body, params } = req;
       const id = Number(params.id);
       const idUser = req.user?.role !== "ADMIN" ? req.user!.id : undefined;
 
-      const recipe = await recipeService.patch(id, body, undefined, idUser);
-      logger.info("Updated", { id: recipe.id });
+      let oldThumbnailUrl: string | undefined;
+      if (req.file) {
+        const current = await recipeService.findById(id);
+        if (!current) throw new Error("RECIPE_NOT_FOUND");
+        oldThumbnailUrl = current.thumbnail ?? undefined;
+        uploadResult = await storageService.upload(
+          req.file.buffer,
+          "mis-registros/recipes",
+        );
+      }
 
+      const recipe = await recipeService.patch(
+        id,
+        { ...body, thumbnail: uploadResult?.url ?? body.thumbnail },
+        undefined,
+        idUser,
+      );
+
+      if (uploadResult && oldThumbnailUrl) {
+        const oldPublicId = storageService.extractPublicId(oldThumbnailUrl);
+        if (oldPublicId) await storageService.delete(oldPublicId).catch(() => {});
+      }
+
+      logger.info("Updated", { id: recipe.id });
       const response: ItemResponse<typeof recipe> = { data: recipe };
       return res.status(HttpStatusCode.OK).send(response);
     } catch (error: unknown) {
+      if (uploadResult) {
+        await storageService.delete(uploadResult.public_id).catch(() => {});
+      }
+
       const message = error instanceof Error ? error.message : String(error);
 
       if (message === "RECIPE_NOT_FOUND") {
-        return res
-          .status(HttpStatusCode.NOT_FOUND)
-          .send({
-            error: "Not Found",
-            details: "Recipe not found",
-          } satisfies ErrorResponse);
+        return res.status(HttpStatusCode.NOT_FOUND).send({
+          error: "Not Found",
+          details: "Recipe not found",
+        } satisfies ErrorResponse);
       }
       if (message === "RECIPE_FORBIDDEN") {
-        return res
-          .status(HttpStatusCode.FORBIDDEN)
-          .send({
-            error: "Forbidden",
-            details: "You can only edit your own recipes",
-          } satisfies ErrorResponse);
+        return res.status(HttpStatusCode.FORBIDDEN).send({
+          error: "Forbidden",
+          details: "You can only edit your own recipes",
+        } satisfies ErrorResponse);
       }
 
       logger.error("Error while updating", {
@@ -154,20 +195,16 @@ export default class RecipeController {
       const message = error instanceof Error ? error.message : String(error);
 
       if (message === "RECIPE_NOT_FOUND") {
-        return res
-          .status(HttpStatusCode.NOT_FOUND)
-          .send({
-            error: "Not Found",
-            details: "Recipe not found",
-          } satisfies ErrorResponse);
+        return res.status(HttpStatusCode.NOT_FOUND).send({
+          error: "Not Found",
+          details: "Recipe not found",
+        } satisfies ErrorResponse);
       }
       if (message === "RECIPE_FORBIDDEN") {
-        return res
-          .status(HttpStatusCode.FORBIDDEN)
-          .send({
-            error: "Forbidden",
-            details: "You can only delete your own recipes",
-          } satisfies ErrorResponse);
+        return res.status(HttpStatusCode.FORBIDDEN).send({
+          error: "Forbidden",
+          details: "You can only delete your own recipes",
+        } satisfies ErrorResponse);
       }
 
       logger.error("Error while deleting", {

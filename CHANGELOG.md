@@ -5,6 +5,29 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.0] - 2026-05-21
+
+### Added
+
+- **Image upload for recipes via Cloudinary**: Implemented end-to-end image upload support for recipe creation and update using a coupled flow:
+  - New dependencies: `cloudinary`, `multer`, `@types/multer`
+  - New environment variables: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`
+  - New `src/config/cloudinary.ts` — initializes the Cloudinary SDK using `environment.ts`
+  - New `src/modules/storage/services/storage.service.ts` — shared, decoupled service with three methods:
+    - `upload(buffer, folder)` — uploads a buffer to Cloudinary, forces WebP format with automatic quality optimization, returns `{ url, public_id }`
+    - `delete(publicId)` — removes an image from Cloudinary by its `public_id`
+    - `extractPublicId(url)` — parses the `public_id` from a Cloudinary URL (used to identify and clean up the previous image on PATCH)
+  - New `src/middleware/upload.middleware.ts` — Multer middleware with `memoryStorage` (no disk writes), type filter (`image/jpeg`, `image/png`, `image/webp`) and 5MB size limit. Returns typed error responses: `400` for oversized files, `415` for unsupported types
+
+### Changed
+
+- **`POST /recipe`**: endpoint now accepts `multipart/form-data` instead of `application/json`. The `thumbnail` field is no longer part of the body — it is sent as a file in the `thumbnail` form field. If the DB operation fails after a successful upload, the image is deleted from Cloudinary automatically in the `catch` block to avoid orphaned files
+- **`PATCH /recipe/:id`**: endpoint now accepts `multipart/form-data` and supports updating the recipe image. When a new image is uploaded, the previous Cloudinary image is deleted automatically after a successful DB update. If the DB update fails, the newly uploaded image is deleted to preserve consistency
+- **`RecipeCreateZodSchema`**: `thumbnail` removed from body validation (now comes from file). Added `z.preprocess(parseJsonString, ...)` for `ingredients` and `steps` to handle JSON string serialization required by `multipart/form-data`
+- **`RecipeUpdateZodSchema`**: Added `z.preprocess(parseJsonString, ...)` for `ingredients` and `steps` for multipart compatibility
+- **`RecipeBaseZodSchema`**: `score` migrated from `z.number()` to `z.coerce.number()` — domain-level change that tolerates string input regardless of transport format
+- **`AuthorizationApiKey` middleware**: added `LoggerService` logging on rejected requests — logs `method`, `endpoint` and `ip` at error level so unauthorized access attempts appear in both console and `error.log`
+
 ## [1.10.0] - 2026-05-10
 
 ### Added
@@ -110,7 +133,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Metadata endpoint with usage statistics**: Implemented comprehensive metadata endpoint for RecipeBook module:
-
   - New `GET /v1/metadata/usage-count` endpoint for retrieving all metadata with usage statistics
   - Complete metadata response including ingredients, categories, and origins with their respective usage counts
   - Alphabetical ordering of all metadata results for consistent frontend display
@@ -122,7 +144,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Recipe duplication functionality**: Implemented comprehensive recipe duplication feature:
-
   - New `POST /v1/recipe/:id/duplicate` endpoint for duplicating existing recipes
   - `RecipeService.duplicate()` method with data transformation for editing workflow
   - Automatic name modification with "(Copia)" suffix for duplicated recipes
@@ -137,7 +158,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **Consolidated test organization**: Refactored test structure for better maintainability:
-
   - Moved recipe duplication unit tests from separate `recipe.duplicate.test.ts` into `recipe.service.test.ts`
   - Integrated duplication integration tests from `recipe.duplicate.integration.test.ts` into `integration.test.ts`
   - Enhanced test coverage with edge cases (recipes without steps, error scenarios)
@@ -156,7 +176,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **Enhanced TypeScript type safety**: Comprehensive refactoring to eliminate `any` types across the codebase:
-
   - **Controllers**: Replaced `any` error types with `unknown` and proper type guards in all controllers (`category`, `ingredient`, `origin`, `recipe`, `step`, `feature`)
   - **Services**: Updated all service `get` methods to use `QueryParams` interface instead of `any` for query parameters
   - **Tests**: Improved type safety in all test files:

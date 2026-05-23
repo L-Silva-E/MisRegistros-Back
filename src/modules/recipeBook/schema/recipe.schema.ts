@@ -33,7 +33,7 @@ export const RecipeBaseZodSchema = z.object({
       }
     }, "El campo 'thumbnail' debe ser una URL de imagen válida (jpg, png, gif, webp, svg, avif)")
     .optional(),
-  score: z
+  score: z.coerce
     .number()
     .int()
     .gte(0, "El campo 'puntuación' debe ser mayor o igual a 0")
@@ -66,9 +66,28 @@ export const RecipeBaseZodSchema = z.object({
     .optional(),
 });
 
+const parseJsonString = (val: unknown) => {
+  if (typeof val === "string") {
+    try {
+      return JSON.parse(val);
+    } catch {
+      return val;
+    }
+  }
+  return val;
+};
+
 //~ CRUD Zod Schemas
 export const RecipeCreateZodSchema = z.object({
-  body: RecipeBaseZodSchema.strict(),
+  body: RecipeBaseZodSchema.omit({ thumbnail: true })
+    .extend({
+      ingredients: z.preprocess(
+        parseJsonString,
+        RecipeBaseZodSchema.shape.ingredients,
+      ),
+      steps: z.preprocess(parseJsonString, RecipeBaseZodSchema.shape.steps),
+    })
+    .strict(),
 });
 
 export const RecipeGetZodSchema = z.object({
@@ -88,7 +107,13 @@ export const RecipeGetZodSchema = z.object({
 
 export const RecipeUpdateZodSchema = z.object({
   params: PrimaryKeySchema.strict(),
-  body: RecipeBaseZodSchema.partial(),
+  body: RecipeBaseZodSchema.partial().extend({
+    ingredients: z.preprocess(
+      parseJsonString,
+      RecipeBaseZodSchema.shape.ingredients.optional(),
+    ),
+    steps: z.preprocess(parseJsonString, RecipeBaseZodSchema.shape.steps),
+  }),
 });
 
 export const RecipeDeleteZodSchema = z.object({
