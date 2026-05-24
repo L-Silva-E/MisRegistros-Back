@@ -21,6 +21,8 @@ export async function seedUsers() {
       username: adminUsername,
       password: adminPassword,
       role: "ADMIN" as const,
+      avatar:
+        "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779588686/mis-registros/profile-pictures/lzpwsrtpnkaxcwvlfxdu.webp",
     },
   ];
 
@@ -44,6 +46,7 @@ export async function seedUsers() {
         username: userData.username,
         passwordHash,
         role: userData.role,
+        avatar: userData.avatar,
       },
     });
 

@@ -7,7 +7,8 @@ const dataRecipes = [
       "Fideos con salsa de tomate y carne, una deliciosa combinación de fideos N°77 acompañados de una salsa casera preparada con cebolla, zanahoria, carne molida y tomate. La carne se cocina lentamente junto con las verduras, creando una salsa robusta que realza el sabor de los fideos al dente. Perfecto para una comida reconfortante y satisfactoria.",
     category: "Almuerzo",
     origin: "Italiana",
-    thumbnail: "https://i.imgur.com/6HydxA5.jpeg",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648512/mis-registros/recipes/l9ninndfaem1dyaurk6o.webp",
     score: Score.EXCELLENT,
     time: 45,
     servings: 4,
@@ -34,7 +35,8 @@ const dataRecipes = [
       "Clásicas empanadas rellenas de carne, preparadas con una masa crujiente y un relleno sabroso de carne picada, cebolla, aceitunas y huevo duro sazonados con comino y pimentón. Horneadas hasta dorar, estas empanadas son ideales como un tentempié o plato principal en cualquier ocasión.",
     category: "Snack",
     origin: "Argentina",
-    thumbnail: "https://i.imgur.com/2HrnIiK.jpeg",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648532/mis-registros/recipes/gr6ogtuc4ikqkysc06pi.webp",
     score: Score.GOOD,
     time: 60,
     servings: 8,
@@ -62,7 +64,8 @@ const dataRecipes = [
       "Paella española con mariscos y chorizo, un plato tradicional que combina arroz con langostinos, calamar y chorizo español, aromatizado con ajo, cebolla y pimentón rojo. El azafrán y el caldo de pescado complementan los sabores, creando una paella con una textura perfecta y un sabor profundo que evoca la cocina mediterránea.",
     category: "Almuerzo",
     origin: "Española",
-    thumbnail: "https://i.imgur.com/aB8thnu.png",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648583/mis-registros/recipes/mqwj3vxp5txzylaexe1k.webp",
     score: Score.EXCELLENT,
     time: 90,
     servings: 6,
@@ -93,7 +96,8 @@ const dataRecipes = [
       "Ensalada clásica con aderezo cremoso, hecha con lechuga romana fresca, pollo asado, crujientes cubos de pan tostado y queso parmesano. El aderezo César se mezcla delicadamente para realzar el sabor de los ingredientes frescos, creando una ensalada ligera pero satisfactoria.",
     category: "Almuerzo",
     origin: "Americana",
-    thumbnail: "https://i.imgur.com/8k2dGZH.jpeg",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648596/mis-registros/recipes/ib64gk7ygwnepchzcf5g.webp",
     score: Score.GREAT,
     time: 20,
     servings: 2,
@@ -119,7 +123,8 @@ const dataRecipes = [
       "Desayuno nutritivo con huevos, aguacate y tostadas, que incluye huevos cocinados al gusto, aguacate fresco en rodajas, tostadas crujientes y tomates cherry. Un plato equilibrado que proporciona energía para empezar el día, con un toque saludable y delicioso.",
     category: "Desayuno",
     origin: "Americana",
-    thumbnail: "https://i.imgur.com/rrQHbDE.jpeg",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648607/mis-registros/recipes/b8wb6jkxmu2y666hx6ks.webp",
     score: Score.EXCELLENT,
     time: 25,
     servings: 2,
@@ -147,7 +152,8 @@ const dataRecipes = [
       "Cóctel peruano refrescante con pisco y limón, elaborado con una mezcla de pisco, jugo de limón fresco, jarabe de goma y clara de huevo. Servido con hielo y unas gotas de amargo de Angostura, este cóctel es un equilibrio perfecto entre dulce y ácido, ideal para celebrar o disfrutar en cualquier ocasión.",
     category: "Trago",
     origin: "Peruana",
-    thumbnail: "https://i.imgur.com/YRzKPa3.png",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648617/mis-registros/recipes/wjkcv2cpv6tawt7zc137.webp",
     score: Score.EXCELLENT,
     time: 10,
     servings: 1,
@@ -173,7 +179,8 @@ const dataRecipes = [
       "Cóctel mexicano con tequila blanco, triple sec y jugo de lima, adornado con una elegante rodaja de lima en el borde. Esta bebida refrescante se prepara agitando los ingredientes con hielo en una coctelera y se sirve con un toque de sal en el borde del vaso. Perfecta para disfrutar en cualquier ocasión con su equilibrio único entre dulzura y acidez.",
     category: "Trago",
     origin: "Mexicana",
-    thumbnail: "https://i.imgur.com/0E3eKjr.jpeg",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648629/mis-registros/recipes/vvqelbbyubstuav30wya.webp",
     score: Score.GOOD,
     time: 10,
     servings: 1,
@@ -198,7 +205,8 @@ const dataRecipes = [
       "Snack de palomitas de maíz cubiertas de caramelo, una delicia dulce y crujiente. Las palomitas se mezclan con una mezcla de mantequilla derretida y azúcar que se carameliza delicadamente, luego se sazona con una pizca de sal para equilibrar los sabores. Ideal para una tarde de cine en casa o cualquier celebración informal.",
     category: "Snack",
     origin: "Americana",
-    thumbnail: "https://i.imgur.com/JMr2FRD.png",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648641/mis-registros/recipes/ivy53tacif3mdnflrmar.webp",
     score: Score.GREAT,
     time: 15,
     servings: 4,
@@ -222,7 +230,8 @@ const dataRecipes = [
       "Delicioso guacamole casero preparado con aguacates maduros, tomate, cebolla morada y cilantro fresco, todo sazonado con limón y sal. Se sirve con Tostitos crujientes para disfrutar como aperitivo o acompañamiento. La combinación de sabores frescos y la textura cremosa del guacamole hacen de este plato una opción siempre popular.",
     category: "Snack",
     origin: "Mexicana",
-    thumbnail: "https://i.imgur.com/EAPZNFy.jpeg",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648654/mis-registros/recipes/phswdxquii3fseoovcjn.webp",
     score: Score.EXCELLENT,
     time: 20,
     servings: 4,
@@ -250,7 +259,8 @@ const dataRecipes = [
       "Pequeñas pizzas individuales con salsa de tomate, queso mozzarella derretido y rodajas de pepperoni, todo sobre panecillos de pizza crujientes. Horneadas hasta que el queso se derrite y la masa esté dorada, estas mini pizzas son perfectas para fiestas infantiles o como un rápido almuerzo satisfactorio.",
     category: "Snack",
     origin: "Italiana",
-    thumbnail: "https://i.imgur.com/ydZbnKS.jpeg",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648666/mis-registros/recipes/ajuou0zsjn8um5iy7h9x.webp",
     score: Score.GOOD,
     time: 30,
     servings: 6,
@@ -276,7 +286,8 @@ const dataRecipes = [
       "Ensalada fresca de atún con lechuga crujiente, pepino, pimentón rojo y huevo cocido, todo mezclado en un tazón. Perfecta para una comida ligera y nutritiva, esta ensalada se prepara con ingredientes simples pero sabrosos que se combinan a la perfección.",
     category: "Almuerzo",
     origin: "Americana",
-    thumbnail: "https://i.imgur.com/AheT9aK.jpeg",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648677/mis-registros/recipes/mptrpnujttrkce1is68y.webp",
     score: Score.GOOD,
     time: 20,
     servings: 2,
@@ -300,7 +311,8 @@ const dataRecipes = [
       "Arroz con pollo y verduras, una receta reconfortante donde el pollo se cocina con cebolla y zanahoria en aceite caliente, luego se mezcla con arroz y se cocina lentamente hasta que esté listo. Esta comida abundante se sirve con pollo tierno y arroz aromático, perfecta para una comida familiar satisfactoria.",
     category: "Almuerzo",
     origin: "Española",
-    thumbnail: "https://i.imgur.com/OkUvyUP.jpeg",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648687/mis-registros/recipes/hiukwimemwpqp2wzs81i.webp",
     score: Score.GREAT,
     time: 45,
     servings: 4,
@@ -326,7 +338,8 @@ const dataRecipes = [
       "Deliciosa tarta de manzana con un toque de canela, preparada con rodajas finas de manzana sobre una base de masa de empanadas. Se espolvorea con azúcar y canela, se añaden trozos de mantequilla y se hornea hasta que la superficie esté dorada y las manzanas estén tiernas. Ideal para disfrutar como postre o acompañamiento.",
     category: "Postre",
     origin: "Americana",
-    thumbnail: "https://i.imgur.com/zHssjys.jpeg",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648701/mis-registros/recipes/n9uip3sngyt4wlyyldvh.webp",
     score: Score.GOOD,
     time: 60,
     servings: 8,
@@ -351,7 +364,8 @@ const dataRecipes = [
       "Reconfortante sopa de verduras con fideos, preparada con cebolla, zanahoria, puerro y apio, todos sofritos en aceite caliente antes de añadir agua y cocinar a fuego lento. Se agregan fideos que se cocinan hasta alcanzar la textura deseada. Perfecta para días fríos o como plato reconfortante en cualquier momento.",
     category: "Cena",
     origin: "Alemana",
-    thumbnail: "https://i.imgur.com/wtX9KjX.jpeg",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648710/mis-registros/recipes/tmy6kskwtbr2m0nobrhg.webp",
     score: Score.GOOD,
     time: 40,
     servings: 4,
@@ -377,7 +391,8 @@ const dataRecipes = [
       "Tarta de espinaca con queso, elaborada con espinacas y cebolla sofritas en aceite caliente, mezcladas con una preparación de harina, manteca y agua. Se hornea en un molde hasta que la masa esté dorada y la superficie de la tarta, con el relleno de espinacas y queso, esté deliciosamente gratinada.",
     category: "Cena",
     origin: "Francesa",
-    thumbnail: "https://i.imgur.com/CqmnLLo.jpeg",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648721/mis-registros/recipes/ksfccleaniaizwl29ndq.webp",
     score: Score.GOOD,
     time: 50,
     servings: 6,
@@ -401,7 +416,8 @@ const dataRecipes = [
       "Sopa de lentejas nutritiva y sabrosa, preparada con cebolla, zanahoria, puerro y apio sofritos en aceite caliente, luego cocidos lentamente con agua hasta que las lentejas estén tiernas y el caldo espeso. Ideal para una comida completa y reconfortante, especialmente en días frescos.",
     category: "Cena",
     origin: "Española",
-    thumbnail: "https://i.imgur.com/G4OZdjB.jpeg",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648732/mis-registros/recipes/pzont56igq3bbgel5mom.webp",
     score: Score.GOOD,
     time: 60,
     servings: 6,
@@ -427,7 +443,8 @@ const dataRecipes = [
       "Tarta de choclo con cebolla y queso, donde el choclo y la cebolla se sofríen en aceite caliente antes de ser combinados con una mezcla de harina, manteca y agua. La masa se hornea hasta dorar y se rellena con la mezcla de choclo, cebolla y queso, creando una combinación sabrosa y gratinada.",
     category: "Cena",
     origin: "Argentina",
-    thumbnail: "https://i.imgur.com/R3vVNGm.jpeg",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648742/mis-registros/recipes/rih2yv3ce0eti9p78xre.webp",
     score: Score.GOOD,
     time: 50,
     servings: 6,
@@ -451,7 +468,8 @@ const dataRecipes = [
       "Sopa de arvejas reconfortante con verduras y arroz, preparada con cebolla, zanahoria, puerro y apio sofritos en aceite caliente, seguidos de agua, arvejas y arroz. Cocinada a fuego lento hasta que los ingredientes estén tiernos y el caldo haya desarrollado sabores profundos. Perfecta para una comida nutritiva y satisfactoria.",
     category: "Cena",
     origin: "Alemana",
-    thumbnail: "https://i.imgur.com/iPs3qKQ.jpeg",
+    thumbnail:
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648754/mis-registros/recipes/byvneq9fom0pgxxznn7c.webp",
     score: Score.GOOD,
     time: 45,
     servings: 4,
