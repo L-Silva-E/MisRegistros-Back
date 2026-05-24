@@ -1,6 +1,6 @@
 {
   "name": "misregistros-back",
-  "version": "1.12.2",
+  "version": "1.12.3",
   "description": "App to register all personal data",
   "main": "server.js",
   "scripts": {
@@ -31,6 +31,7 @@
     "jest-mock-extended": "^3.0.7",
     "prisma": "5.7.0",
     "ts-jest": "^29.1.4",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "5.4.5"
   },
