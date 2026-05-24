@@ -5,6 +5,18 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.12.3] - 2026-05-24
+
+### Fixed
+
+- **Seed fails with `spawn ts-node ENOENT` under pnpm**: `ts-node` was only a transitive dependency of `ts-node-dev`. pnpm does not hoist transitive dependencies, so the `ts-node` binary was not available in PATH when Prisma ran the seed command. Fixed by adding `ts-node` as a direct `devDependency`
+
+### Changed
+
+- **Seed images migrated from imgur to Cloudinary**: all recipe thumbnail URLs and the admin user avatar now point to Cloudinary (`res.cloudinary.com/dp5rqmzzw`) to keep seed data consistent with the rest of the image storage strategy
+
+---
+
 ## [1.12.2] - 2026-05-24
 
 ### Fixed
