@@ -10,6 +10,7 @@ export interface UserModel extends BaseEntity {
   role: Role;
   isActive: boolean;
   lastLoginAt?: Date | null;
+  avatar?: string | null;
 }
 
 //~ Safe to expose (no passwordHash)
@@ -21,6 +22,7 @@ export interface UserPublicModel {
   isActive: boolean;
   lastLoginAt?: Date | null;
   createdAt?: Date;
+  avatar?: string | null;
 }
 
 export interface UserLoginResponse {
