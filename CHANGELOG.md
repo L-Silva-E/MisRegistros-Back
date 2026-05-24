@@ -5,6 +5,24 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.12.2] - 2026-05-24
+
+### Fixed
+
+- **Docker build failure with pnpm v11**: `corepack prepare pnpm@latest` instalaba pnpm v11 en la imagen, que ya no lee el campo `"pnpm"` de `package.json`. Se resolvió fijando la versión a `pnpm@10.11.0` en ambos Dockerfiles (`corepack prepare pnpm@10.11.0 --activate`) para que coincida con la versión local del proyecto
+- **Prisma no encontraba el engine en Alpine (OpenSSL)**: En Node 22-alpine (Alpine 3.19+), Prisma no detectaba la versión de OpenSSL al no tener las librerías instaladas, usaba por defecto el engine compilado para OpenSSL 1.1.x, que no existe en Alpine moderno. Se resolvieron dos problemas por separado:
+  - Se agregó `RUN apk add --no-cache openssl` en ambos Dockerfiles para que Prisma pueda detectar OpenSSL 3.x en tiempo de ejecución
+  - Se agregó `binaryTargets = ["native", "linux-musl-openssl-3.0.x"]` al bloque `generator client` de `schema.prisma` para que `prisma generate` incluya el engine correcto para Alpine con OpenSSL 3.x
+
+## [1.12.1] - 2026-05-23
+
+### Changed
+
+- **Package manager migrated from npm to pnpm**: replaced `package-lock.json` with `pnpm-lock.yaml` as the project's official lock file
+  - Added `"pnpm": { "onlyBuiltDependencies" }` section to `package.json` to approve build scripts for `@prisma/client`, `@prisma/engines` and `prisma` — required by pnpm v10's default security model that blocks all dependency scripts
+  - Updated `Dockerfile` and `Dockerfile.dev` to install pnpm via `npm install -g pnpm`, copy the new lock file and run `pnpm install --frozen-lockfile`
+  - All `package.json` scripts remain unchanged and are compatible with `pnpm run`
+
 ## [1.12.0] - 2026-05-23
 
 ### Added

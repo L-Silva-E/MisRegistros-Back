@@ -1,10 +1,14 @@
-FROM node:17.3.1-alpine3.14
+FROM node:22-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
+RUN apk add --no-cache openssl
 
-RUN npm install
+RUN corepack enable && corepack prepare pnpm@10.11.0 --activate
+
+COPY package.json pnpm-lock.yaml ./
+
+RUN pnpm install --frozen-lockfile
 
 COPY src/shared/prisma ./src/shared/prisma
 
@@ -16,6 +20,6 @@ COPY . .
 
 EXPOSE 9000
 
-RUN npm run build
+RUN pnpm run build
 
 CMD [ "node", "./build/server.js" ]
