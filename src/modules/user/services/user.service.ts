@@ -38,6 +38,7 @@ export default class UserService {
         isActive: true,
         lastLoginAt: true,
         createdAt: true,
+        avatar: true,
       },
     });
 
@@ -161,6 +162,7 @@ export default class UserService {
         isActive: true,
         lastLoginAt: true,
         createdAt: true,
+        avatar: true,
       },
     });
 
@@ -169,5 +171,63 @@ export default class UserService {
     }
 
     return user;
+  }
+
+  public async updateAvatar(
+    userId: number,
+    avatarUrl: string,
+    ctx?: Context,
+  ): Promise<UserPublicModel> {
+    const prisma = ctx?.prisma || prismaClient;
+
+    return prisma.user.update({
+      where: { id: userId },
+      data: { avatar: avatarUrl },
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        role: true,
+        isActive: true,
+        lastLoginAt: true,
+        createdAt: true,
+        avatar: true,
+      },
+    });
+  }
+
+  public async deleteAvatar(
+    userId: number,
+    ctx?: Context,
+  ): Promise<{ oldAvatarUrl: string; user: UserPublicModel }> {
+    const prisma = ctx?.prisma || prismaClient;
+
+    const current = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { avatar: true },
+    });
+
+    if (!current?.avatar) {
+      throw new Error("NO_AVATAR");
+    }
+
+    const oldAvatarUrl = current.avatar;
+
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: { avatar: null },
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        role: true,
+        isActive: true,
+        lastLoginAt: true,
+        createdAt: true,
+        avatar: true,
+      },
+    });
+
+    return { oldAvatarUrl, user };
   }
 }
