@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -14,18 +15,18 @@ enum Role {
 }
 
 model User {
-  id           Int       @id @default(autoincrement())
-  email        String    @unique
-  username     String    @unique
-  passwordHash String
-  role         Role      @default(USER)
-  isActive              Boolean   @default(true)
-  lastLoginAt           DateTime?
-  resetToken            String?   @unique
-  resetTokenExpires     DateTime?
-  avatar                String?
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
+  id                Int       @id @default(autoincrement())
+  email             String    @unique
+  username          String    @unique
+  passwordHash      String
+  role              Role      @default(USER)
+  isActive          Boolean   @default(true)
+  lastLoginAt       DateTime?
+  resetToken        String?   @unique
+  resetTokenExpires DateTime?
+  avatar            String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
   recipes Recipe[]
 }
