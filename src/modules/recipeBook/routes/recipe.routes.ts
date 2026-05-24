@@ -29,7 +29,7 @@ export default class RecipeRouter {
       `/${this.version}/recipe`,
       AuthorizationApiKey,
       authMiddleware,
-      uploadMiddleware,
+      uploadMiddleware("thumbnail"),
       middlewareValidationSchema(RecipeCreateZodSchema),
       this.controller.create,
     );
@@ -46,7 +46,7 @@ export default class RecipeRouter {
       `/${this.version}/recipe/:id`,
       AuthorizationApiKey,
       authMiddleware,
-      uploadMiddleware,
+      uploadMiddleware("thumbnail"),
       middlewareValidationSchema(RecipeUpdateZodSchema),
       this.controller.patch,
     );

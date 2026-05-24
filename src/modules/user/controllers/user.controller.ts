@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import UserService from "../services/user.service";
+import StorageService, { UploadResult } from "../../storage/services/storage.service";
 import LoggerService from "../../../services/logger";
 import ErrorCodes from "../../../shared/prisma/middlewares/error.codes";
 import {
@@ -10,6 +11,7 @@ import { HttpStatusCode } from "../../../shared/types.environment";
 import { AuthenticatedRequest } from "../../../middleware/auth.middleware";
 
 const userService = new UserService();
+const storageService = new StorageService();
 const logger = new LoggerService("User");
 
 export default class UserController {
@@ -152,6 +154,88 @@ export default class UserController {
         return res.status(HttpStatusCode.NOT_FOUND).send({
           error: "Not Found",
           details: "User not found",
+        } satisfies ErrorResponse);
+      }
+
+      const errorBody = ErrorCodes(
+        error instanceof Error ? error : new Error(message),
+      );
+      return res.status(errorBody.code).send(errorBody.response);
+    }
+  }
+
+  public async updateAvatar(
+    req: AuthenticatedRequest,
+    res: Response,
+  ): Promise<Response> {
+    let uploadResult: UploadResult | undefined;
+
+    try {
+      const idUser = req.user!.id;
+
+      if (!req.file) {
+        return res.status(HttpStatusCode.BAD_REQUEST).send({
+          error: "Bad Request",
+          details: "No se recibió ningún archivo",
+        } satisfies ErrorResponse);
+      }
+
+      const current = await userService.getMe(idUser);
+      const oldAvatarUrl = current.avatar ?? undefined;
+
+      uploadResult = await storageService.upload(
+        req.file.buffer,
+        "mis-registros/profile-pictures",
+      );
+
+      const user = await userService.updateAvatar(idUser, uploadResult.url);
+
+      if (oldAvatarUrl) {
+        const oldPublicId = storageService.extractPublicId(oldAvatarUrl);
+        if (oldPublicId) await storageService.delete(oldPublicId).catch(() => {});
+      }
+
+      logger.info("Avatar updated", { id: idUser });
+      const response: ItemResponse<typeof user> = { data: user };
+      return res.status(HttpStatusCode.OK).send(response);
+    } catch (error: unknown) {
+      if (uploadResult) {
+        await storageService.delete(uploadResult.public_id).catch(() => {});
+      }
+
+      const message = error instanceof Error ? error.message : String(error);
+      logger.error("Error while updating avatar", { error: message });
+
+      const errorBody = ErrorCodes(
+        error instanceof Error ? error : new Error(message),
+      );
+      return res.status(errorBody.code).send(errorBody.response);
+    }
+  }
+
+  public async deleteAvatar(
+    req: AuthenticatedRequest,
+    res: Response,
+  ): Promise<Response> {
+    try {
+      const idUser = req.user!.id;
+
+      const { oldAvatarUrl, user } = await userService.deleteAvatar(idUser);
+
+      const publicId = storageService.extractPublicId(oldAvatarUrl);
+      if (publicId) await storageService.delete(publicId).catch(() => {});
+
+      logger.info("Avatar deleted", { id: idUser });
+      const response: ItemResponse<typeof user> = { data: user };
+      return res.status(HttpStatusCode.OK).send(response);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      logger.error("Error while deleting avatar", { error: message });
+
+      if (message === "NO_AVATAR") {
+        return res.status(HttpStatusCode.BAD_REQUEST).send({
+          error: "Bad Request",
+          details: "El usuario no tiene una foto de perfil",
         } satisfies ErrorResponse);
       }
 

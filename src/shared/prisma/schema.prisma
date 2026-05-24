@@ -23,6 +23,7 @@ model User {
   lastLoginAt           DateTime?
   resetToken            String?   @unique
   resetTokenExpires     DateTime?
+  avatar                String?
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
 

@@ -24,32 +24,30 @@ const multerUpload = multer({
   limits: { fileSize: MAX_SIZE_MB * 1024 * 1024 },
 });
 
-const uploadMiddleware = (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-): void => {
-  multerUpload.single("thumbnail")(req, res, (error) => {
-    if (!error) return next();
+const uploadMiddleware =
+  (fieldName: string) =>
+  (req: Request, res: Response, next: NextFunction): void => {
+    multerUpload.single(fieldName)(req, res, (error) => {
+      if (!error) return next();
 
-    if (error instanceof MulterError && error.code === "LIMIT_FILE_SIZE") {
-      res.status(HttpStatusCode.BAD_REQUEST).json({
-        error: "Bad Request",
-        details: `El archivo no puede superar los ${MAX_SIZE_MB}MB`,
-      } satisfies ErrorResponse);
-      return;
-    }
+      if (error instanceof MulterError && error.code === "LIMIT_FILE_SIZE") {
+        res.status(HttpStatusCode.BAD_REQUEST).json({
+          error: "Bad Request",
+          details: `El archivo no puede superar los ${MAX_SIZE_MB}MB`,
+        } satisfies ErrorResponse);
+        return;
+      }
 
-    if (error instanceof Error && error.message === "INVALID_FILE_TYPE") {
-      res.status(HttpStatusCode.UNSUPPORTED_MEDIA_TYPE).json({
-        error: "Unsupported Media Type",
-        details: "Solo se permiten imágenes en formato JPG, PNG o WebP",
-      } satisfies ErrorResponse);
-      return;
-    }
+      if (error instanceof Error && error.message === "INVALID_FILE_TYPE") {
+        res.status(HttpStatusCode.UNSUPPORTED_MEDIA_TYPE).json({
+          error: "Unsupported Media Type",
+          details: "Solo se permiten imágenes en formato JPG, PNG o WebP",
+        } satisfies ErrorResponse);
+        return;
+      }
 
-    next(error);
-  });
-};
+      next(error);
+    });
+  };
 
 export default uploadMiddleware;

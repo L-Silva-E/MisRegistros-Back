@@ -1,6 +1,7 @@
 import { Router } from "express";
 import AuthorizationApiKey from "../../../shared/prisma/middlewares/authorization";
 import authMiddleware from "../../../middleware/auth.middleware";
+import uploadMiddleware from "../../../middleware/upload.middleware";
 import middlewareValidationSchema from "../../../shared/zod/middleware/schema.validation";
 import {
   UserRegisterZodSchema,
@@ -53,6 +54,21 @@ export default class UserRouter {
       AuthorizationApiKey,
       authMiddleware,
       this.controller.getMe,
+    );
+
+    this.router.patch(
+      `/${this.version}/user/me/avatar`,
+      AuthorizationApiKey,
+      authMiddleware,
+      uploadMiddleware("avatar"),
+      this.controller.updateAvatar,
+    );
+
+    this.router.delete(
+      `/${this.version}/user/me/avatar`,
+      AuthorizationApiKey,
+      authMiddleware,
+      this.controller.deleteAvatar,
     );
   }
 }

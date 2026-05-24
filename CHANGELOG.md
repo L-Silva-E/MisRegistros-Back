@@ -5,6 +5,22 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.12.0] - 2026-05-23
+
+### Added
+
+- **User avatar management**: Implemented profile picture upload and deletion for authenticated users:
+  - New field `avatar String?` on `User` model — migration `add_avatar_to_user`
+  - New `PATCH /v1/user/me/avatar` — accepts `multipart/form-data` with the file in the `avatar` field. Uploads to Cloudinary under `mis-registros/profile-pictures/`, converts to WebP. If the user already has an avatar, the previous image is deleted from Cloudinary automatically. Returns the updated `UserPublicModel`
+  - New `DELETE /v1/user/me/avatar` — removes the avatar from Cloudinary and sets `avatar: null` in DB. Returns `400` with message `"El usuario no tiene una foto de perfil"` if the user has no avatar set
+  - New `UserService.updateAvatar(userId, avatarUrl)` and `UserService.deleteAvatar(userId)` methods
+  - New `avatar?: string | null` field added to `UserModel` and `UserPublicModel` interfaces
+  - `avatar` field included in `select` of `register` and `getMe` service methods so all user endpoints return it consistently
+
+### Changed
+
+- **`uploadMiddleware`**: refactored from a fixed middleware to a factory function `uploadMiddleware(fieldName)` — allows each route to declare its own form field name. Recipe routes use `uploadMiddleware("thumbnail")`, avatar route uses `uploadMiddleware("avatar")`
+
 ## [1.11.0] - 2026-05-21
 
 ### Added
