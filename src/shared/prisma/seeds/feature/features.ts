@@ -3,10 +3,12 @@ const dataFeatures = {
     {
       name: "Libro de Recetas",
       description: "Libro con las Recetas hechas y por realizar",
+      isActive: true,
     },
     {
       name: "Eventos",
       description: "Eventos importantes para recordar",
+      isActive: true,
     },
     {
       name: "Ideas para Desarrollar",
