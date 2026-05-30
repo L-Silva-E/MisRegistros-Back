@@ -16,7 +16,8 @@ export const StepBaseZodSchema = z.object({
     .optional(),
   instruction: z
     .string({ invalid_type_error: "El campo 'instrucción' debe ser un texto" })
-    .min(1, "El campo 'instrucción' no puede estar vacío"),
+    .min(1, "El campo 'instrucción' no puede estar vacío")
+    .max(500, "El campo 'instrucción' no puede superar los 500 caracteres"),
 });
 
 //~ CRUD Zod Schemas
