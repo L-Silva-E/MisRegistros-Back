@@ -187,6 +187,12 @@ export default class RecipeController {
       const idUser = req.user?.role !== "ADMIN" ? req.user!.id : undefined;
 
       const recipe = await recipeService.delete(id, undefined, idUser);
+
+      if (recipe.thumbnail) {
+        const publicId = storageService.extractPublicId(recipe.thumbnail);
+        if (publicId) await storageService.delete(publicId).catch(() => {});
+      }
+
       logger.info("Deleted", { id: recipe.id });
 
       const response: DeleteResponse = { deleted: true, id: recipe.id! };
