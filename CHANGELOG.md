@@ -5,6 +5,38 @@ All notable changes to the `MisRegistros-Back` project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.0] - 2026-05-29
+
+### Added
+
+- **Thumbnail cleanup on recipe deletion**: `DELETE /v1/recipe/:id` now removes the associated Cloudinary image when the recipe has a thumbnail. Uses fire-and-forget — a failed storage call is silently caught so it never blocks the database deletion
+
+### Changed
+
+- **Maximum length validations added to Zod schemas**: Added `.max()` constraints across all schemas to prevent oversized input and protect visual layout integrity:
+  - `category.name` → 30
+  - `origin.name` → 30
+  - `ingredient.name` → 50
+  - `feature.name` → 50, `feature.description` → 100
+  - `recipe.name` → 100, `recipe.description` → 500
+  - `step.instruction` → 500
+  - `user.password` and `user.newPassword` → 72 (bcrypt processes only the first 72 bytes)
+
+### Fixed
+
+- **Feature seeds missing `isActive`**: Feature seed entries now explicitly set `isActive: true`, matching the expected default state
+- **Recipe seed thumbnails**: Updated recipe thumbnail URLs in seeds to point to current Cloudinary paths
+
+---
+
+## [1.12.4] - 2026-05-26
+
+### Removed
+
+- **Recipe duplication endpoint**: Removed `POST /v1/recipe/:id/duplicate` endpoint along with `RecipeService.duplicate()` and its associated tests. The original approach created an immediate copy of the recipe server-side, which did not match the intended UX. The replacement flow pre-fills the recipe creation form on the frontend with the existing recipe's data, letting the user review and edit before saving — no dedicated endpoint is needed for this.
+
+---
+
 ## [1.12.3] - 2026-05-24
 
 ### Fixed

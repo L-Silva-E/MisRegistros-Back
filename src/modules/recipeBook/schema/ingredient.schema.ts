@@ -10,7 +10,8 @@ import { UnitList } from "../../../shared/enums";
 export const IngredientBaseZodSchema = z.object({
   name: z
     .string({ invalid_type_error: "El campo 'nombre' debe ser un texto" })
-    .min(1, "El campo 'nombre' no puede estar vacío"),
+    .min(1, "El campo 'nombre' no puede estar vacío")
+    .max(50, "El campo 'nombre' no puede superar los 50 caracteres"),
   unit: z.nativeEnum(UnitList, {
     errorMap: () => {
       return {

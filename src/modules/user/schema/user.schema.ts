@@ -11,7 +11,8 @@ export const UserRegisterZodSchema = z.object({
       .max(30, "El campo 'username' no puede superar los 30 caracteres"),
     password: z
       .string({ invalid_type_error: "El campo 'password' debe ser un texto" })
-      .min(8, "El campo 'password' debe tener al menos 8 caracteres"),
+      .min(8, "El campo 'password' debe tener al menos 8 caracteres")
+      .max(72, "El campo 'password' no puede superar los 72 caracteres"),
   }),
 });
 
@@ -41,6 +42,7 @@ export const UserResetPasswordZodSchema = z.object({
       .min(1, "El campo 'token' no puede estar vacío"),
     newPassword: z
       .string({ invalid_type_error: "El campo 'newPassword' debe ser un texto" })
-      .min(8, "El campo 'newPassword' debe tener al menos 8 caracteres"),
+      .min(8, "El campo 'newPassword' debe tener al menos 8 caracteres")
+      .max(72, "El campo 'newPassword' no puede superar los 72 caracteres"),
   }),
 });

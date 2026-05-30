@@ -16,10 +16,12 @@ export const RecipeBaseZodSchema = z.object({
     .positive("Ingrese una 'id' válida"),
   name: z
     .string({ invalid_type_error: "El campo 'nombre' debe ser un texto" })
-    .min(1, "El campo 'nombre' no puede estar vacío"),
+    .min(1, "El campo 'nombre' no puede estar vacío")
+    .max(100, "El campo 'nombre' no puede superar los 100 caracteres"),
   description: z
     .string({ invalid_type_error: "El campo 'descripción' debe ser un texto" })
-    .min(1, "El campo 'descripción' no puede estar vacío"),
+    .min(1, "El campo 'descripción' no puede estar vacío")
+    .max(500, "El campo 'descripción' no puede superar los 500 caracteres"),
   thumbnail: z
     .string()
     .url("El campo 'thumbnail' debe ser una URL válida")

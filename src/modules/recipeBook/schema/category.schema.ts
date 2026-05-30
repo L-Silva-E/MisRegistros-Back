@@ -8,7 +8,8 @@ import {
 export const CategoryBaseZodSchema = z.object({
   name: z
     .string({ invalid_type_error: "El campo 'nombre' debe ser un texto" })
-    .min(1, "El campo 'nombre' no puede estar vacío"),
+    .min(1, "El campo 'nombre' no puede estar vacío")
+    .max(30, "El campo 'nombre' no puede superar los 30 caracteres"),
 });
 
 //~ CRUD Zod Schemas

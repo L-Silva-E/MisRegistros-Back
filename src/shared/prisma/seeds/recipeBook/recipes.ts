@@ -8,7 +8,7 @@ const dataRecipes = [
     category: "Almuerzo",
     origin: "Italiana",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648512/mis-registros/recipes/l9ninndfaem1dyaurk6o.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110144/mis-registros/recipes/qfrfdkxi17vhglqq0teb.webp",
     score: Score.EXCELLENT,
     time: 45,
     servings: 4,
@@ -36,7 +36,7 @@ const dataRecipes = [
     category: "Snack",
     origin: "Argentina",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648532/mis-registros/recipes/gr6ogtuc4ikqkysc06pi.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110183/mis-registros/recipes/cqasykec9ltnijus7se9.webp",
     score: Score.GOOD,
     time: 60,
     servings: 8,
@@ -65,7 +65,7 @@ const dataRecipes = [
     category: "Almuerzo",
     origin: "Española",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648583/mis-registros/recipes/mqwj3vxp5txzylaexe1k.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110198/mis-registros/recipes/pp7rfdj4wgjcbre3eyev.webp",
     score: Score.EXCELLENT,
     time: 90,
     servings: 6,
@@ -97,7 +97,7 @@ const dataRecipes = [
     category: "Almuerzo",
     origin: "Americana",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648596/mis-registros/recipes/ib64gk7ygwnepchzcf5g.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110245/mis-registros/recipes/hmu5lgpdqqngtyrvyprf.webp",
     score: Score.GREAT,
     time: 20,
     servings: 2,
@@ -124,7 +124,7 @@ const dataRecipes = [
     category: "Desayuno",
     origin: "Americana",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648607/mis-registros/recipes/b8wb6jkxmu2y666hx6ks.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110270/mis-registros/recipes/tgzkws3hb6br07fdow8q.webp",
     score: Score.EXCELLENT,
     time: 25,
     servings: 2,
@@ -153,7 +153,7 @@ const dataRecipes = [
     category: "Trago",
     origin: "Peruana",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648617/mis-registros/recipes/wjkcv2cpv6tawt7zc137.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110285/mis-registros/recipes/uuhj05jzu0gcd517rfpf.webp",
     score: Score.EXCELLENT,
     time: 10,
     servings: 1,
@@ -180,7 +180,7 @@ const dataRecipes = [
     category: "Trago",
     origin: "Mexicana",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648629/mis-registros/recipes/vvqelbbyubstuav30wya.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110310/mis-registros/recipes/loc3ozxys4nq04ikuybz.webp",
     score: Score.GOOD,
     time: 10,
     servings: 1,
@@ -206,7 +206,7 @@ const dataRecipes = [
     category: "Snack",
     origin: "Americana",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648641/mis-registros/recipes/ivy53tacif3mdnflrmar.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110330/mis-registros/recipes/q9qimuxgouyydcdvslpf.webp",
     score: Score.GREAT,
     time: 15,
     servings: 4,
@@ -231,7 +231,7 @@ const dataRecipes = [
     category: "Snack",
     origin: "Mexicana",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648654/mis-registros/recipes/phswdxquii3fseoovcjn.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110345/mis-registros/recipes/atwnph7c5fqve5udyvwh.webp",
     score: Score.EXCELLENT,
     time: 20,
     servings: 4,
@@ -260,7 +260,7 @@ const dataRecipes = [
     category: "Snack",
     origin: "Italiana",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648666/mis-registros/recipes/ajuou0zsjn8um5iy7h9x.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110363/mis-registros/recipes/klgdike2eb3hkmgur70e.webp",
     score: Score.GOOD,
     time: 30,
     servings: 6,
@@ -287,7 +287,7 @@ const dataRecipes = [
     category: "Almuerzo",
     origin: "Americana",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648677/mis-registros/recipes/mptrpnujttrkce1is68y.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110391/mis-registros/recipes/eimvzd2qgkpvfv3pw55a.webp",
     score: Score.GOOD,
     time: 20,
     servings: 2,
@@ -312,7 +312,7 @@ const dataRecipes = [
     category: "Almuerzo",
     origin: "Española",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648687/mis-registros/recipes/hiukwimemwpqp2wzs81i.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110404/mis-registros/recipes/adbgyihtnyntp8n8t6th.webp",
     score: Score.GREAT,
     time: 45,
     servings: 4,
@@ -339,7 +339,7 @@ const dataRecipes = [
     category: "Postre",
     origin: "Americana",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648701/mis-registros/recipes/n9uip3sngyt4wlyyldvh.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110422/mis-registros/recipes/cmfl2qxeqihqv0gjzmlz.webp",
     score: Score.GOOD,
     time: 60,
     servings: 8,
@@ -365,7 +365,7 @@ const dataRecipes = [
     category: "Cena",
     origin: "Alemana",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648710/mis-registros/recipes/tmy6kskwtbr2m0nobrhg.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110435/mis-registros/recipes/nbr5eslxabnfz2smhujw.webp",
     score: Score.GOOD,
     time: 40,
     servings: 4,
@@ -392,7 +392,7 @@ const dataRecipes = [
     category: "Cena",
     origin: "Francesa",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648721/mis-registros/recipes/ksfccleaniaizwl29ndq.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110461/mis-registros/recipes/ycim6hucfjmowfz7yexd.webp",
     score: Score.GOOD,
     time: 50,
     servings: 6,
@@ -417,7 +417,7 @@ const dataRecipes = [
     category: "Cena",
     origin: "Española",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648732/mis-registros/recipes/pzont56igq3bbgel5mom.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110474/mis-registros/recipes/yoie3ysnnrqxtgyadquo.webp",
     score: Score.GOOD,
     time: 60,
     servings: 6,
@@ -444,7 +444,7 @@ const dataRecipes = [
     category: "Cena",
     origin: "Argentina",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648742/mis-registros/recipes/rih2yv3ce0eti9p78xre.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110487/mis-registros/recipes/ua5pnhblheghigd9zifr.webp",
     score: Score.GOOD,
     time: 50,
     servings: 6,
@@ -469,7 +469,7 @@ const dataRecipes = [
     category: "Cena",
     origin: "Alemana",
     thumbnail:
-      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1779648754/mis-registros/recipes/byvneq9fom0pgxxznn7c.webp",
+      "https://res.cloudinary.com/dp5rqmzzw/image/upload/v1780110502/mis-registros/recipes/ohdojt3jkkmy6mf1ivmd.webp",
     score: Score.GOOD,
     time: 45,
     servings: 4,
